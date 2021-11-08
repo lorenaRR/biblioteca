@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
     forma!: FormGroup;
     usuarioNoValido!:boolean;
     passwordNoValido!:boolean;
-    acceso=false;
+
 
 
 
@@ -45,7 +45,13 @@ export class LoginComponent implements OnInit {
         this.usuarioNoValido=false;
         if (this.forma.controls.password.value === usuario.password) {
           this.passwordNoValido=false;
-          this.acceso=true;
+          if (usuario.rol=='admin') {
+            window.location.href='/admin';
+          }
+          if(usuario.rol=='usuario'){
+            window.location.href='/user';
+          }
+         
         }
       }
     });

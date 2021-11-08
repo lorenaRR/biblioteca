@@ -5,18 +5,27 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/shared/navbar/navbar.component';
+
 import { LoginComponent } from './components/shared/login/login.component';
 import { GestionUsuariosComponent } from './components/admin/gestion-usuarios/gestion-usuarios.component';
 import { MisLibrosComponent } from './components/user/mis-libros/mis-libros.component';
+import { AdminComponent } from './components/admin/admin/admin.component';
+
+import { UserComponent } from './components/user/user/user.component';
+import { NavbarUserComponent } from './components/user/navbar-user/navbar-user.component';
+import { NavbarAdminComponent } from './components/admin/navbar-admin/navbar-admin.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     LoginComponent,
     GestionUsuariosComponent,
-    MisLibrosComponent
+    MisLibrosComponent,
+    AdminComponent,
+    UserComponent,
+    NavbarUserComponent,
+    NavbarAdminComponent
   ],
   imports: [
     BrowserModule,

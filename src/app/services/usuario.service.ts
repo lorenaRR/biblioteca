@@ -18,8 +18,8 @@ export class UsuarioService {
      telefono:'985123123',
      rol:'usuario',
      email:'abc@abc.com',
-     usuario:'abc@abc.com',
-     password:'123456789A'
+     usuario:'123456789A',
+     password:'abc@abc.com'
    },
    {
      nombre:'Lorena',
@@ -46,8 +46,8 @@ export class UsuarioService {
        telefono:'666555444',
        rol:'usuario',
        email:'abc@abc.com',
-       usuario:'abc@abc.com',
-       password:'111111111C'
+       usuario:'111111111C',
+       password:'abc@abc.com'
      }];
 
   constructor() { }

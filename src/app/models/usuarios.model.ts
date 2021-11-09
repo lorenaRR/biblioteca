@@ -1,3 +1,4 @@
+import { LibrosModel } from './libros.model';
 export class UsuarioModel{
     nombre!:string;
     apellidos!:string;
@@ -11,5 +12,6 @@ export class UsuarioModel{
     email!:string;
     usuario!:string;
     password!:string;
-
+    listaLibros:LibrosModel[]=[];
+    prestamos:LibrosModel[]=[];
 }

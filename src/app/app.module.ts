@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +16,7 @@ import { AdminComponent } from './components/admin/admin/admin.component';
 import { UserComponent } from './components/user/user/user.component';
 import { NavbarUserComponent } from './components/user/navbar-user/navbar-user.component';
 import { NavbarAdminComponent } from './components/admin/navbar-admin/navbar-admin.component';
+import { CatalogoComponent } from './components/user/catalogo/catalogo.component';
 
 
 @NgModule({
@@ -25,13 +28,15 @@ import { NavbarAdminComponent } from './components/admin/navbar-admin/navbar-adm
     AdminComponent,
     UserComponent,
     NavbarUserComponent,
-    NavbarAdminComponent
+    NavbarAdminComponent,
+    CatalogoComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

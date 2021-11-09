@@ -1,1 +1,27 @@
-<p>mis-libros works!</p>
+<app-navbar-user></app-navbar-user>
+<div class="container m-5">
+    <div class="border border-light bg-light shadow-none p-3 mb-5 bg-light rounded" style="width: 1000px;">
+        <h1 class="text-center m-5">Nuevo libro</h1>
+        <hr>
+        <form class="m-5" (ngSubmit)="guardarFormulario()" [formGroup]="forma">
+            <div class="form-group mb-3">
+                <label class="form-label">Titulo</label>
+                <input type="text" class="form-control" formControlName="title" [class.is-invalid]="">
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">Autores</label>
+                <input type="text" class="form-control" formControlName="authors" [class.is-invalid]="">
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">Sinopsis</label>
+                <input type="text" class="form-control" formControlName="description" [class.is-invalid]="">
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">Categorías</label>
+                <input type="text" class="form-control" formControlName="categories" [class.is-invalid]="">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+</div>

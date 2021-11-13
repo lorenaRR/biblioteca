@@ -1,13 +1,18 @@
 <app-navbar-user></app-navbar-user>
-<h1>Catálogo de libros</h1>
-<hr>
-<div class="row">
-    <form action="">
-        <input type="text" name="busqueda"><button type="submit">Buscar</button>
+<div class="m-5">
+    <h1>Catálogo de libros</h1>
+    <hr>
+</div>
+<div class="row m-5">
+    <form class="form-inline" (ngSubmit)="buscar()" [formGroup]="forma">
+        <div class="form-group">
+            <input class="form-control form-control-lg" type="text" formControlName="busqueda" placeholder="Buscar...">
+        </div>
+        <button class="btn btn-primary" type="submit">Buscar</button>
     </form>
 </div>
 <hr>
-<div class="row">
+<div class="row m-5">
     <div class="col-md-3 mb-5" *ngFor="let libro of libros">
         <img [src]="libro.volumeInfo.imageLinks?.thumbnail" alt="" class="img-fluid">
         <div>

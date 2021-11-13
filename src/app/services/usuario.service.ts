@@ -18,8 +18,8 @@ export class UsuarioService {
      telefono:'985123123',
      rol:'usuario',
      email:'abc@abc.com',
-     usuario:'123456789A',
-     password:'abc@abc.com'
+     usuario:'user',
+     password:'user'
    },
    {
      nombre:'Lorena',

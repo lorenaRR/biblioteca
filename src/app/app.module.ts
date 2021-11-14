@@ -17,6 +17,9 @@ import { UserComponent } from './components/user/user/user.component';
 import { NavbarUserComponent } from './components/user/navbar-user/navbar-user.component';
 import { NavbarAdminComponent } from './components/admin/navbar-admin/navbar-admin.component';
 import { CatalogoComponent } from './components/user/catalogo/catalogo.component';
+import { PipesModule } from './pipes/pipes.module';
+import { GestionLibrosComponent } from './components/admin/gestion-libros/gestion-libros.component';
+import { LibroCatalogoComponent } from './components/user/libro-catalogo/libro-catalogo.component';
 
 
 @NgModule({
@@ -30,13 +33,16 @@ import { CatalogoComponent } from './components/user/catalogo/catalogo.component
     NavbarUserComponent,
     NavbarAdminComponent,
     CatalogoComponent,
+    GestionLibrosComponent,
+    LibroCatalogoComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    PipesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

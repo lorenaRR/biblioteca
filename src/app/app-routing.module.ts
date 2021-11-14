@@ -6,12 +6,16 @@ import { MisLibrosComponent } from './components/user/mis-libros/mis-libros.comp
 import { AdminComponent } from './components/admin/admin/admin.component';
 import { UserComponent } from './components/user/user/user.component';
 import { CatalogoComponent } from './components/user/catalogo/catalogo.component';
+import { GestionLibrosComponent } from './components/admin/gestion-libros/gestion-libros.component';
+import { LibroCatalogoComponent } from './components/user/libro-catalogo/libro-catalogo.component';
 
 const routes: Routes = [
   {path:'login', component: LoginComponent },
   {path:'gestion-usuarios', component: GestionUsuariosComponent },
+  {path:'gestion-libros', component: GestionLibrosComponent },
   {path:'mis-libros', component: MisLibrosComponent },
   {path:'catalogo', component: CatalogoComponent },
+  {path:'libro-catalogo/:id', component: LibroCatalogoComponent},
   {path:'admin', component: AdminComponent },
   {path:'user', component: UserComponent },
   {path:'**', pathMatch:'full', redirectTo:'login'},

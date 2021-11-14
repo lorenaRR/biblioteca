@@ -4,22 +4,20 @@
     <hr>
 </div>
 <div class="row m-5">
-    <form class="form-inline" (ngSubmit)="buscar()" [formGroup]="forma">
-        <div class="form-group">
-            <input class="form-control form-control-lg" type="text" formControlName="busqueda" placeholder="Buscar...">
-        </div>
-        <button class="btn btn-primary" type="submit">Buscar</button>
-    </form>
+    <div class="d-flex" style="width: 800px;">
+        <input #txtBuscar (keyup.enter)="buscar(txtBuscar.value)" class="form-control me-2" type="search" placeholder="Buscar libro...">
+        <button (click)="buscar(txtBuscar.value)" class="btn btn-success" type="submit">Buscar</button>
+    </div>
 </div>
 <hr>
 <div class="row m-5">
     <div class="col-md-3 mb-5" *ngFor="let libro of libros">
-        <img [src]="libro.volumeInfo.imageLinks?.thumbnail" alt="" class="img-fluid">
+        <img (click)="onLibroClick(libro)" [src]="getImagen(libro)" alt="" class="img-fluid">
         <div>
-            <h3>{{libro.volumeInfo.title}}</h3><br>
-            <h4>{{libro.volumeInfo.subtitle}}</h4><br>
-            <p>{{libro.volumeInfo.authors}}</p><br>
-            <span>{{libro.searchInfo?.textSnippet}}</span>
+            <h5>{{libro.volumeInfo.title}}</h5>
+            <p *ngFor="let author of libro.volumeInfo.authors">{{author}}</p>
+            <span>{{libro.volumeInfo.publishedDate}}</span><br>
+            <span *ngFor="let categorie of libro.volumeInfo.categories" class="badge badge-pill badge-secondary">{{categorie}}</span>
         </div>
     </div>
 </div>

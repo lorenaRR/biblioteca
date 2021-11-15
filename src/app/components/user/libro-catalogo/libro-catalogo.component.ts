@@ -16,7 +16,6 @@ export class LibroCatalogoComponent implements OnInit {
 
   ngOnInit(): void {
     const {id} = this.activatedRoute.snapshot.params;
-    console.log(id);
     this.librosService.getLibro(id)
     .subscribe(resp=>{
       this.libro=resp;
@@ -26,8 +25,8 @@ export class LibroCatalogoComponent implements OnInit {
   }
 
   getImagen(libro:LibroResponse){
-    if (libro.volumeInfo.imageLinks?.large) {
-      return `${libro.volumeInfo.imageLinks?.large}`
+    if (libro.volumeInfo.imageLinks?.medium) {
+      return `${libro.volumeInfo.imageLinks?.medium}`
     }
     else{
       return '../assets/no-image.jpg'

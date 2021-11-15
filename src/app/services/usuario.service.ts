@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { UsuarioModel } from '../models/usuarios.model';
 
 @Injectable({
   providedIn: 'root'
@@ -6,7 +7,7 @@ import { Injectable } from '@angular/core';
 
 export class UsuarioService {
 
-  public usuarios=[
+  public usuarios:UsuarioModel[]=[
     {
      nombre:'Ana',
      apellidos:'López',
@@ -16,10 +17,18 @@ export class UsuarioService {
        ciudad:'Avilés'
      },
      telefono:'985123123',
-     rol:'usuario',
+     admin:false,
      email:'abc@abc.com',
      usuario:'user',
-     password:'user'
+     password:'user',
+     listaLibros:[{
+       id: '2zgRDXFWkm8C',
+       fecha: '12/07/21'
+     },
+     {
+      id: 'fYa_hJ4bWnsC',
+      fecha:'02/05/21'
+     }]
    },
    {
      nombre:'Lorena',
@@ -30,10 +39,11 @@ export class UsuarioService {
        ciudad:'Avilés'
      },
      telefono:'985123123',
-     rol:'admin',
+     admin:true,
      email:'abc@abc.com',
      usuario:'admin',
-     password:'admin'
+     password:'admin',
+     listaLibros:[]
    },
    {
        nombre:'Pepe',
@@ -44,10 +54,11 @@ export class UsuarioService {
          ciudad:'Oviedo'
        },
        telefono:'666555444',
-       rol:'usuario',
+       admin:false,
        email:'abc@abc.com',
        usuario:'111111111C',
-       password:'abc@abc.com'
+       password:'abc@abc.com',
+       listaLibros:[]
      }];
 
   constructor() { }

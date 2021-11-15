@@ -1,4 +1,4 @@
-import { LibrosModel } from './libros.model';
+
 export class UsuarioModel{
     nombre!:string;
     apellidos!:string;
@@ -8,10 +8,15 @@ export class UsuarioModel{
         ciudad: string;
     };
     telefono!:string;
-    rol!:string;
+    admin!:boolean;
     email!:string;
     usuario!:string;
     password!:string;
-    listaLibros:LibrosModel[]=[];
-    prestamos:LibrosModel[]=[];
+    listaLibros!:ListaLibros[];
+    prestamos?:string[];
+}
+
+export class ListaLibros{
+    id!: string;
+    fecha!:string;
 }

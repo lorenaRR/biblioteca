@@ -23,4 +23,5 @@ export class LibrosModel{
     previewLink!:         string;
     infoLink!:            string;
     canonicalVolumeLink!: string;
+    fechaLectura!:        string;
 }

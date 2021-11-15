@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
+import { UsuarioModel } from '../../../models/usuarios.model';
 
 
 @Component({
@@ -20,7 +22,7 @@ export class LoginComponent implements OnInit {
 
 
 
-  constructor(private formBuilder:FormBuilder, private usuarioService:UsuarioService) {
+  constructor(private formBuilder:FormBuilder, private usuarioService:UsuarioService, private router:Router) {
     this.crearFormulario();
    }
 
@@ -45,11 +47,11 @@ export class LoginComponent implements OnInit {
         this.usuarioNoValido=false;
         if (this.forma.controls.password.value === usuario.password) {
           this.passwordNoValido=false;
-          if (usuario.rol=='admin') {
-            window.location.href='/admin';
+          if (usuario.admin) {
+            this.router.navigate(['/admin']);
           }
-          if(usuario.rol=='usuario'){
-            window.location.href='/user';
+          else{
+            this.router.navigate(['/user']);
           }
          
         }

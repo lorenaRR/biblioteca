@@ -1,3 +1,50 @@
 <app-navbar-user></app-navbar-user>
 
-<p>libros</p>
+<div class="m-5">
+    <h1>Lista de libros en prestamo</h1>
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Portada</th>
+                <th>Fecha Préstamo</th>
+                <th>Fecha Devolución</th>
+                <th>Título</th>
+                <th>Autor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+                <td>@mdo</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<hr>
+<br>
+<div class="m-5">
+    <h1>Lista de libros leídos</h1>
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Portada</th>
+                <th>Fecha Lectura</th>
+                <th>Título</th>
+                <th>Autor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let libro of libros">
+                <td><img [src]="getImagen(libro)" alt=""></td>
+                <td></td>
+                <td>{{libro.volumeInfo.title}}</td>
+                <td>{{libro.volumeInfo.authors}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

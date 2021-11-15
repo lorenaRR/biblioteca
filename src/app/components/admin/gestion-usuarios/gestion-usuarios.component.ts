@@ -63,7 +63,7 @@ export class GestionUsuariosComponent implements OnInit {
 
     console.log(this.forma);
 
-    let usuarioNuevo = new UsuarioModel;
+    let usuarioNuevo: UsuarioModel;
 
     usuarioNuevo = this.forma.value;
 

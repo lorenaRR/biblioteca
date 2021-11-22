@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UsuarioModel } from '../models/usuarios.model';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -61,5 +63,14 @@ export class UsuarioService {
        listaLibros:[]
      }];
 
-  constructor() { }
+  private url = 'https://localhost:44367/api/Usuarios/'
+
+  public currentUser = new UsuarioModel;
+
+  constructor(private http:HttpClient) { }
+
+  getUsuario(dni:string):Observable<UsuarioModel>{
+      return this.http.get<UsuarioModel>(this.url+dni)
+  }
+
 }

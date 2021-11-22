@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
         this.usuarioNoValido=false;
         if (this.forma.controls.password.value === usuario.password) {
           this.passwordNoValido=false;
+          this.usuarioService.currentUser = usuario;
           if (usuario.admin) {
             this.router.navigate(['/admin']);
           }

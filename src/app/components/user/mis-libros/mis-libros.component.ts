@@ -20,6 +20,8 @@ export class MisLibrosComponent implements OnInit {
    }
 
   ngOnInit(): void {
+
+
     
     this.usuarioService.usuarios.forEach(usuario => {
       if (usuario.usuario=='user') {
@@ -28,6 +30,8 @@ export class MisLibrosComponent implements OnInit {
         console.log(this.listado);
       }
     });
+
+
 
     this.listado.forEach(libro=>{
       this.librosService.getLibro(libro.id)

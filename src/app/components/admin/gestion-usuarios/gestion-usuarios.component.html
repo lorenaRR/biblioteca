@@ -34,4 +34,11 @@
             <button type="submit" class="btn btn-primary">Enviar</button>
         </form>
     </div>
+    <br>
+    <hr><br>
+    <form class="m-5" (ngSubmit)="verUsuario()" [formGroup]="formaUsu">
+        <input type="text" class="form-control" formControlName="dni2" placeholder="Dni">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+
 </div>

@@ -14,9 +14,11 @@ export class GestionUsuariosComponent implements OnInit {
 
 
   forma!: FormGroup;
+  formaUsu!: FormGroup;
  
   constructor(private formBuilder:FormBuilder, private usuarioService:UsuarioService) {
       this.crearFormulario();
+      this.crearFormularioUsu();
    }
 
 
@@ -45,6 +47,7 @@ export class GestionUsuariosComponent implements OnInit {
   get emailNoValido(){
     return this.forma.get('email')?.invalid && this.forma.get('email')?.touched;
   }
+  
   crearFormulario(){
     this.forma=this.formBuilder.group({
         nombre:['', [Validators.required]], 
@@ -59,6 +62,12 @@ export class GestionUsuariosComponent implements OnInit {
         });
   }
 
+  crearFormularioUsu(){
+    this.formaUsu=this.formBuilder.group({
+      dni2:['', [Validators.required]]
+    })
+  }
+
   guardarFormulario(){
 
     console.log(this.forma);
@@ -67,16 +76,14 @@ export class GestionUsuariosComponent implements OnInit {
 
     usuarioNuevo = this.forma.value;
 
-    usuarioNuevo.usuario=this.forma.controls.email.value;
-    usuarioNuevo.password=this.forma.controls.dni.value;
+    usuarioNuevo.password=this.forma.controls.email.value;
+    usuarioNuevo.usuario=this.forma.controls.dni.value;
 
     console.log(usuarioNuevo);
 
     this.usuarioService.usuarios.push(usuarioNuevo);
 
     console.log(this.usuarioService.usuarios);
-
-
 
     if(this.forma.invalid){
       Object.values(this.forma.controls).forEach(control=>{
@@ -90,6 +97,13 @@ export class GestionUsuariosComponent implements OnInit {
     this.forma.reset();
     
     
+  }
+
+  verUsuario(){
+    this.usuarioService.getUsuario(this.formaUsu.controls.dni2.value)
+      .subscribe(resp=>{
+        console.log(resp);
+      })
   }
   
 

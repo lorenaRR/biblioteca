@@ -105,6 +105,7 @@ export class GestionUsuariosComponent implements OnInit {
         console.log(resp);
       })
   }
+
   
 
 }

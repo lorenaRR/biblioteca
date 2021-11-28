@@ -1,3 +1,7 @@
+body {
+    background-color: #eee;
+}
+
 .badge-pill {
     background-color: darkslategrey;
     border-radius: 20px;

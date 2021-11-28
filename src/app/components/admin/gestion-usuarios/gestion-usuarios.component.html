@@ -1,44 +1,42 @@
 <app-navbar-admin></app-navbar-admin>
 <div class="container m-5">
-    <div class="border border-light bg-light shadow-none p-3 mb-5 bg-light rounded" style="width: 1000px;">
-        <h1 class="text-center m-5">Nuevo usuario</h1>
-        <hr>
-        <form class="m-5" (ngSubmit)="guardarFormulario()" [formGroup]="forma">
-            <div class="form-group mb-3">
-                <label class="form-label">Nombre</label>
-                <input type="text" class="form-control" formControlName="nombre" [class.is-invalid]="nombreNoValido">
-            </div>
-            <div class="form-group mb-3">
-                <label class="form-label">Apellidos</label>
-                <input type="text" class="form-control" formControlName="apellidos" [class.is-invalid]="apellidosNoValido">
-            </div>
-            <div class="form-group mb-3">
-                <label class="form-label">DNI</label>
-                <input type="text" class="form-control" formControlName="dni" [class.is-invalid]="dniNoValido">
-                <small class="form-text text-muted">Este campo se usará como primer nombre de usuario</small>
-            </div>
-            <div class="form-group mb-3" formGroupName="direccion">
-                <label class="form-label">Dirección</label>
-                <input type="text" class="form-control" formControlName="calle" placeholder="Calle" [class.is-invalid]="calleNoValido">
-                <input type="text" class="form-control" formControlName="ciudad" placeholder="Ciudad" [class.is-invalid]="ciudadNoValido">
-            </div>
-            <div class="form-group mb-3">
-                <label class="form-label">Telefono</label>
-                <input type="tel" class="form-control" formControlName="telefono" [class.is-invalid]="telefonoNoValido">
-            </div>
-            <div class="form-group mb-3">
-                <label class="form-label">E-mail</label>
-                <input type="email" class="form-control" formControlName="email" [class.is-invalid]="emailNoValido">
-                <small class="form-text text-muted">Este campo se usará como primera contraseña</small>
-            </div>
-            <button type="submit" class="btn btn-primary">Enviar</button>
+    <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5" style="width: 1500px;">
+        <form class="m-5 row" (ngSubmit)="verUsuario()" [formGroup]="formaUsu">
+            <input type="text" class="form-control col" formControlName="dni" placeholder="Dni">
+            <button type="submit" class="btn btn-primary col">Buscar</button>
         </form>
+        <br>
+        <hr>
+        <br>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">DNI</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">E-mail</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> - </td>
+                    <td> - </td>
+                    <td> - </td>
+                    <td> - </td>
+                    <td> - </td>
+                    <td> - </td>
+                    <td>
+                        <button class="btn btn-info">
+                            <i class="fa fa-pen"></i>
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <br>
-    <hr><br>
-    <form class="m-5" (ngSubmit)="verUsuario()" [formGroup]="formaUsu">
-        <input type="text" class="form-control" formControlName="dni2" placeholder="Dni">
-        <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
-
 </div>

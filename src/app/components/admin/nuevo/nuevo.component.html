@@ -1,0 +1,36 @@
+<app-navbar-admin></app-navbar-admin>
+<div class="container m-5">
+    <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5" style="width: 800px;">
+        <h1 class="text-center m-5">Nuevo usuario</h1>
+        <hr>
+        <form class="m-5" (ngSubmit)="guardarFormulario()" [formGroup]="forma">
+            <div class="form-group mb-3">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-control" formControlName="nombre" [class.is-invalid]="nombreNoValido">
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">Apellidos</label>
+                <input type="text" class="form-control" formControlName="apellidos" [class.is-invalid]="apellidosNoValido">
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">DNI</label>
+                <input type="text" class="form-control" formControlName="dni" [class.is-invalid]="dniNoValido">
+                <small class="form-text text-muted">Este campo se usará como primer nombre de usuario</small>
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">Dirección</label>
+                <input type="text" class="form-control" formControlName="direccion" [class.is-invalid]="direccionNoValido">
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">Telefono</label>
+                <input type="tel" class="form-control" formControlName="telefono" [class.is-invalid]="telefonoNoValido">
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label">E-mail</label>
+                <input type="email" class="form-control" formControlName="email" [class.is-invalid]="emailNoValido">
+                <small class="form-text text-muted">Este campo se usará como primera contraseña</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+</div>

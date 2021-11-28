@@ -14,10 +14,7 @@ export class UsuarioService {
      nombre:'Ana',
      apellidos:'López',
      dni:'123456789A',
-     direccion:{
-       calle:'La Paz',
-       ciudad:'Avilés'
-     },
+     direccion:'La Paz',
      telefono:'985123123',
      admin:false,
      email:'abc@abc.com',
@@ -36,10 +33,7 @@ export class UsuarioService {
      nombre:'Lorena',
      apellidos:'Rodríguez',
      dni:'987654321B',
-     direccion:{
-       calle:'Flor',
-       ciudad:'Avilés'
-     },
+     direccion:'Flor',
      telefono:'985123123',
      admin:true,
      email:'abc@abc.com',
@@ -51,10 +45,7 @@ export class UsuarioService {
        nombre:'Pepe',
        apellidos:'Pérez',
        dni:'111111111C',
-       direccion:{
-         calle:'Mar',
-         ciudad:'Oviedo'
-       },
+       direccion:'Mar',
        telefono:'666555444',
        admin:false,
        email:'abc@abc.com',
@@ -63,14 +54,15 @@ export class UsuarioService {
        listaLibros:[]
      }];
 
-  private url = 'https://localhost:44367/api/Usuarios/'
+  private url = 'https://localhost:44367/api/SeleccionarUsuariosDTO/'
 
   public currentUser = new UsuarioModel;
 
   constructor(private http:HttpClient) { }
 
-  getUsuario(dni:string):Observable<UsuarioModel>{
-      return this.http.get<UsuarioModel>(this.url+dni)
-  }
+  getUsuario(dni:string){
+    console.log(this.url+dni);
+    return this.http.get(this.url+dni)
+}
 
 }

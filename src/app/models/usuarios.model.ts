@@ -3,10 +3,7 @@ export class UsuarioModel{
     nombre!:string;
     apellidos!:string;
     dni!:string;
-    direccion!: {
-        calle: string;
-        ciudad: string;
-    };
+    direccion!: string;
     telefono!:string;
     admin!:boolean;
     email!:string;

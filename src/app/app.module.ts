@@ -20,6 +20,10 @@ import { CatalogoComponent } from './components/user/catalogo/catalogo.component
 import { PipesModule } from './pipes/pipes.module';
 import { GestionLibrosComponent } from './components/admin/gestion-libros/gestion-libros.component';
 import { LibroCatalogoComponent } from './components/user/libro-catalogo/libro-catalogo.component';
+import { NuevoComponent } from './components/admin/nuevo/nuevo.component';
+import { InformesComponent } from './components/admin/informes/informes.component';
+import { PrestamosComponent } from './components/admin/prestamos/prestamos.component';
+
 
 
 @NgModule({
@@ -35,6 +39,9 @@ import { LibroCatalogoComponent } from './components/user/libro-catalogo/libro-c
     CatalogoComponent,
     GestionLibrosComponent,
     LibroCatalogoComponent,
+    NuevoComponent,
+    InformesComponent,
+    PrestamosComponent,
   ],
   imports: [
     BrowserModule,

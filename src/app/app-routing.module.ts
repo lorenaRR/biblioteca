@@ -8,16 +8,22 @@ import { UserComponent } from './components/user/user/user.component';
 import { CatalogoComponent } from './components/user/catalogo/catalogo.component';
 import { GestionLibrosComponent } from './components/admin/gestion-libros/gestion-libros.component';
 import { LibroCatalogoComponent } from './components/user/libro-catalogo/libro-catalogo.component';
+import { NuevoComponent } from './components/admin/nuevo/nuevo.component';
+import { InformesComponent } from './components/admin/informes/informes.component';
+import { PrestamosComponent } from './components/admin/prestamos/prestamos.component';
 
 const routes: Routes = [
   {path:'login', component: LoginComponent },
+  {path:'admin', component: AdminComponent },
   {path:'gestion-usuarios', component: GestionUsuariosComponent },
   {path:'gestion-libros', component: GestionLibrosComponent },
+  {path:'nuevo', component: NuevoComponent },
+  {path:'informes', component: InformesComponent },
+  {path:'prestamos', component: PrestamosComponent },
+  {path:'user', component: UserComponent },
   {path:'mis-libros', component: MisLibrosComponent },
   {path:'catalogo', component: CatalogoComponent },
   {path:'libro-catalogo/:id', component: LibroCatalogoComponent},
-  {path:'admin', component: AdminComponent },
-  {path:'user', component: UserComponent },
   {path:'**', pathMatch:'full', redirectTo:'login'},
 ];
 

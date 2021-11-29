@@ -32,6 +32,7 @@ export class GestionUsuariosComponent implements OnInit {
   }
 
   verUsuario(){
+    console.log(this.formaUsu.controls.dni.value);
     this.usuarioService.getUsuario(this.formaUsu.controls.dni.value)
       .subscribe(resp=>{
         console.log(resp);

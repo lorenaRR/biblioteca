@@ -54,7 +54,7 @@ export class UsuarioService {
        listaLibros:[]
      }];
 
-  private url = 'https://localhost:44367/api/SeleccionarUsuariosDTO/'
+  private url = 'https://localhost:44389/api/Usuarios/SeleccionarUsuarios?id='
 
   public currentUser = new UsuarioModel;
 

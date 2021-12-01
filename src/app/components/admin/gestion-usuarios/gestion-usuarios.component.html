@@ -1,14 +1,26 @@
 <app-navbar-admin></app-navbar-admin>
 <div class="container m-5">
     <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5" style="width: 1500px;">
-        <form class="m-5 row" (ngSubmit)="verUsuario()" [formGroup]="formaUsu">
-            <input type="text" class="form-control col" formControlName="dni" placeholder="Dni">
-            <button type="submit" class="btn btn-primary col">Buscar</button>
+        <form class="m-5" (ngSubmit)="verUsuario()" [formGroup]="forma">
+            <input type="text" class="form-control" formControlName="dni" placeholder="Dni">
+            <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre">
+            <input type="text" class="form-control" formControlName="apellidos" placeholder="Apellidos">
+            <div class="form-check">
+                <input type="radio" class="form-check-input" formControlName="admin" value="99" checked>
+                <label class="form-check-label">Todos</label><br>
+                <input type="radio" class="form-check-input" formControlName="admin" value="1">
+                <label class="form-check-label">Administradores</label><br>
+                <input type="radio" class="form-check-input" formControlName="admin" value="0">
+                <label class="form-check-label">Usuarios</label>
+            </div>
+            <br><br>
+
+            <button type="submit" class="btn btn-primary">Buscar</button>
         </form>
         <br>
         <hr>
         <br>
-        <table class="table">
+        <table class="table" *ngIf="usuarios">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Nombre</th>
@@ -20,15 +32,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td> - </td>
-                    <td> - </td>
-                    <td> - </td>
-                    <td> - </td>
-                    <td> - </td>
-                    <td> - </td>
+                <tr *ngFor="let usuario of usuarios">
+                    <td> {{usuario.nombre}} </td>
+                    <td> {{usuario.apellidos}} </td>
+                    <td> {{usuario.dni}} </td>
+                    <td> {{usuario.direccion}} </td>
+                    <td> {{usuario.telefono}} </td>
+                    <td> {{usuario.email}} </td>
                     <td>
-                        <button class="btn btn-info">
+                        <button class="btn btn-info" [routerLink]="['/usuario', usuario.dni]">
                             <i class="fa fa-pen"></i>
                         </button>
                         <button class="btn btn-danger">

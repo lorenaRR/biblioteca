@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UsuarioModel } from '../models/usuarios.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -19,16 +19,8 @@ export class UsuarioService {
      admin:false,
      email:'abc@abc.com',
      usuario:'user',
-     password:'user',
-     listaLibros:[{
-       id: '2zgRDXFWkm8C',
-       fecha: '12/07/21'
-     },
-     {
-      id: 'fYa_hJ4bWnsC',
-      fecha:'02/05/21'
-     }]
-   },
+     password:'user'
+    },
    {
      nombre:'Lorena',
      apellidos:'Rodríguez',
@@ -38,8 +30,7 @@ export class UsuarioService {
      admin:true,
      email:'abc@abc.com',
      usuario:'admin',
-     password:'admin',
-     listaLibros:[]
+     password:'admin'
    },
    {
        nombre:'Pepe',
@@ -50,19 +41,22 @@ export class UsuarioService {
        admin:false,
        email:'abc@abc.com',
        usuario:'111111111C',
-       password:'abc@abc.com',
-       listaLibros:[]
+       password:'abc@abc.com'
      }];
 
-  private url = 'https://localhost:44389/api/Usuarios/SeleccionarUsuarios?id='
+  private url = 'https://localhost:44389/api/Usuarios/SeleccionarUsuarios?id=';
+
+  private paramNombre ='&nombre=';
+  private paramApellidos='&apellidos=';
+  private paramAdmin='&admin=';
 
   public currentUser = new UsuarioModel;
 
   constructor(private http:HttpClient) { }
 
-  getUsuario(dni:string){
-    console.log(this.url+dni);
-    return this.http.get(this.url+dni)
-}
+  getUsuario(dni:string, nombre:string, apellidos:string, admin:string):Observable<UsuarioModel[]>{  
+    return this.http.get<UsuarioModel[]>(this.url + dni + this.paramAdmin + admin + this.paramNombre + nombre + this.paramApellidos + apellidos)
+  }
+
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UsuarioService } from '../../../services/usuario.service';
+import { UsuarioModel } from '../../../models/usuarios.model';
 
 
 @Component({
@@ -13,11 +14,11 @@ export class GestionUsuariosComponent implements OnInit {
 
 
   forma!: FormGroup;
-  formaUsu!: FormGroup;
+  
+  usuarios!: UsuarioModel[];
  
   constructor(private formBuilder:FormBuilder, private usuarioService:UsuarioService) {
       this.crearFormulario();
-
    }
 
 
@@ -26,19 +27,25 @@ export class GestionUsuariosComponent implements OnInit {
 
 
   crearFormulario(){
-    this.formaUsu=this.formBuilder.group({
-      dni:['', [Validators.required]]
+    this.forma=this.formBuilder.group({
+      dni:['', [Validators.required]],
+      nombre:['', [Validators.required]],
+      apellidos:['', [Validators.required]],
+      admin:['', [Validators.required]],
     })
   }
 
+  
+
   verUsuario(){
-    console.log(this.formaUsu.controls.dni.value);
-    this.usuarioService.getUsuario(this.formaUsu.controls.dni.value)
+   
+    this.usuarioService.getUsuario(this.forma.controls.dni.value, this.forma.controls.nombre.value,this.forma.controls.apellidos.value,this.forma.controls.admin.value)
       .subscribe(resp=>{
-        console.log(resp);
+        this.usuarios = resp;
+        console.log(this.usuarios);
       })
   }
 
-  
+
 
 }

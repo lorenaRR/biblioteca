@@ -6,3 +6,7 @@ body {
     background-color: darkslategrey;
     border-radius: 20px;
 }
+
+i {
+    color: white;
+}

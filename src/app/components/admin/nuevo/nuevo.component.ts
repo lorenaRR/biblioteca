@@ -11,18 +11,16 @@ import { UsuarioModel } from '../../../models/usuarios.model';
 export class NuevoComponent implements OnInit {
 
   forma!: FormGroup;
-  formaUsu!: FormGroup;
  
   constructor(private formBuilder:FormBuilder, private usuarioService:UsuarioService) {
       this.crearFormulario();
-      this.crearFormularioUsu();
    }
 
 
   ngOnInit(): void {
   }
 
-  get nombreNoValido(){
+  /*get nombreNoValido(){
     return this.forma.get('nombre')?.invalid && this.forma.get('nombre')?.touched;
   }
   get apellidosNoValido(){
@@ -41,41 +39,37 @@ export class NuevoComponent implements OnInit {
   }
   get emailNoValido(){
     return this.forma.get('email')?.invalid && this.forma.get('email')?.touched;
-  }
-  
+  }*/
+
   crearFormulario(){
     this.forma=this.formBuilder.group({
-        nombre:['', [Validators.required]], 
-        apellidos:['',[Validators.required]],
-        dni:['', [Validators.required]], 
-        direccion:['', [Validators.required]], 
-        telefono:['', [Validators.required]], 
-        email:['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
+        nombre:[''], 
+        apellidos:[''],
+        dni:[''], 
+        direccion:[''], 
+        telefono:[''], 
+        email:[''],
         });
-  }
-
-  crearFormularioUsu(){
-    this.formaUsu=this.formBuilder.group({
-      dni2:['', [Validators.required]]
-    })
   }
 
   guardarFormulario(){
 
+    console.log('prueba');
+
     console.log(this.forma);
 
-    let usuarioNuevo: UsuarioModel;
-
-    usuarioNuevo = this.forma.value;
+    let usuarioNuevo: UsuarioModel = this.forma.value;
 
     usuarioNuevo.password=this.forma.controls.email.value;
     usuarioNuevo.usuario=this.forma.controls.dni.value;
+    usuarioNuevo.admin=false;
 
     console.log(usuarioNuevo);
 
-    this.usuarioService.usuarios.push(usuarioNuevo);
-
-    console.log(this.usuarioService.usuarios);
+    this.usuarioService.postUsuario(this.forma.controls.dni.value, usuarioNuevo)
+      .subscribe((resp:any)=>{
+        console.log(resp.Estado);
+      }) ;
 
     if(this.forma.invalid){
       Object.values(this.forma.controls).forEach(control=>{

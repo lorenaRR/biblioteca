@@ -23,6 +23,7 @@ import { LibroCatalogoComponent } from './components/user/libro-catalogo/libro-c
 import { NuevoComponent } from './components/admin/nuevo/nuevo.component';
 import { InformesComponent } from './components/admin/informes/informes.component';
 import { PrestamosComponent } from './components/admin/prestamos/prestamos.component';
+import { ActualizarComponent } from './components/admin/actualizar/actualizar.component';
 
 
 
@@ -42,6 +43,7 @@ import { PrestamosComponent } from './components/admin/prestamos/prestamos.compo
     NuevoComponent,
     InformesComponent,
     PrestamosComponent,
+    ActualizarComponent,
   ],
   imports: [
     BrowserModule,

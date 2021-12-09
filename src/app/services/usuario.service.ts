@@ -3,6 +3,7 @@ import { UsuarioModel } from '../models/usuarios.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -45,10 +46,13 @@ export class UsuarioService {
      }];
 
   private url = 'https://localhost:44389/api/Usuarios/SeleccionarUsuarios?id=';
+  private urlInsertar = 'https://localhost:44389/api/Usuarios/InsertarUsuarios';
+  private urlActualizar = 'https://localhost:44389/api/Usuarios/ActualizarUsuarios?id=';
 
   private paramNombre ='&nombre=';
   private paramApellidos='&apellidos=';
   private paramAdmin='&admin=';
+ 
 
   public currentUser = new UsuarioModel;
 
@@ -57,6 +61,16 @@ export class UsuarioService {
   getUsuario(dni:string, nombre:string, apellidos:string, admin:string):Observable<UsuarioModel[]>{  
     return this.http.get<UsuarioModel[]>(this.url + dni + this.paramAdmin + admin + this.paramNombre + nombre + this.paramApellidos + apellidos)
   }
+
+  postUsuario(dni:string, usuario:UsuarioModel){
+    return this.http.post(this.urlInsertar,usuario);
+  }
+
+  putUsuario(dni:string, usuario:UsuarioModel){
+    console.log(dni);
+    return this.http.put(this.urlActualizar+dni, usuario);
+  }
+
 
 
 }

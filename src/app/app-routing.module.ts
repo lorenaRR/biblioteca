@@ -11,13 +11,15 @@ import { LibroCatalogoComponent } from './components/user/libro-catalogo/libro-c
 import { NuevoComponent } from './components/admin/nuevo/nuevo.component';
 import { InformesComponent } from './components/admin/informes/informes.component';
 import { PrestamosComponent } from './components/admin/prestamos/prestamos.component';
+import { ActualizarComponent } from './components/admin/actualizar/actualizar.component';
 
 const routes: Routes = [
   {path:'login', component: LoginComponent },
   {path:'admin', component: AdminComponent },
   {path:'gestion-usuarios', component: GestionUsuariosComponent },
-  {path:'gestion-libros', component: GestionLibrosComponent },
   {path:'nuevo', component: NuevoComponent },
+  {path:'actualizar/:id', component: ActualizarComponent },
+  {path:'gestion-libros', component: GestionLibrosComponent },
   {path:'informes', component: InformesComponent },
   {path:'prestamos', component: PrestamosComponent },
   {path:'user', component: UserComponent },

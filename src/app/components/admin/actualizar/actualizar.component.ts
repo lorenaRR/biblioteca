@@ -17,7 +17,7 @@ export class ActualizarComponent implements OnInit {
   id:any;
 
   actualizarFormulario(){
-    this.usuarioService.putUsuario(this.id, this.usuario)
+    this.usuarioService.putUsuario(this.usuario)
       .subscribe((resp:any)=>{
         console.log(resp.Estado);
       }) ;

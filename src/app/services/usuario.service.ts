@@ -47,7 +47,8 @@ export class UsuarioService {
 
   private url = 'https://localhost:44389/api/Usuarios/SeleccionarUsuarios?id=';
   private urlInsertar = 'https://localhost:44389/api/Usuarios/InsertarUsuarios';
-  private urlActualizar = 'https://localhost:44389/api/Usuarios/ActualizarUsuarios?id=';
+  private urlActualizar = 'https://localhost:44389/api/Usuarios/ActualizarUsuarios';
+  private urlBorrar = 'https://localhost:44389/api/Usuarios/BorrarUsuarios/';
 
   private paramNombre ='&nombre=';
   private paramApellidos='&apellidos=';
@@ -58,6 +59,12 @@ export class UsuarioService {
 
   constructor(private http:HttpClient) { }
 
+  getHeaders() {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+  }
+
   getUsuario(dni:string, nombre:string, apellidos:string, admin:string):Observable<UsuarioModel[]>{  
     return this.http.get<UsuarioModel[]>(this.url + dni + this.paramAdmin + admin + this.paramNombre + nombre + this.paramApellidos + apellidos)
   }
@@ -66,11 +73,26 @@ export class UsuarioService {
     return this.http.post(this.urlInsertar,usuario);
   }
 
-  putUsuario(dni:string, usuario:UsuarioModel){
-    console.log(dni);
-    return this.http.put(this.urlActualizar+dni, usuario);
+  putUsuario(usuario:UsuarioModel){
+    return this.http.put(this.urlActualizar, usuario);
   }
 
+  /*deleteUsuario(dni:string){
+    console.log('Es: ' + dni );
+    let options = {headers: this.getHeaders(), 
+    body: {
+      dni:dni
+    }}
+    console.log(options);
+    return this.http.post<String>(this.urlBorrar, options);
+  }*/
 
+  deleteUsuario(dni: any) : Observable<any> {
+    console.log('Es: ' + dni );
+    let options = {headers: this.getHeaders(),}
+    return this.http.get(this.urlBorrar + `${dni}`, options)
+  }
+
+   
 
 }

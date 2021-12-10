@@ -46,6 +46,14 @@ export class GestionUsuariosComponent implements OnInit {
       })
   }
 
+  borrarUsuario(dni:string){
+    this.usuarioService.deleteUsuario(dni)
+      .subscribe(resp=>{
+        console.log('Subscribre hecho');
+        console.log(resp);
+      })
+  }
+
 
 
 }

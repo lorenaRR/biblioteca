@@ -43,7 +43,7 @@
                         <button class="btn btn-info" [routerLink]="['/actualizar', usuario.dni]">
                             <i class="fa fa-pen"></i>
                         </button>
-                        <button class="btn btn-danger">
+                        <button (click)="borrarUsuario(usuario.dni)" class="btn btn-danger">
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>

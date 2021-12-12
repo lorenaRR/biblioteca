@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LibrosResponse } from '../interfaces/libros-response';
 import { LibroResponse } from '../interfaces/libro-response';
+import { LibrosModel } from '../models/libros.model';
 
 
 
@@ -15,17 +16,19 @@ import { LibroResponse } from '../interfaces/libro-response';
 
 export class LibrosService  {
 
-  private url='https://www.googleapis.com/books/v1/volumes?q=';
+  private url='https://localhost:44389/api/Libros/SeleccionarLibros?isbn=';
+
+  private paramTitulo ='&titulo=';
+  private paramSubtitulo='&subtitulo=';
+  private paramEditorial='&editorial=';
+  private paramAutor='&autor=';
   
 
   constructor(private http:HttpClient) { }
 
 
-  getLibros(criterio:string):Observable<LibrosResponse>{
-      return this.http.get<LibrosResponse>(`${this.url}`+criterio+'&maxResults=40')
+  getLibros(isbn:string, titulo:string, subtitulo:string, editorial:string, autor:string):Observable<LibrosModel[]>{  
+    return this.http.get<LibrosModel[]>(this.url + isbn + this.paramTitulo + titulo + this.paramSubtitulo + subtitulo + this.paramEditorial + editorial + this.paramAutor + autor)
   }
 
-  getLibro(id:string):Observable<LibroResponse>{
-    return this.http.get<LibroResponse>('https://www.googleapis.com/books/v1/volumes/'+id)
-  }
 }

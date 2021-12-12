@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 
 
 
-export class CatalogoComponent implements OnInit {
+export class CatalogoComponent {
 
 public libros:Item[]=[];
 forma!: FormGroup;
@@ -37,17 +37,17 @@ forma!: FormGroup;
 
 
 constructor(private librosService:LibrosService, private formBuilder:FormBuilder, private router:Router) { 
-  this.crearFormulario();
+  //this.crearFormulario();
 }
 
-  ngOnInit(): void {
+  /*ngOnInit(): void {
 
 
    /*this.librosService.getLibros('')
         .subscribe(resp=>{
           this.libros=resp.items;
           console.log(this.libros);
-        })*/
+        })
   }
 
   crearFormulario(){
@@ -89,7 +89,7 @@ constructor(private librosService:LibrosService, private formBuilder:FormBuilder
 
   onLibroClick(libro:Item){
     this.router.navigate(['/libro-catalogo', libro.id]);
-  }
+  }*/
 
 }
 

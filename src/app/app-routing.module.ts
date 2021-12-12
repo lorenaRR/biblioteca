@@ -12,6 +12,7 @@ import { NuevoComponent } from './components/admin/nuevo/nuevo.component';
 import { InformesComponent } from './components/admin/informes/informes.component';
 import { PrestamosComponent } from './components/admin/prestamos/prestamos.component';
 import { ActualizarComponent } from './components/admin/actualizar/actualizar.component';
+import { NuevoLibroComponent } from './components/admin/nuevo-libro/nuevo-libro.component';
 
 const routes: Routes = [
   {path:'login', component: LoginComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path:'nuevo', component: NuevoComponent },
   {path:'actualizar/:id', component: ActualizarComponent },
   {path:'gestion-libros', component: GestionLibrosComponent },
+  {path:'nuevo-libro', component: NuevoLibroComponent },
   {path:'informes', component: InformesComponent },
   {path:'prestamos', component: PrestamosComponent },
   {path:'user', component: UserComponent },

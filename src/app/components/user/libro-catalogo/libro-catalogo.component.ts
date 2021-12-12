@@ -9,9 +9,9 @@ import { LibroResponse } from '../../../interfaces/libro-response';
   templateUrl: './libro-catalogo.component.html',
   styleUrls: ['./libro-catalogo.component.css']
 })
-export class LibroCatalogoComponent implements OnInit {
+export class LibroCatalogoComponent {
 
-  constructor(private activatedRoute: ActivatedRoute, private librosService:LibrosService) { }
+  /*constructor(private activatedRoute: ActivatedRoute, private librosService:LibrosService) { }
   libro!:LibroResponse;
 
   ngOnInit(): void {
@@ -31,6 +31,6 @@ export class LibroCatalogoComponent implements OnInit {
     else{
       return '../assets/no-image.jpg'
     }
-  }
+  }*/
 
 }

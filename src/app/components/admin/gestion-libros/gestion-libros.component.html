@@ -1,27 +1,44 @@
 <app-navbar-admin></app-navbar-admin>
 <div class="container m-5">
-    <div class="border border-light bg-light shadow-none p-3 mb-5 bg-light rounded" style="width: 1000px;">
-        <h1 class="text-center m-5">Nuevo libro</h1>
-        <hr>
-        <form class="m-5" (ngSubmit)="guardarFormulario()" [formGroup]="forma">
-            <div class="form-group mb-3">
-                <label class="form-label">Titulo</label>
-                <input type="text" class="form-control" formControlName="title" [class.is-invalid]="">
-            </div>
-            <div class="form-group mb-3">
-                <label class="form-label">Autores</label>
-                <input type="text" class="form-control" formControlName="authors" [class.is-invalid]="">
-            </div>
-            <div class="form-group mb-3">
-                <label class="form-label">Sinopsis</label>
-                <input type="text" class="form-control" formControlName="description" [class.is-invalid]="">
-            </div>
-            <div class="form-group mb-3">
-                <label class="form-label">Categorías</label>
-                <input type="text" class="form-control" formControlName="categories" [class.is-invalid]="">
-            </div>
+    <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5" style="width: 1500px;">
+        <form class="m-5" (ngSubmit)="verLibros()" [formGroup]="forma">
+            <input type="text" class="form-control" formControlName="isbn" placeholder="ISBN">
+            <input type="text" class="form-control" formControlName="titulo" placeholder="Título">
+            <input type="text" class="form-control" formControlName="subtitulo" placeholder="Subtítulo">
+            <input type="text" class="form-control" formControlName="autor" placeholder="Autor">
+            <input type="text" class="form-control" formControlName="editorial" placeholder="Editorial">
 
-            <button type="submit" class="btn btn-primary">Enviar</button>
+
+            <br><br>
+
+            <button type="submit" class="btn btn-primary">Buscar</button>
         </form>
+        <br>
+        <hr>
+        <br>
+        <table class="table" *ngIf="libros">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ISBN</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Subtítulo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let libro of libros">
+                    <td> {{libro.isbn}} </td>
+                    <td> {{libro.titulo}} </td>
+                    <td> {{libro.subtitulo}} </td>
+                    <td>
+                        <button class="btn btn-info" [routerLink]="['/actualizar-libro', libro.id]">
+                            <i class="fa fa-pen"></i>
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

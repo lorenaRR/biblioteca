@@ -6,17 +6,17 @@
         <form class="m-5" (ngSubmit)="guardarFormulario()" [formGroup]="forma">
             <div class="form-group mb-3">
                 <label class="form-label">ISBN</label>
-                <input type="text" class="form-control" formControlName="isbn" [class.is-invalid]="">
+                <input type="text" class="form-control" formControlName="isbn">
             </div>
 
             <div class="form-group mb-3">
                 <label class="form-label">Título</label>
-                <input type="text" class="form-control" formControlName="titulo" [class.is-invalid]="">
+                <input type="text" class="form-control" formControlName="titulo">
             </div>
 
             <div class="form-group mb-3">
                 <label class="form-label">Subtítulo</label>
-                <input type="text" class="form-control" formControlName="subtitulo" [class.is-invalid]="">
+                <input type="text" class="form-control" formControlName="subtitulo">
             </div>
 
             <div class="form-group mb-3">
@@ -41,52 +41,39 @@
 
             <div class="form-group mb-3">
                 <label class="form-label">Fecha de Publicación</label>
-                <input type="date" class="form-control" formControlName="fechaPublicacion" [class.is-invalid]="">
+                <input type="date" class="form-control" formControlName="fechaPublicacion">
             </div>
 
             <div class="form-group mb-3">
                 <label class="form-label">Editorial</label>
-                <input type="text" class="form-control" formControlName="editorial" [class.is-invalid]="">
+                <input type="text" class="form-control" formControlName="editorial">
             </div>
 
             <div class="form-group mb-3">
                 <label class="form-label">Páginas</label>
-                <input type="number" class="form-control" formControlName="nPaginas" [class.is-invalid]="">
+                <input type="number" class="form-control" formControlName="nPaginas">
             </div>
 
             <div class="form-group mb-3">
                 <label class="form-label">Descipción</label>
-                <textarea class="form-control" formControlName="descripcion" [class.is-invalid]="" cols="30" rows="10"></textarea>
+                <textarea class="form-control" formControlName="descripcion" cols="30" rows="10"></textarea>
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group xmb-3">
                 <label class="form-label">Categorías</label>
-                <button class="btn btn-secondary">
-                    <i class="fa fa-plus"></i>
-                </button>
-                <br>
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <th> - </th>
-                            <th>
-                                <button class="btn btn-danger">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
+                <select class="form-control form-select" formControlName="categoria">
+                    <option *ngFor="let categoria of categorias" >{{categoria.categoria}}</option>
+                </select>
             </div>
 
             <div class="form-group mb-3">
                 <label class="form-label">Link de Imágen</label>
-                <input type="text" class="form-control" formControlName="imagen" [class.is-invalid]="">
+                <input type="text" class="form-control" formControlName="imagen">
             </div>
 
             <div class="form-group mb-3">
                 <label class="form-label">Stock</label>
-                <input type="number" class="form-control" formControlName="stock" [class.is-invalid]="">
+                <input type="number" class="form-control" formControlName="stock">
             </div>
 
             <button type="submit" class="btn btn-primary">Enviar</button>

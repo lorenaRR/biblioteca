@@ -19,9 +19,6 @@ export class LoginComponent implements OnInit {
     usuarioNoValido!:boolean;
     passwordNoValido!:boolean;
 
-
-
-
   constructor(private formBuilder:FormBuilder, private usuarioService:UsuarioService, private router:Router) {
     this.crearFormulario();
    }
@@ -42,23 +39,17 @@ export class LoginComponent implements OnInit {
     this.usuarioNoValido=true;
     this.passwordNoValido=true;
     
-    this.usuarioService.usuarios.forEach(usuario => {
-      if(this.forma.controls.usuario.value==usuario.usuario){
-        this.usuarioNoValido=false;
-        if (this.forma.controls.password.value === usuario.password) {
-          this.passwordNoValido=false;
-          this.usuarioService.currentUser = usuario;
-          if (usuario.admin) {
-            this.router.navigate(['/admin']);
-          }
-          else{
-            this.router.navigate(['/user']);
-          }
-         
-        }
-      }
-    });
-
+    this.usuarioService.login(this.forma.controls.usuario.value,this.forma.controls.password.value)
+                            .subscribe((resp:any)=>{
+                                this.usuarioService.currentUser = resp[0];
+                                console.log(this.usuarioService.currentUser);
+                                if (this.usuarioService.currentUser.admin) {
+                                  this.router.navigate(['/admin']);
+                                }
+                                else{
+                                  this.router.navigate(['/user']);
+                                }   
+                            });   
   }
 
   

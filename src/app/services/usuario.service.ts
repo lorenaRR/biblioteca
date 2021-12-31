@@ -53,6 +53,8 @@ export class UsuarioService {
   private paramNombre ='&nombre=';
   private paramApellidos='&apellidos=';
   private paramAdmin='&admin=';
+
+  private urlLogin = 'https://localhost:44389/api/Usuarios/Logins'
  
 
   public currentUser = new UsuarioModel;
@@ -93,6 +95,9 @@ export class UsuarioService {
     return this.http.get(this.urlBorrar + `${dni}`, options)
   }
 
+  login(user:string, pass:string){
+    return this.http.get<UsuarioModel>(this.urlLogin + '?user=' + user + '&pass=' + pass)
+  }
 
 
    

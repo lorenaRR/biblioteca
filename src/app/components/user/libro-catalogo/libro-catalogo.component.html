@@ -1,16 +1,16 @@
 <app-navbar-user></app-navbar-user>
 
-<!-- <div class="row m-5">
+<div class="row m-5">
     <div class="col-6 mb-5">
         <img [src]="getImagen(libro)" class="img-fluid" alt="">
     </div>
     <div class="col-6 mb-5">
-        <h1>{{libro.volumeInfo.title | uppercase}} </h1><br>
-        <h3 *ngFor="let author  of libro.volumeInfo.authors">{{author}}</h3><br>
-        <h5>{{libro.volumeInfo.publisher}} - <small> <i>{{libro.volumeInfo.publishedDate}} </i> </small> </h5><br>
-        <h6>{{libro.volumeInfo.pageCount}} páginas.</h6><br><br>
-        <p>{{libro.volumeInfo.description}}</p><br>
+        <h1>{{libro.titulo | uppercase}} </h1><br>
+        <!-- <h3 *ngFor="let author  of libro.volumeInfo.authors">{{author}}</h3><br> -->
+        <h5>{{libro.editorial}} - <small> {{libro.fechaPublicacion | date:'M/d/yyyy'}} </small> </h5><br>
+        <h6>{{libro.nPaginas}} páginas.</h6><br><br>
+        <p>{{libro.descripcion}}</p><br>
         <button class="btn btn-primary">Reservar</button><br>
         <span>Aquí iría la fecha de entrega en el caso de que estuviese prestado</span>
     </div>
-</div> -->
+</div>

@@ -1,5 +1,5 @@
 export class AutoresModel {
-    id!:number;
+    id!:string;
     nombre!:string;
     apellidos!:string;
 }

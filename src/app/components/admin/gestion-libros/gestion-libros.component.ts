@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UsuarioService } from '../../../services/usuario.service';
 import { LibrosModel } from '../../../models/libros.model';
 import { AutoresModel } from '../../../models/autores.model';
 import { LibrosService } from '../../../services/libros.service';
@@ -17,7 +16,7 @@ export class GestionLibrosComponent implements OnInit {
   autores!: AutoresModel[];
 
  
-  constructor(private formBuilder:FormBuilder, private librosService:LibrosService) {
+  constructor(private formBuilder:FormBuilder, private librosService:LibrosService)  {
     this.crearFormulario();
    }
 
@@ -42,7 +41,6 @@ export class GestionLibrosComponent implements OnInit {
                 this.libros = resp;
                 console.log(this.libros);
               })
-
   }
 
 

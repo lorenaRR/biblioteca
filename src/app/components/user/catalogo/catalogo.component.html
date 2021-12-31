@@ -1,23 +1,32 @@
 <app-navbar-user></app-navbar-user>
-<!-- <div class="m-5">
+<div class="m-5">
     <h1>Catálogo de libros</h1>
     <hr>
 </div>
 <div class="row m-5">
-    <div class="d-flex" style="width: 800px;">
-        <input #txtBuscar (keyup.enter)="buscar(txtBuscar.value)" class="form-control me-2" type="search" placeholder="Buscar libro...">
-        <button (click)="buscar(txtBuscar.value)" class="btn btn-success" type="submit">Buscar</button>
-    </div>
-</div>
-<hr>
-<div class="row m-5">
-    <div class="col-md-3 mb-5" *ngFor="let libro of libros">
-        <img (click)="onLibroClick(libro)" [src]="getImagen(libro)" alt="" class="img-fluid" [ngStyle]="{'cursor': 'pointer'}">
-        <div class="m-5">
-            <h5>{{libro.volumeInfo.title}}</h5>
-            <p *ngFor="let author of libro.volumeInfo.authors">{{author}}</p>
-            <span>{{libro.volumeInfo.publishedDate}}</span><br>
-            <span *ngFor="let categorie of libro.volumeInfo.categories" class="badge badge-pill badge-secondary">{{categorie}}</span>
+    <form class="m-5" (ngSubmit)="buscar()" [formGroup]="forma">
+        <input type="text" class="form-control" formControlName="isbn" placeholder="ISBN">
+        <input type="text" class="form-control" formControlName="titulo" placeholder="Título">
+        <input type="text" class="form-control" formControlName="subtitulo" placeholder="Subtítulo">
+        <input type="text" class="form-control" formControlName="autor" placeholder="Autor">
+        <input type="text" class="form-control" formControlName="editorial" placeholder="Editorial">
+        <br><br>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+    <br>
+    <hr>
+    <br>
+    <br>
+    <hr>
+    <br>
+    <div class="row m-5">
+        <div class="col-md-3 mb-5" *ngFor="let libro of libros">
+            <img (click)="onLibroClick(libro)" [src]="getImagen(libro)" alt="" class="img-fluid" [ngStyle]="{'cursor': 'pointer'}">
+            <div class="m-5">
+                <h5>{{libro.titulo}}</h5>
+                <!-- <p *ngFor="let author of libro.autor">{{author}}</p> -->
+                <span>{{libro.fechaPublicacion | date:'M/d/yyyy'}}</span><br>
+                <!-- <span *ngFor="let categorie of libro" class="badge badge-pill badge-secondary">{{categorie}}</span> -->
+            </div>
         </div>
     </div>
-</div> -->

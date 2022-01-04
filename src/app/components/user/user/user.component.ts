@@ -42,10 +42,19 @@ export class UserComponent implements OnInit {
 
   actualizarUser(){
     this.usuario.usuario = this.formaUsu.controls.user.value;
+    this.usuarioService.putUsuario(this.usuario)
+          .subscribe((resp:any)=>{
+        console.log(resp.Estado);
+      }) ;
   }
 
   actualizarPass(){
-      if (this.formaPass.controls.pass.value == this.formaPass.controls.pass2.value) {
+      if (this.formaPass.controls.pass.value == this.formaPass.controls.pass2.value && this.usuario.password == this.formaPass.controls.pass.value && this.formaPass.controls.new.value != null) {
+        this.usuario.password = this.formaPass.controls.new.value;
+        this.usuarioService.putUsuario(this.usuario)
+          .subscribe((resp:any)=>{
+        console.log(resp.Estado);
+      }) ;
       }
       else{
         this.passwordNoValido = true;

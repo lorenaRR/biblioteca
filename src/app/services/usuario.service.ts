@@ -10,41 +10,6 @@ import { Observable } from 'rxjs';
 
 export class UsuarioService {
 
-  public usuarios:UsuarioModel[]=[
-    {
-     nombre:'Ana',
-     apellidos:'López',
-     dni:'123456789A',
-     direccion:'La Paz',
-     telefono:'985123123',
-     admin:false,
-     email:'abc@abc.com',
-     usuario:'user',
-     password:'user'
-    },
-   {
-     nombre:'Lorena',
-     apellidos:'Rodríguez',
-     dni:'987654321B',
-     direccion:'Flor',
-     telefono:'985123123',
-     admin:true,
-     email:'abc@abc.com',
-     usuario:'admin',
-     password:'admin'
-   },
-   {
-       nombre:'Pepe',
-       apellidos:'Pérez',
-       dni:'111111111C',
-       direccion:'Mar',
-       telefono:'666555444',
-       admin:false,
-       email:'abc@abc.com',
-       usuario:'111111111C',
-       password:'abc@abc.com'
-     }];
-
   private url = 'https://localhost:44389/api/Usuarios/SeleccionarUsuarios?id=';
   private urlInsertar = 'https://localhost:44389/api/Usuarios/InsertarUsuarios';
   private urlActualizar = 'https://localhost:44389/api/Usuarios/ActualizarUsuarios';
@@ -99,6 +64,7 @@ export class UsuarioService {
     return this.http.get<UsuarioModel>(this.urlLogin + '?user=' + user + '&pass=' + pass)
   }
 
+  
 
    
 

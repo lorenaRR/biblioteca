@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LibrosModel } from '../models/libros.model';
 import { CategoriasModel } from '../models/categorias.model';
+import { AutoresModel } from '../models/autores.model';
 
 
 
@@ -25,6 +26,8 @@ export class LibrosService  {
   
   private urlCategorias='https://localhost:44389/api/Categorias/SeleccionarCategorias'
 
+  private urlAutores = 'https://localhost:44389/api/Autores/SeleccionarAutores'
+
   constructor(private http:HttpClient) { }
 
 
@@ -41,6 +44,10 @@ export class LibrosService  {
   getCategorias(){
     return this.http.get<CategoriasModel[]>(this.urlCategorias);
 
+  }
+
+  getAutores(){
+    return this.http.get<AutoresModel[]>(this.urlAutores);
   }
 
 

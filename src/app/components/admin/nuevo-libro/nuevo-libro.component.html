@@ -20,24 +20,27 @@
             </div>
 
             <div class="form-group mb-3">
-                <label class="form-label">Autores</label>
-                <button class="btn btn-secondary">
+                <label class="form-label">Lista de Autores</label>
+                <select class="form-control form-select" formControlName="autores">
+                    <option id={{autor.id_autor}} *ngFor="let autor of autores; let i = index" value={{autor.id_autor}} >{{autor.apellidos}}, {{autor.nombre}}</option>
+                </select>
+                <button type="button" (click)="addAutor()" class="btn btn-secondary">
                     <i class="fa fa-plus"></i>
                 </button>
                 <br>
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <th> - </th>
-                            <th>
-                                <button class="btn btn-danger">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
+            <table *ngIf="nombre_autores_libro" class="table">
+                <tbody>
+                    <tr *ngFor="let autor of nombre_autores_libro">
+                        <th>{{autor}}</th>
+                        <th>
+                            <button class="btn btn-danger">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
 
             <div class="form-group mb-3">
                 <label class="form-label">Fecha de Publicación</label>

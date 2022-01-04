@@ -1,6 +1,5 @@
 
 export class LibrosModel{
-    id!:                 number;
     isbn!:               string;
     titulo!:             string;
     subtitulo!:          string;

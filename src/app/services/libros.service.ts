@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LibrosModel } from '../models/libros.model';
-import { CategoriasModel } from '../models/categorias.model';
-import { AutoresModel } from '../models/autores.model';
+import { CategoriasModel, CategoriasLibrosModel } from '../models/categorias.model';
+import { AutoresModel, AutoresLibrosModel } from '../models/autores.model';
 
 
 
@@ -24,9 +24,11 @@ export class LibrosService  {
   private paramEditorial='&editorial=';
   private paramAutor='&autor=';
   
-  private urlCategorias='https://localhost:44389/api/Categorias/SeleccionarCategorias'
+  private urlCategorias='https://localhost:44389/api/Categorias/SeleccionarCategorias';
+  private urlCategoriasLibro='https://localhost:44389/api/Categorias/InsertarCategoriasLibro';
 
-  private urlAutores = 'https://localhost:44389/api/Autores/SeleccionarAutores'
+  private urlAutores = 'https://localhost:44389/api/Autores/SeleccionarAutores';
+  private urlAutoresLibro = 'https://localhost:44389/api/Autores/InsertarAutoresLibro';
 
   constructor(private http:HttpClient) { }
 
@@ -46,8 +48,18 @@ export class LibrosService  {
 
   }
 
+  postCategoriasLibro(categoria_libro:CategoriasLibrosModel){
+    console.log(categoria_libro);
+    return this.http.post(this.urlCategoriasLibro,categoria_libro);
+  }
+
   getAutores(){
     return this.http.get<AutoresModel[]>(this.urlAutores);
+  }
+
+  postAutoresLibro(autor_libro:AutoresLibrosModel){
+    console.log(autor_libro);
+    return this.http.post(this.urlAutoresLibro, autor_libro);
   }
 
 

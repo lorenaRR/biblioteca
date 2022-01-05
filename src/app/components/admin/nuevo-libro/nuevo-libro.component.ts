@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService } from '../../../services/usuario.service';
 import { LibrosModel } from '../../../models/libros.model';
 import { LibrosService } from '../../../services/libros.service';
-import { CategoriasModel } from '../../../models/categorias.model';
+import { CategoriasModel, CategoriasLibrosModel } from '../../../models/categorias.model';
 import { AutoresModel, AutoresLibrosModel } from '../../../models/autores.model';
 
 @Component({
@@ -14,10 +14,13 @@ import { AutoresModel, AutoresLibrosModel } from '../../../models/autores.model'
 export class NuevoLibroComponent implements OnInit {
 
   forma!: FormGroup;
-  categorias!:CategoriasModel[]; //Todas las categorías de la base de datos
+
+  categorias: CategoriasModel[] = []; //Todas las categorías de la base de datos
+  categorias_libro: CategoriasLibrosModel[]=[]; //Todas las relaciones categoria-libro de este libro
+  nombre_categorias_libro:string[]=[]; //Sólo los nombres de las categorias del libro
+
   autores: AutoresModel[] = []; //Todos los autores de la base de datos
-  autores_libro: AutoresLibrosModel[] = []; //Las relaciones autor-libro de este libro
-  autor_libro: AutoresLibrosModel = new AutoresLibrosModel; //La relación autor-libro que se guardará en el anterior
+  autores_libro: AutoresLibrosModel[] = []; //Todas las relaciones autor-libro de este libro
   nombre_autores_libro:string[]=[]; //Sólo los nombres de los autores del libro
   
  
@@ -62,16 +65,16 @@ export class NuevoLibroComponent implements OnInit {
   }
 
   addAutor(){
-    this.autor_libro.isbn = this.forma.controls.isbn.value;
-    this.autor_libro.id_autor = this.forma.controls.autores.value;
+    let autor_libro: AutoresLibrosModel = new AutoresLibrosModel; //La relación autor-libro que se guardará en autores_libro
+    autor_libro.isbn = this.forma.controls.isbn.value;
+    autor_libro.id_autor = this.forma.controls.autores.value;
 
-    this.autores_libro.push(this.autor_libro);
+    this.autores_libro.push(autor_libro);
 
     this.autores_libro.forEach(autor_libro => { //Por cada autor de este libro
       this.autores.forEach(autor => { //Por cada autor de la base de datos
         if (autor.id_autor == autor_libro.id_autor){ //Si coinciden los id
           let nombre = autor.nombre + ' '+ autor.apellidos;
-          console.log(this.nombre_autores_libro.indexOf(nombre));
           if (this.nombre_autores_libro.indexOf(nombre)==-1) { //Si no exite ya ese autor en la lista
               this.nombre_autores_libro.push(nombre);
           }
@@ -79,10 +82,26 @@ export class NuevoLibroComponent implements OnInit {
         }
       });
     });
+  }
 
-    console.log(this.autor_libro);
-    console.log(this.autores_libro);
-    console.log(this.nombre_autores_libro);
+  addCategoria(){
+    let categoria_libro: CategoriasLibrosModel = new CategoriasLibrosModel; //La relacion categoria-libro que se guardará en categorias_libro
+    categoria_libro.isbn = this.forma.controls.isbn.value;
+    categoria_libro.id_categoria=this.forma.controls.categoria.value;
+
+    this.categorias_libro.push(categoria_libro);
+
+    this.categorias_libro.forEach(categoria_libro => {//Por cada categoria de este libro
+      this.categorias.forEach(categoria => {//Por cada categoria de la base de datos
+        if(categoria.id_categoria == categoria_libro.id_categoria){ //Si coinciden los id
+          let nombre = categoria.categoria;
+            if(this.nombre_categorias_libro.indexOf(nombre)){//Si no existe ya esa categoria en la lista
+                this.nombre_categorias_libro.push(nombre);
+            }
+        }        
+      });
+    });
+
   }
         
   guardarFormulario(){
@@ -93,12 +112,24 @@ export class NuevoLibroComponent implements OnInit {
     libroNuevo.reservado=false;
     libroNuevo.prestado=false;
 
-    console.log(libroNuevo);
-
-    this.librosService.postLibro(libroNuevo)
+    this.librosService.postLibro(libroNuevo) //Insertar en tabla Libro
     .subscribe((resp:any)=>{
       console.log(resp.Estado);
-    }) ;
+    });
+
+    this.autores_libro.forEach(autor_libro => { //Insertar en tabla Autores_Libro
+      this.librosService.postAutoresLibro(autor_libro)
+        .subscribe((resp:any)=>{
+          console.log(resp.Estado);
+        })
+    });
+
+    this.categorias_libro.forEach(categoria_libro => { //Insertar en tabla Categorias_libro
+      this.librosService.postCategoriasLibro(categoria_libro)
+        .subscribe((resp:any)=>{
+          console.log(resp.Estado);
+        })
+    });
     
 
     if(this.forma.invalid){

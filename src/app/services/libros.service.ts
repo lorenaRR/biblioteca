@@ -28,6 +28,8 @@ export class LibrosService  {
   private urlCategoriasLibro='https://localhost:44389/api/Categorias/InsertarCategoriasLibro';
 
   private urlAutores = 'https://localhost:44389/api/Autores/SeleccionarAutores';
+  private paramNombre = '?nombre=';
+  private paramApellidos = '&apellidos='
   private urlAutoresLibro = 'https://localhost:44389/api/Autores/InsertarAutoresLibro';
 
   constructor(private http:HttpClient) { }
@@ -53,8 +55,8 @@ export class LibrosService  {
     return this.http.post(this.urlCategoriasLibro,categoria_libro);
   }
 
-  getAutores(){
-    return this.http.get<AutoresModel[]>(this.urlAutores);
+  getAutores(nombre:string, apellidos:string){
+    return this.http.get<AutoresModel[]>(this.urlAutores + this.paramNombre + nombre + this.paramApellidos + apellidos);
   }
 
   postAutoresLibro(autor_libro:AutoresLibrosModel){

@@ -20,27 +20,24 @@
             </div>
 
             <div class="form-group mb-3">
-                <label class="form-label">Lista de Autores</label>
-                <select class="form-control form-select" formControlName="autores">
-                    <option id={{autor.id_autor}} *ngFor="let autor of autores; let i = index" value={{autor.id_autor}} >{{autor.apellidos}}, {{autor.nombre}}</option>
-                </select>
-                <button type="button" (click)="addAutor()" class="btn btn-secondary">
-                    <i class="fa fa-plus"></i>
+                <label class="form-label m-3">Lista de Autores</label>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-sm fa-plus"></i>
                 </button>
                 <br>
+                <table *ngIf="nombre_autores_libro" class="table">
+                    <tbody>
+                        <tr *ngFor="let nombre of nombre_autores_libro">
+                            <th>{{nombre}}</th>
+                            <th>
+                                <button class="btn btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <table *ngIf="nombre_autores_libro" class="table">
-                <tbody>
-                    <tr *ngFor="let autor of nombre_autores_libro">
-                        <th>{{autor}}</th>
-                        <th>
-                            <button class="btn btn-danger">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
 
             <div class="form-group mb-3">
                 <label class="form-label">Fecha de Publicación</label>
@@ -63,14 +60,10 @@
             </div>
 
             <div class="form-group xmb-3">
-                <label class="form-label">Categorías</label>
-                <select class="form-control form-select" formControlName="categoria">
-                    <option id={{categoria.id_categoria}} *ngFor="let categoria of categorias" value={{categoria.id_categoria}}>{{categoria.categoria}}</option>
-                </select>
-                <button type="button" (click)="addCategoria()" class="btn btn-secondary">
-                    <i class="fa fa-plus"></i>
+                <label class="form-label m-3">Categorías</label>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2">
+                    <i class="fa fa-sm fa-plus"></i>
                 </button>
-                <br>
             </div>
             <table *ngIf="nombre_categorias_libro" class="table">
                 <tbody>
@@ -97,5 +90,82 @@
 
             <button type="submit" class="btn btn-primary">Enviar</button>
         </form>
+    </div>
+</div>
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Autores</h4>
+                <button type="button" class="btn btn-light" data-dismiss="modal"> <i class="fa fa-times" style="color: gray;"></i> </button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form class="m-5" (ngSubmit)="buscarAutor()" [formGroup]="formaAutores">
+                    <div class="form-group mb-3">
+                        <label class="form-label">Nombre: </label>
+                        <input type="text" class="form-control" formControlName="nombre">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Apellidos: </label>
+                        <input type="text" class="form-control" formControlName="apellidos">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                    <button type="button" class="btn btn-primary">Añadir</button>
+                    <br><br>
+                    <div class="list-group" *ngIf="autores">
+                        <a class="list-group-item list-group-item-action" *ngFor="let autor of autores" (click)="addAutor(autor.id_autor)">
+                           {{autor.nombre}} {{autor.apellidos}}
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="myModal2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Categorías</h4>
+                <button type="button" class="btn btn-light" data-dismiss="modal"> <i class="fa fa-times" style="color: gray;"></i> </button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form class="m-5" (ngSubmit)="buscarAutor()" [formGroup]="formaAutores">
+                    <div class="form-group mb-3">
+                        <label class="form-label">Categoría: </label>
+                        <input type="text" class="form-control" formControlName="categoria">
+                    </div>
+                    <button type="button" class="btn btn-primary">Añadir</button>
+                    <br><br>
+                    <div class="list-group" *ngIf="categorias">
+                        <a class="list-group-item list-group-item-action" *ngFor="let categoria of categorias" (click)="addCategoria(categoria.id_categoria)">
+                           {{categoria.categoria}}
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
     </div>
 </div>

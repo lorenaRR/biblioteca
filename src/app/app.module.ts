@@ -25,6 +25,7 @@ import { InformesComponent } from './components/admin/informes/informes.componen
 import { PrestamosComponent } from './components/admin/prestamos/prestamos.component';
 import { ActualizarComponent } from './components/admin/actualizar/actualizar.component';
 import { NuevoLibroComponent } from './components/admin/nuevo-libro/nuevo-libro.component';
+import { ActualizarLibroComponent } from './components/admin/actualizar-libro/actualizar-libro.component';
 
 
 
@@ -46,6 +47,7 @@ import { NuevoLibroComponent } from './components/admin/nuevo-libro/nuevo-libro.
     PrestamosComponent,
     ActualizarComponent,
     NuevoLibroComponent,
+    ActualizarLibroComponent,
   ],
   imports: [
     BrowserModule,

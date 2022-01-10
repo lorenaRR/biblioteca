@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LibrosService } from '../../../services/libros.service';
-import { LibroResponse } from '../../../interfaces/libro-response';
 import { LibrosModel } from '../../../models/libros.model';
 
 @Component({

@@ -14,6 +14,7 @@ import { AutoresModel, AutoresLibrosModel } from '../../../models/autores.model'
 export class NuevoLibroComponent implements OnInit {
 
   forma!: FormGroup;
+  formaAutores!:FormGroup;
 
   categorias: CategoriasModel[] = []; //Todas las categorías de la base de datos
   categorias_libro: CategoriasLibrosModel[]=[]; //Todas las relaciones categoria-libro de este libro
@@ -27,7 +28,7 @@ export class NuevoLibroComponent implements OnInit {
   constructor(private formBuilder:FormBuilder, private librosService:LibrosService) {
       this.crearFormulario();
       this.cargarListaCategorias();
-      this.cargarListaAutores();
+      //this.cargarListaAutores();
    }
 
 
@@ -48,6 +49,11 @@ export class NuevoLibroComponent implements OnInit {
       categoria:[''],
       autores:['']
       });
+
+    this.formaAutores = this.formBuilder.group({
+      nombre:[''],
+      apellidos:['']
+    })
   }
 
   cargarListaCategorias(){
@@ -57,17 +63,24 @@ export class NuevoLibroComponent implements OnInit {
         })
   }
 
-  cargarListaAutores(){
+  /*cargarListaAutores(){
     this.librosService.getAutores()
+    .subscribe(resp=>{
+    this.autores = resp;
+    })
+  }*/
+
+  buscarAutor(){
+    this.librosService.getAutores(this.formaAutores.controls.nombre.value, this.formaAutores.controls.apellidos.value)
     .subscribe(resp=>{
     this.autores = resp;
     })
   }
 
-  addAutor(){
+  addAutor(autorid:string){
     let autor_libro: AutoresLibrosModel = new AutoresLibrosModel; //La relación autor-libro que se guardará en autores_libro
     autor_libro.isbn = this.forma.controls.isbn.value;
-    autor_libro.id_autor = this.forma.controls.autores.value;
+    autor_libro.id_autor = autorid;
 
     this.autores_libro.push(autor_libro);
 
@@ -77,17 +90,16 @@ export class NuevoLibroComponent implements OnInit {
           let nombre = autor.nombre + ' '+ autor.apellidos;
           if (this.nombre_autores_libro.indexOf(nombre)==-1) { //Si no exite ya ese autor en la lista
               this.nombre_autores_libro.push(nombre);
-          }
-          
+          } 
         }
       });
     });
   }
 
-  addCategoria(){
+  addCategoria(categoriaid:string){
     let categoria_libro: CategoriasLibrosModel = new CategoriasLibrosModel; //La relacion categoria-libro que se guardará en categorias_libro
     categoria_libro.isbn = this.forma.controls.isbn.value;
-    categoria_libro.id_categoria=this.forma.controls.categoria.value;
+    categoria_libro.id_categoria=categoriaid;
 
     this.categorias_libro.push(categoria_libro);
 
@@ -104,6 +116,25 @@ export class NuevoLibroComponent implements OnInit {
 
   }
         
+  insertarAutoresLibro(autor_libro:AutoresLibrosModel){
+    console.log(autor_libro);
+    this.librosService.postAutoresLibro(autor_libro)
+    .subscribe((resp:any)=>{
+      console.log(resp);
+      console.log(resp.Estado);
+    });
+  }
+
+  insertarCategoriasLibro(categoria_libro:CategoriasLibrosModel){
+    console.log(categoria_libro);
+    this.librosService.postCategoriasLibro(categoria_libro)
+        .subscribe((resp:any)=>{
+          console.log(resp);
+          console.log(resp.Estado);
+        });
+  }
+
+
   guardarFormulario(){
 
     console.log(this.forma);
@@ -118,17 +149,11 @@ export class NuevoLibroComponent implements OnInit {
     });
 
     this.autores_libro.forEach(autor_libro => { //Insertar en tabla Autores_Libro
-      this.librosService.postAutoresLibro(autor_libro)
-        .subscribe((resp:any)=>{
-          console.log(resp.Estado);
-        })
+      this.insertarAutoresLibro(autor_libro);
     });
 
     this.categorias_libro.forEach(categoria_libro => { //Insertar en tabla Categorias_libro
-      this.librosService.postCategoriasLibro(categoria_libro)
-        .subscribe((resp:any)=>{
-          console.log(resp.Estado);
-        })
+      this.insertarCategoriasLibro(categoria_libro);
     });
     
 

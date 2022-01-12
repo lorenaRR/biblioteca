@@ -44,28 +44,14 @@ export class UsuarioService {
     return this.http.put(this.urlActualizar, usuario);
   }
 
-  /*deleteUsuario(dni:string){
-    console.log('Es: ' + dni );
-    let options = {headers: this.getHeaders(), 
-    body: {
-      dni:dni
-    }}
-    console.log(options);
-    return this.http.post<String>(this.urlBorrar, options);
-  }*/
-
   deleteUsuario(dni: any) : Observable<any> {
     console.log('Es: ' + dni );
     let options = {headers: this.getHeaders(),}
-    return this.http.get(this.urlBorrar + `${dni}`, options)
+    return this.http.delete(this.urlBorrar + `${dni}`, options)
   }
 
   login(user:string, pass:string){
     return this.http.get<UsuarioModel>(this.urlLogin + '?user=' + user + '&pass=' + pass)
   }
-
-  
-
-   
 
 }

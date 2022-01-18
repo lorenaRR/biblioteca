@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { UsuarioModel } from '../models/usuarios.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ReservasModel } from '../models/reservas.model';
 
 
 @Injectable({
@@ -15,12 +16,15 @@ export class UsuarioService {
   private urlActualizar = 'https://localhost:44389/api/Usuarios/ActualizarUsuarios';
   private urlBorrar = 'https://localhost:44389/api/Usuarios/BorrarUsuarios/';
 
+  private urlLogin = 'https://localhost:44389/api/Usuarios/Logins';
+
+  private urlReserva = 'https://localhost:44389/api/Reservas/SeleccionarReservas';
+  private urlInsertarReserva = 'https://localhost:44389/api/Reservas/InsertarReserva';
+
   private paramNombre ='&nombre=';
   private paramApellidos='&apellidos=';
   private paramAdmin='&admin=';
 
-  private urlLogin = 'https://localhost:44389/api/Usuarios/Logins'
- 
 
   public currentUser = new UsuarioModel;
 
@@ -45,7 +49,6 @@ export class UsuarioService {
   }
 
   deleteUsuario(dni: any) : Observable<any> {
-    console.log('Es: ' + dni );
     let options = {headers: this.getHeaders(),}
     return this.http.delete(this.urlBorrar + `${dni}`, options)
   }
@@ -53,5 +56,15 @@ export class UsuarioService {
   login(user:string, pass:string){
     return this.http.get<UsuarioModel>(this.urlLogin + '?user=' + user + '&pass=' + pass)
   }
+
+  getReserva(isbn:string,dni:string){
+    return this.http.get<ReservasModel[]>(this.urlReserva + '?dni=' + dni + '&isbn=' + isbn)
+  }
+
+  postReserva(reserva:ReservasModel){
+    return this.http.post(this.urlInsertarReserva,reserva);
+  }
+
+
 
 }

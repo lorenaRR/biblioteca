@@ -32,7 +32,7 @@ export class ActualizarComponent implements OnInit {
         this.usuario = resp[0];
         this.usuario.dni = this.id;
         console.log(this.usuario);
-      })
+      });
   }
 
 }

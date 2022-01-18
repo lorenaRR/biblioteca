@@ -20,13 +20,13 @@
     <hr>
     <br>
     <div class="row m-5">
-        <div class="col-md-3 mb-5" *ngFor="let libro of libros">
+        <div class="col-md-3 mb-5" *ngFor="let libro of libros; let i = index">
             <img (click)="onLibroClick(libro)" [src]="getImagen(libro)" alt="" class="img-fluid" [ngStyle]="{'cursor': 'pointer'}">
             <div class="m-5">
                 <h5>{{libro.titulo}}</h5>
-                <!-- <p *ngFor="let author of libro.autor">{{author}}</p> -->
-                <span>{{libro.fechaPublicacion | date:'M/d/yyyy'}}</span><br>
-                <!-- <span *ngFor="let categorie of libro" class="badge badge-pill badge-secondary">{{categorie}}</span> -->
+                <p>{{libro.nombre}} {{libro.apellidos}}</p>
+                <span>{{libro.fechaPublicacion | date:'d/M/yyyy'}}</span><br>
+                <span class="badge badge-pill badge-secondary">{{libro.categoria}}</span>
             </div>
         </div>
     </div>

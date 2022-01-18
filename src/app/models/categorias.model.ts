@@ -4,7 +4,7 @@ export class CategoriasModel {
 }
 
 export class CategoriasLibrosModel {
-    id?:string;
+    id_categoria_libro?:string;
     id_categoria!:string;
     isbn!:string;
 }

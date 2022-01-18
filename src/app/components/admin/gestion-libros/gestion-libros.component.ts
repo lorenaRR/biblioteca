@@ -43,6 +43,12 @@ export class GestionLibrosComponent implements OnInit {
               })
   }
 
+  borrarLibro(isbn:string){
+    this.librosService.deleteLibro(isbn)
+    .subscribe(resp=>{
+      console.log(resp);
+    })
+  }
 
 
 }

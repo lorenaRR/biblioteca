@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UsuarioService } from '../../../services/usuario.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { LibrosModel } from '../../../models/libros.model';
 import { LibrosService } from '../../../services/libros.service';
 import { CategoriasModel, CategoriasLibrosModel } from '../../../models/categorias.model';
@@ -63,21 +62,22 @@ export class NuevoLibroComponent implements OnInit {
 
   cargarListaCategorias(){
     this.categorias = [];
-    this.librosService.getCategorias()
+    this.librosService.getCategorias('','')
         .subscribe(resp=>{
           resp.forEach(e => {
             this.categorias.push(e);
           });
         
-        })
+        });
   }
 
   buscarAutor(){
-    this.librosService.getAutores(this.formaAutores.controls.nombre.value, this.formaAutores.controls.apellidos.value)
+    this.librosService.getAutores('',this.formaAutores.controls.nombre.value, this.formaAutores.controls.apellidos.value)
     .subscribe(resp=>{
     this.autores = resp;
     })
   }
+
 
   addAutorLibro(autorid:string){
     let autor_libro: AutoresLibrosModel = new AutoresLibrosModel; //La relación autor-libro que se guardará en autores_libro
@@ -167,6 +167,8 @@ export class NuevoLibroComponent implements OnInit {
     let libroNuevo:LibrosModel = this.forma.value;
     libroNuevo.reservado=false;
     libroNuevo.prestado=false;
+
+    console.log(libroNuevo.imagen);
 
     this.librosService.postLibro(libroNuevo) //Insertar en tabla Libro
     .subscribe((resp:any)=>{

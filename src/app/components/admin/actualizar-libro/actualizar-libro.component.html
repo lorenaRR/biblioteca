@@ -1,1 +1,181 @@
-<p>actualizar-libro works!</p>
+<app-navbar-admin></app-navbar-admin>
+
+<div class="container m-5">
+    <div class="border border-light bg-light shadow-none p-3 mb-5 bg-light rounded" style="width: 1000px;">
+        <h1 class="text-center m-5">Actualizar libro</h1>
+        <hr>
+        <form class="m-5" (ngSubmit)="actualizarFormulario()" #f="ngForm">
+            <div class="form-group mb-3">
+                <label class="form-label">ISBN</label>
+                <input type="text" class="form-control" [(ngModel)]="libro.isbn" name="isbn" disabled>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Título</label>
+                <input type="text" class="form-control" [(ngModel)]="libro.titulo" name="titulo">
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Subtítulo</label>
+                <input type="text" class="form-control" [(ngModel)]="libro.subtitulo" name="subtitulo">
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label m-3">Lista de Autores</label>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-sm fa-plus"></i>
+                </button>
+                <br>
+                <table *ngIf="autores" class="table">
+                    <tbody>
+                        <tr *ngFor="let autor of autores">
+                            <th>{{autor.nombre}} {{autor.apellidos}}</th>
+                            <th>
+                                <button class="btn btn-danger" (click)="borrarAutor(autor.id_autor)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Fecha de Publicación</label>
+                <input type="date" class="form-control" [(ngModel)]="libro.fecha_publicacion" name="fecha_publicacion">
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Editorial</label>
+                <input type="text" class="form-control" [(ngModel)]="libro.editorial" name="editorial">
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Páginas</label>
+                <input type="number" class="form-control" [(ngModel)]="libro.nPaginas" name="nPaginas">
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Descipción</label>
+                <textarea class="form-control" [(ngModel)]="libro.descripcion" name="descripcion" cols="30" rows="10" maxlength="500"></textarea>
+            </div>
+
+            <div class="form-group xmb-3">
+                <label class="form-label m-3">Categorías</label>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2">
+                    <i class="fa fa-sm fa-plus"></i>
+                </button>
+            </div>
+            <table *ngIf="categorias" class="table">
+                <tbody>
+                    <tr *ngFor="let categoria of categorias">
+                        <th>{{categoria.categoria}}</th>
+                        <th>
+                            <button class="btn btn-danger" (click)="borrarCategoria(categoria.id_categoria)">
+                            <i class="fa fa-trash"></i>
+                            </button>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Link de Imágen</label>
+                <input type="text" class="form-control" [(ngModel)]="libro.imagen" name="imagen">
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Stock</label>
+                <input type="number" class="form-control" [(ngModel)]="libro.stock" name="stock">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+</div>
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Autores</h4>
+                <button type="button" class="btn btn-light" data-dismiss="modal"> <i class="fa fa-times" style="color: gray;"></i> </button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form class="m-5" (ngSubmit)="buscarAutor()" [formGroup]="formaAutores">
+                    <div class="form-group mb-3">
+                        <label class="form-label">Nombre: </label>
+                        <input type="text" class="form-control" formControlName="nombre">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Apellidos: </label>
+                        <input type="text" class="form-control" formControlName="apellidos">
+                    </div>
+                    <button type="submit" class="btn btn-primary m-3">Buscar</button>
+                    <button type="button" class="btn btn-primary" (click)="insertarAutor()">Añadir</button>
+                    <br><br>
+                    <div class="list-group" *ngIf="listaAutores">
+                        <a class="list-group-item list-group-item-action" *ngFor="let autor of listaAutores" (click)="addAutorLibro(autor.id_autor)">
+                           {{autor.nombre}} {{autor.apellidos}}
+                           <button class="btn btn-danger" (click)="borrarAutorBD(autor.id_autor)">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="myModal2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Categorías</h4>
+                <button type="button" class="btn btn-light" data-dismiss="modal"> <i class="fa fa-times" style="color: gray;"></i> </button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form class="m-5" [formGroup]="formaCategorias">
+                    <div class="form-group mb-3">
+                        <label class="form-label">Categoría: </label>
+                        <input type="text" class="form-control" formControlName="categoria">
+                    </div>
+                    <button type="button" class="btn btn-primary" (click)="insertarCategoria()">Añadir</button>
+                    <br><br>
+                    <div class="list-group" *ngIf="listaCategorias">
+                        <div>
+                            <a class="list-group-item list-group-item-action col-4" *ngFor="let categoria of listaCategorias" (click)="addCategoriaLibro(categoria.id_categoria)">
+                                {{categoria.categoria}}
+                                <button class="btn btn-danger" (click)="borrarCategoriaBD(categoria.id_categoria)">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </a>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,3 +1,5 @@
+import { AutoresModel } from './autores.model';
+import { CategoriasModel } from './categorias.model';
 
 export class LibrosModel{
     isbn!:               string;
@@ -11,4 +13,12 @@ export class LibrosModel{
     stock!:              number;
     reservado!:          boolean;
     prestado!:           boolean;
+    id_autor!:           string;
+    nombre!:             string;
+    apellidos!:          string;
+    id_categoria!:       string;
+    categoria!:          string;
+    autores:             AutoresModel[] = [];
+    categorias:          CategoriasModel[] = [];
 }
+

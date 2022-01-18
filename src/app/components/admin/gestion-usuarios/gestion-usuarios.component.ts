@@ -32,10 +32,8 @@ export class GestionUsuariosComponent implements OnInit {
       nombre:['', [Validators.required]],
       apellidos:['', [Validators.required]],
       admin:['', [Validators.required]],
-    })
+    });
   }
-
-  
 
   verUsuario(){
    
@@ -49,7 +47,6 @@ export class GestionUsuariosComponent implements OnInit {
   borrarUsuario(dni:string){
     this.usuarioService.deleteUsuario(dni)
       .subscribe(resp=>{
-        console.log('Subscribe hecho');
         console.log(resp);
       })
   }

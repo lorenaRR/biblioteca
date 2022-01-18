@@ -33,7 +33,7 @@
                         <button class="btn btn-info" [routerLink]="['/actualizar-libro', libro.isbn]">
                             <i class="fa fa-pen"></i>
                         </button>
-                        <button class="btn btn-danger">
+                        <button (click)="borrarLibro(libro.isbn)" class="btn btn-danger">
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>

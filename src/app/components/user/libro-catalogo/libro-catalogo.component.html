@@ -10,7 +10,7 @@
         <h5>{{libro.editorial}} - <small> {{libro.fechaPublicacion | date:'M/d/yyyy'}} </small> </h5><br>
         <h6>{{libro.nPaginas}} páginas.</h6><br><br>
         <p>{{libro.descripcion}}</p><br>
-        <button class="btn btn-primary">Reservar</button><br>
-        <span>Aquí iría la fecha de entrega en el caso de que estuviese prestado</span>
+        <button (click)="insertarReserva()" class="btn btn-primary">Reservar</button><br>
+        <span>Personas delante de tí: {{num_cola}}</span>
     </div>
 </div>

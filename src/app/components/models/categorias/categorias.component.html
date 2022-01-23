@@ -1,0 +1,35 @@
+<div class="modal" id="myModal2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Categorías</h4>
+                <button type="button" class="btn btn-light" data-dismiss="modal"> <i class="fa fa-times" style="color: gray;"></i> </button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form class="m-5" [formGroup]="formaCategorias">
+                    <div class="form-group mb-3">
+                        <label class="form-label">Categoría: </label>
+                        <input type="text" class="form-control" formControlName="categoria">
+                    </div>
+                    <button type="button" class="btn btn-primary" (click)="insertarCategoria()">Añadir</button>
+                    <br><br>
+                    <div class="list-group" *ngIf="listaCategorias">
+                        <div *ngFor="let categoria of listaCategorias">
+                            <a class="list-group-item list-group-item-action col-4" style="float: left; width: 85%;" (click)="insertarCategoriaLibro(categoria.id_categoria)">
+                                {{categoria.categoria}}
+                            </a>
+                            <button class="btn btn-danger" style="float: right; width: 15%;" (click)="borrarCategoria(categoria.id_categoria)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

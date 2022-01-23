@@ -18,7 +18,6 @@ import { AutoresModel } from '../../../models/autores.model';
 export class CatalogoComponent {
 
 libros: LibrosModel [] = [];
-librosTemp: LibrosModel [] = [];
 
 categoria_libro: CategoriasModel = new CategoriasModel;
 categoriasLibro:CategoriasModel[]=[];
@@ -60,23 +59,33 @@ ngOnInit(): void {
  
     this.libros=[];
   
-    this.librosService.getLibros(isbn,titulo,subtitulo,editorial,autor)
+    this.librosService.getLibros(isbn,titulo,subtitulo,editorial)
     .subscribe(resp=>{
-      this.librosTemp=resp;
-      this.librosTemp.forEach(libroTemp => {
-          this.categoria_libro.id_categoria=libroTemp.id_categoria;
-          this.categoria_libro.categoria=libroTemp.categoria;
-          this.categoriasLibro.push(this.categoria_libro);
-        if(libroTemp.isbn != this.isbnTemp){ 
-          this.categoriasLibro.push(this.categoria_libro);
-          libroTemp.categorias = this.categoriasLibro;
-          this.categoriasLibro = [];
-          this.libros.push(libroTemp);
-          this.isbnTemp=libroTemp.isbn;      
-        }
+      this.libros=resp;
+      this.libros.forEach(libro => {  //Recorro todos los libros
+          this.getAutoresLibro(libro); //Lleno el array de autores de cada libro
+          this.getCategoriasLibro(libro);
+          console.log(this.libros);
       });
     });
+
+   
   
+  }
+
+
+  getAutoresLibro(libro:LibrosModel){
+    this.librosService.getAutoresLibro(libro.isbn) 
+      .subscribe((resp:any)=>{
+          libro.autores=resp;
+    });
+  }
+
+  getCategoriasLibro(libro:LibrosModel){
+    this.librosService.getCategoriasLibro(libro.isbn)
+      .subscribe((resp:any)=>{
+        libro.categorias = resp;
+      });
   }
 
   getImagen(libro:LibrosModel){

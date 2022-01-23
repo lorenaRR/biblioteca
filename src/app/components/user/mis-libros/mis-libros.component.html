@@ -8,17 +8,20 @@
             <tr>
                 <th>Portada</th>
                 <th>Fecha Préstamo</th>
-                <th>Fecha Devolución</th>
+                <th>Fecha Entrega</th>
                 <th>Título</th>
                 <th>Autor</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
+            <tr *ngFor="let libro of libros">
+                <td class="align-middle"><img [src]="getImagen(libro)" alt="" style="width: 25%;"></td>
+                <td class="align-middle">{{libro.fechaPrestamo | date:'d/M/yy'}}</td>
+                <td class="align-middle">{{libro.fechaEntrega | date:'d/M/yy'}}</td>
+                <td class="align-middle">{{libro.titulo}}</td>
+                <td class="align-middle">
+                    <p *ngFor="let autor of libro.autores"> {{autor.nombre}} {{autor.apellidos}}</p>
+                </td>
             </tr>
         </tbody>
     </table>

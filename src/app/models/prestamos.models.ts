@@ -1,0 +1,7 @@
+export class PrestamosModel {
+    id_prestamo!:string;
+    isbn!:string;
+    dni!:string;
+    fechaPrestamo!: Date;
+    fechaEntrega!: Date;
+}

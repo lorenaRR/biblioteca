@@ -3,8 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { LibrosModel } from '../../../models/libros.model';
 import { LibrosService } from '../../../services/libros.service';
 import { CategoriasModel, CategoriasLibrosModel } from '../../../models/categorias.model';
-import { AutoresModel } from '../../../models/autores.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AutoresModel, AutoresLibrosModel } from '../../../models/autores.model';
+import { FormBuilder } from '@angular/forms';
+import * as moment from 'moment';
 
 
 
@@ -17,165 +18,90 @@ export class ActualizarLibroComponent implements OnInit {
 
   libro: any;
   id:any;
-  formaAutores!:FormGroup;
-  formaCategorias!:FormGroup;
   categorias: CategoriasModel[] = [];
   listaCategorias:CategoriasModel[] = [];
   autores: AutoresModel[] = [];
   listaAutores: AutoresModel[] = [];
   cambioCat=false;
   cambioAut=false;
+  noAutores = false;
 
   constructor(private librosService:LibrosService,  private route:ActivatedRoute, private formBuilder:FormBuilder) { 
-    this.crearFormulario();
-    this.cargarCategorias();
+
   }
-
-  crearFormulario(){
-    this.formaAutores = this.formBuilder.group({
-      nombre:[''],
-      apellidos:['']
-    });
-
-    this.formaCategorias = this.formBuilder.group({
-      categoria:['']
-    });
-  }
-
 
   ngOnInit(): void {
     this.libro = new LibrosModel();
     this.id=this.route.snapshot.paramMap.get('id');
-    this.librosService.getLibros(this.id,'','','','')
+    this.librosService.getLibros(this.id, '','','')
       .subscribe((resp:any)=>{
         this.libro = resp[0];
         this.libro.isbn = this.id;
-        this.librosService.getAutoresLibro('', this.libro.isbn)
-          .subscribe(resp=>{
-            resp.forEach(aut_libro => {
-              this.librosService.getAutores(aut_libro.id_autor,'','')
-                .subscribe(resp=>{
-                  this.autores.push(resp[0]);
-                });
-            });
-
-            this.librosService.getCategoriasLibro('', '',this.libro.isbn)
-            .subscribe(resp=>{
-              resp.forEach(cat_libro => {
-                this.librosService.getCategorias(cat_libro.id_categoria,'')
-                  .subscribe(resp=>{
-                    this.categorias.push(resp[0]);
-                    console.log(this.categorias);
-                  });
-              });
-                
-            });
-          })
+        this.libro.fechaPublicacion = moment(this.libro.fechaPublicacion).format('YYYY-MM-DD');
+        this.getAutoresLibro(this.libro);
+        this.getCategoriasLibro(this.libro);
       });
+  
   }
 
-  borrarAutor(id_autor:string){
-    this.autores = this.autores.filter(autor => autor.id_autor != id_autor);
-    this.cambioAut=true;
-  }
-
-  borrarCategoria(id_categoria:string){
-    this.categorias = this.categorias.filter(categoria => categoria.id_categoria != id_categoria);
-    this.cambioCat=true;
-  }
-
-  cargarCategorias(){
-    this.listaCategorias = [];
-    this.librosService.getCategorias('','')
-        .subscribe(resp=>{
-          resp.forEach(e => {
-            this.listaCategorias.push(e);
-          });        
-        });
-  }
-
-  insertarCategoria(){
-    let categoria = new CategoriasModel;
-    categoria.categoria=this.formaCategorias.controls.categoria.value;
-    this.librosService.postCategorias(categoria)
-        .subscribe((resp:any)=>{
-          console.log(resp.Estado);
-          this.formaCategorias.reset();
-          this.cargarCategorias();
-        });
-  }
-
-  addCategoriaLibro(id_categoria:string){
-    this.cambioCat=true;
-    this.librosService.getCategorias(id_categoria,'')
-      .subscribe(resp=>{
-        console.log(resp);
-      });
-  }
-
-  borrarCategoriaBD(id_categoria:string){
-      this.librosService.deleteCategorias(id_categoria)
-        .subscribe((resp:any)=>{
-          console.log(resp.Estado);
-          this.cargarCategorias();
-        });
-  }
-
-  buscarAutor(){
-    this.librosService.getAutores('',this.formaAutores.controls.nombre.value, this.formaAutores.controls.apellidos.value)
-      .subscribe(resp=>{
-      this.listaAutores = resp;
-      });
-  }
-
-  insertarAutor(){
-    let autor = new AutoresModel;
-    autor.nombre = this.formaAutores.controls.nombre.value;
-    autor.apellidos = this.formaAutores.controls.apellidos.value;
-
-    this.librosService.postAutores(autor)
+  getAutoresLibro(libro:LibrosModel){
+    this.librosService.getAutoresLibro(libro.isbn) 
       .subscribe((resp:any)=>{
-        console.log(resp);
+          libro.autores=resp;
+    });
+  }
+
+  getCategoriasLibro(libro:LibrosModel){
+    this.librosService.getCategoriasLibro(libro.isbn)
+      .subscribe((resp:any)=>{
+        libro.categorias = resp;
       });
   }
 
-  addAutorLibro(id_autor:string){
 
+
+  borrarAutorLibro(id_autor:string){
+    this.librosService.deleteAutoresLibro(id_autor, this.libro.isbn)
+      .subscribe((resp:any)=>{
+        console.log(resp.Estado);
+      });
   }
 
-  borrarAutorBD(id_autor:string){
-    this.librosService.deleteAutor(id_autor)
-        .subscribe((resp:any)=>{
+ borrarCategoriaLibro(id_categoria:string, isbn:string){
+  this.librosService.deleteCategoriasLibro(id_categoria, isbn) 
+    .subscribe((resp:any)=>{
+      console.log(resp.Estado);
+      this.getCategoriasLibro(this.libro);
+    });
+  }
+
+  insertarCategoriaLibro(id_categoria:string){
+    let categoria:CategoriasLibrosModel= new CategoriasLibrosModel;
+    categoria.id_categoria=id_categoria;
+    categoria.isbn=this.libro.isbn;
+    this.librosService.postCategoriasLibro(categoria) 
+      .subscribe((resp:any)=>{
+        console.log(resp.Estado);
+        this.getCategoriasLibro(this.libro);
+      });
+  }
+
+  insertarAutorLibro(id_autor:string){
+    let autor:AutoresLibrosModel = new AutoresLibrosModel;
+    autor.id_autor= id_autor;
+    autor.isbn=this.libro.isbn;
+    console.log(autor);
+    this.librosService.postAutoresLibro(autor)
+      .subscribe((resp:any)=>{
+        console.log(resp.Estado);
+        this.getAutoresLibro(this.libro);
+      });
+  }
+
+  actualizarLibro(){
+    this.librosService.putLibro(this.libro)
+      .subscribe((resp:any)=>{
           console.log(resp.Estado);
-        });
-  }
-
-  actualizarFormulario(){
-      this.librosService.putLibro(this.libro) //Actualizar libro
-        .subscribe((resp:any)=>{
-            console.log(resp.Estado);
-            if (this.cambioCat){ //Si se cambian las categorías
-              this.librosService.getCategoriasLibro('', '', this.libro.isbn)
-              .subscribe(resp=>{
-                  console.log('categorias libro: ' + resp);
-                  resp.forEach(cat_libro => {
-                    this.librosService.deleteCategoriasLibro(cat_libro.id_categoria_libro) //Borra Cat-Lib
-                        .subscribe((resp:any)=>{
-                          console.log(resp.Estado); 
-                        });
-                    this.categorias.forEach(categoria => {
-                      console.log(categoria);
-                      this.librosService.postCategorias(categoria)  //Inserta Nueva Cat
-                        .subscribe((resp:any)=>{
-                          console.log(resp.Estado);
-                        });
-                    });
-                  });
-              });
-            }
-            if (this.cambioAut){  //Si se cambian los autores
-              
-            }
       });
   }
 

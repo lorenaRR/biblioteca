@@ -22,7 +22,7 @@ export class LibroCatalogoComponent implements OnInit  {
   ngOnInit(): void {
     const {id} = this.activatedRoute.snapshot.params;
     console.log(id);
-    this.librosService.getLibros(id,'','','','')
+    this.librosService.getLibros(id,'','','')
     .subscribe(resp=>{
       console.log(resp);
       this.libro=resp[0];

@@ -24,9 +24,9 @@
             <img (click)="onLibroClick(libro)" [src]="getImagen(libro)" alt="" class="img-fluid" [ngStyle]="{'cursor': 'pointer'}">
             <div class="m-5">
                 <h5>{{libro.titulo}}</h5>
-                <p>{{libro.nombre}} {{libro.apellidos}}</p>
+                <p *ngFor="let autor of libro.autores">{{autor.nombre}} {{autor.apellidos}}</p>
                 <span>{{libro.fechaPublicacion | date:'d/M/yyyy'}}</span><br>
-                <span class="badge badge-pill badge-secondary">{{libro.categoria}}</span>
+                <span class="badge badge-pill badge-secondary" *ngFor="let categoria of libro.categorias">{{categoria.categoria}}</span>
             </div>
         </div>
     </div>

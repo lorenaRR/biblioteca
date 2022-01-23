@@ -35,7 +35,8 @@ export class LibrosService  {
   private urlBorrarAutor = 'https://localhost:44389/api/Autores/BorrarAutores/'
 
   private urlAutoresLibro = 'https://localhost:44389/api/Autores/SeleccionarAutoresLibro'; 
-  //private urlInsertarAutorLibro='https://localhost:44389/api/Autores/InsertarAutoresLibro';
+  private urlInsertarAutorLibro='https://localhost:44389/api/Autores/InsertarAutoresLibro';
+  private urlBorrarAutorLibro ='https://localhost:44389/api/Autores/BorrarAutoresLibros/'
 
   constructor(private http:HttpClient) { }
 
@@ -47,8 +48,8 @@ export class LibrosService  {
 
   /*************************LIBROS*************************/
 
-  getLibros(isbn:string, titulo:string, subtitulo:string, editorial:string, autor:string):Observable<LibrosModel[]>{  
-    return this.http.get<LibrosModel[]>(this.url + isbn + this.paramTitulo + titulo + this.paramSubtitulo + subtitulo + this.paramEditorial + editorial + this.paramAutor + autor)
+  getLibros(isbn:string, titulo:string, subtitulo:string, editorial:string):Observable<LibrosModel[]>{  
+    return this.http.get<LibrosModel[]>(this.url + isbn + this.paramTitulo + titulo + this.paramSubtitulo + subtitulo + this.paramEditorial + editorial)
   }
 
   postLibro(libro:LibrosModel){
@@ -81,18 +82,16 @@ export class LibrosService  {
 
   /**********************CATEGORIAS-LIBROS***********************/
 
-  getCategoriasLibro(id_categoria_libro:string, id_categoria:string, isbn:string){
-    return this.http.get<CategoriasLibrosModel[]>(this.urlCategoriasLibro + '?id_categoria_libro=' + id_categoria_libro + '&id_categoria=' + id_categoria + '&isbn=' + isbn);
+  getCategoriasLibro(isbn:string){
+    return this.http.get<CategoriasLibrosModel[]>(this.urlCategoriasLibro + '?isbn=' + isbn);
   }
   
   postCategoriasLibro(categoria_libro:CategoriasLibrosModel){
     return this.http.post(this.urlInsertarCategoriasLibro,categoria_libro);
   }
 
-  deleteCategoriasLibro(id_categorias_libro:any){
-    console.log(id_categorias_libro);
-    let options = {headers: this.getHeaders(),}
-    return this.http.delete(this.urlBorrarCategoriasLibro + `${id_categorias_libro}`, options)
+  deleteCategoriasLibro(id_categoria:any, isbn:any){
+    return this.http.delete(this.urlBorrarCategoriasLibro + '?id_categoria=' + id_categoria + '&isbn=' + isbn)
   }
 
   /*************************AUTORES*************************/
@@ -113,12 +112,16 @@ export class LibrosService  {
   /**********************AUTORES-LIBROS***********************/
 
 
-  getAutoresLibro(id_autor:string, isbn:string){
-    return this.http.get<AutoresLibrosModel[]>(this.urlAutoresLibro + '?id_autor=' + id_autor + '&isbn=' + isbn);
+  getAutoresLibro(isbn:string){
+    return this.http.get<AutoresLibrosModel[]>(this.urlAutoresLibro + '?isbn=' + isbn);
   }
 
   postAutoresLibro(autor_libro:AutoresLibrosModel){
-    return this.http.post(this.urlAutoresLibro, autor_libro);
+    return this.http.post(this.urlInsertarAutorLibro, autor_libro);
+  }
+
+  deleteAutoresLibro(id_autor:any, isbn:any){
+    return this.http.delete(this.urlBorrarAutorLibro + '?id_autor=' + id_autor + '&isbn=' + isbn);
   }
 
 

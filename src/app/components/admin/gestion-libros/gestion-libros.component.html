@@ -30,10 +30,13 @@
                     <td> {{libro.titulo}} </td>
                     <td> {{libro.subtitulo}} </td>
                     <td>
-                        <button class="btn btn-info" [routerLink]="['/actualizar-libro', libro.isbn]">
+                        <button class="btn btn-success" [routerLink]="['/prestamos', libro.isbn]" title="Prestamos">
+                            <i class="fa fa-book-reader"></i>
+                        </button>
+                        <button class="btn btn-info" [routerLink]="['/actualizar-libro', libro.isbn]" title="Actualizar">
                             <i class="fa fa-pen"></i>
                         </button>
-                        <button (click)="borrarLibro(libro.isbn)" class="btn btn-danger">
+                        <button (click)="borrarLibro(libro.isbn)" class="btn btn-danger" title="Borrar"> 
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>

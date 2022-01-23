@@ -3,6 +3,7 @@ import { UsuarioModel } from '../models/usuarios.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ReservasModel } from '../models/reservas.model';
+import { PrestamosModel } from '../models/prestamos.models';
 
 
 @Injectable({
@@ -20,6 +21,9 @@ export class UsuarioService {
 
   private urlReserva = 'https://localhost:44389/api/Reservas/SeleccionarReservas';
   private urlInsertarReserva = 'https://localhost:44389/api/Reservas/InsertarReserva';
+
+  private urlPrestamo = 'https://localhost:44389/api/Prestamos/SeleccionarPrestamos';
+  private urlInsertarPrestamo = 'https://localhost:44389/api/Prestamos/InsertarPrestamos';
 
   private paramNombre ='&nombre=';
   private paramApellidos='&apellidos=';
@@ -57,6 +61,8 @@ export class UsuarioService {
     return this.http.get<UsuarioModel>(this.urlLogin + '?user=' + user + '&pass=' + pass)
   }
 
+  /**********************RESERVAS***********************/
+
   getReserva(isbn:string,dni:string){
     return this.http.get<ReservasModel[]>(this.urlReserva + '?dni=' + dni + '&isbn=' + isbn)
   }
@@ -65,6 +71,14 @@ export class UsuarioService {
     return this.http.post(this.urlInsertarReserva,reserva);
   }
 
+  /**********************PRESTAMOS***********************/
 
+  getPrestamo(isbn:string, dni:string){
+    return this.http.get<PrestamosModel[]>(this.urlPrestamo + '?isbn=' + isbn + '&dni=' + dni)
+  }
+
+  postPrestamo(prestamo:PrestamosModel){
+    return this.http.post(this.urlInsertarPrestamo, prestamo);
+  }
 
 }

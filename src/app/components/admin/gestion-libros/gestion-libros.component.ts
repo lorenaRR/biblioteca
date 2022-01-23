@@ -36,7 +36,7 @@ export class GestionLibrosComponent implements OnInit {
 
   verLibros(){
     this.librosService.getLibros(this.forma.controls.isbn.value, this.forma.controls.titulo.value,this.forma.controls.subtitulo.value,
-                      this.forma.controls.editorial.value,this.forma.controls.autor.value)
+                      this.forma.controls.editorial.value)
               .subscribe(resp=>{
                 this.libros = resp;
                 console.log(this.libros);

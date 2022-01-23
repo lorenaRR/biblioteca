@@ -25,7 +25,7 @@ const routes: Routes = [
   {path:'nuevo-libro', component: NuevoLibroComponent },
   {path:'actualizar-libro/:id', component: ActualizarLibroComponent },
   {path:'informes', component: InformesComponent },
-  {path:'prestamos', component: PrestamosComponent },
+  {path:'prestamos/:id', component: PrestamosComponent },
   {path:'user', component: UserComponent },
   {path:'mis-libros', component: MisLibrosComponent },
   {path:'catalogo', component: CatalogoComponent },

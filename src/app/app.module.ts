@@ -26,6 +26,8 @@ import { PrestamosComponent } from './components/admin/prestamos/prestamos.compo
 import { ActualizarComponent } from './components/admin/actualizar/actualizar.component';
 import { NuevoLibroComponent } from './components/admin/nuevo-libro/nuevo-libro.component';
 import { ActualizarLibroComponent } from './components/admin/actualizar-libro/actualizar-libro.component';
+import { CategoriasComponent } from './components/models/categorias/categorias.component';
+import { AutoresComponent } from './components/models/autores/autores.component';
 
 
 
@@ -48,6 +50,8 @@ import { ActualizarLibroComponent } from './components/admin/actualizar-libro/ac
     ActualizarComponent,
     NuevoLibroComponent,
     ActualizarLibroComponent,
+    CategoriasComponent,
+    AutoresComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,7 @@ import { LibrosService } from '../../../services/libros.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AutoresModel } from '../../../models/autores.model';
 import { ActualizarLibroComponent } from '../../admin/actualizar-libro/actualizar-libro.component';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-categorias',
@@ -46,7 +47,7 @@ export class CategoriasComponent implements OnInit {
     categoria.categoria=this.formaCategorias.controls.categoria.value.toUpperCase();
     this.librosService.postCategorias(categoria)
         .subscribe((resp:any)=>{
-          console.log(resp.Estado);
+          swal(resp.Estado);
           this.formaCategorias.reset();
           this.cargarCategorias();
         });
@@ -59,7 +60,7 @@ export class CategoriasComponent implements OnInit {
   borrarCategoria(id_categoria:string){
       this.librosService.deleteCategorias(id_categoria)
         .subscribe((resp:any)=>{
-          console.log(resp.Estado);
+          swal(resp.Estado);
           this.cargarCategorias();
         });
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../../services/usuario.service';
 import { UsuarioModel } from '../../../models/usuarios.model';
 import { ActivatedRoute } from '@angular/router';
+import swal from 'sweetalert';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class ActualizarComponent implements OnInit {
   actualizarFormulario(){
     this.usuarioService.putUsuario(this.usuario)
       .subscribe((resp:any)=>{
-        console.log(resp.Estado);
+        swal(resp.Estado);
       }) ;
   }
 
@@ -31,7 +32,6 @@ export class ActualizarComponent implements OnInit {
       .subscribe((resp:any)=>{
         this.usuario = resp[0];
         this.usuario.dni = this.id;
-        console.log(this.usuario);
       });
   }
 

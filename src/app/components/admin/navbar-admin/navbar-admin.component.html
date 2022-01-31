@@ -7,22 +7,25 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/admin">Administrador</a>
+                    <a class="nav-link" routerLink="/gestion-libros" [routerLinkActive]="['active']">Adminsitrar libros</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/nuevo">Nuevo usuario</a>
+                    <a class="nav-link" routerLink="/nuevo-libro" [routerLinkActive]="['active']">Nuevo libro</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/gestion-usuarios">Administrar usuarios</a>
+                    <a class="nav-link" routerLink="/devoluciones" [routerLinkActive]="['active']">Devoluciones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/nuevo-libro">Nuevo libro</a>
+                    <a class="nav-link" routerLink="/reservas" [routerLinkActive]="['active']">Reservas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/gestion-libros">Adminsitrar libros</a>
+                    <a class="nav-link" routerLink="/gestion-usuarios" [routerLinkActive]="['active']">Administrar usuarios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/informes">Informes</a>
+                    <a class="nav-link" routerLink="/nuevo" [routerLinkActive]="['active']">Nuevo usuario</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/informes" [routerLinkActive]="['active']">Informes</a>
                 </li>
             </ul>
         </div>

@@ -4,8 +4,11 @@ import { LibrosModel } from '../../../models/libros.model';
 import { LibrosService } from '../../../services/libros.service';
 import { CategoriasModel, CategoriasLibrosModel } from '../../../models/categorias.model';
 import { AutoresModel, AutoresLibrosModel } from '../../../models/autores.model';
-import { FormBuilder } from '@angular/forms';
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core';
 import * as moment from 'moment';
+import swal from 'sweetalert';
+
 
 
 
@@ -22,11 +25,9 @@ export class ActualizarLibroComponent implements OnInit {
   listaCategorias:CategoriasModel[] = [];
   autores: AutoresModel[] = [];
   listaAutores: AutoresModel[] = [];
-  cambioCat=false;
-  cambioAut=false;
-  noAutores = false;
+  swal!: SweetAlert;
 
-  constructor(private librosService:LibrosService,  private route:ActivatedRoute, private formBuilder:FormBuilder) { 
+  constructor(private librosService:LibrosService,  private route:ActivatedRoute) { 
 
   }
 
@@ -58,19 +59,17 @@ export class ActualizarLibroComponent implements OnInit {
       });
   }
 
-
-
   borrarAutorLibro(id_autor:string){
     this.librosService.deleteAutoresLibro(id_autor, this.libro.isbn)
       .subscribe((resp:any)=>{
-        console.log(resp.Estado);
+        swal(resp.Estado);
       });
   }
 
  borrarCategoriaLibro(id_categoria:string, isbn:string){
   this.librosService.deleteCategoriasLibro(id_categoria, isbn) 
     .subscribe((resp:any)=>{
-      console.log(resp.Estado);
+      swal(resp.Estado);
       this.getCategoriasLibro(this.libro);
     });
   }
@@ -81,7 +80,7 @@ export class ActualizarLibroComponent implements OnInit {
     categoria.isbn=this.libro.isbn;
     this.librosService.postCategoriasLibro(categoria) 
       .subscribe((resp:any)=>{
-        console.log(resp.Estado);
+        swal(resp.Estado);
         this.getCategoriasLibro(this.libro);
       });
   }
@@ -93,7 +92,7 @@ export class ActualizarLibroComponent implements OnInit {
     console.log(autor);
     this.librosService.postAutoresLibro(autor)
       .subscribe((resp:any)=>{
-        console.log(resp.Estado);
+        swal(resp.Estado);
         this.getAutoresLibro(this.libro);
       });
   }
@@ -101,7 +100,7 @@ export class ActualizarLibroComponent implements OnInit {
   actualizarLibro(){
     this.librosService.putLibro(this.libro)
       .subscribe((resp:any)=>{
-          console.log(resp.Estado);
+          swal(resp.Estado);
       });
   }
 

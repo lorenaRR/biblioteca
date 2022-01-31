@@ -20,7 +20,10 @@
             <h3>Editar contraseña:</h3>
             <div class="form-group mb-3">
                 <label class="form-label">Contraseña anterior: </label>
-                <input type="password" class="form-control" formControlName="pass">
+                <input type="password" class="form-control" formControlName="pass">  
+                <button class="btn btn-info" (click)="verPass()">
+                    <i class="fa fa-eye"></i>
+                </button>
             </div>
             <div class="form-group mb-3">
                 <label class="form-label">Repetir contraseña anterior: </label>

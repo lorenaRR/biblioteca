@@ -1,6 +1,10 @@
 <app-navbar-admin></app-navbar-admin>
 
 <div class="container m-5">
+    <div class="m-5">
+        <h1>Prestamos - Buscar usuario</h1>
+        <hr>
+    </div>
     <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5" style="width: 1500px;">
         <form class="m-5" (ngSubmit)="buscarUsuario()" [formGroup]="forma">
             <input type="text" class="form-control" formControlName="dni" placeholder="Dni">

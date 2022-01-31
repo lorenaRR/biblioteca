@@ -12,6 +12,8 @@ import { AutoresModel, AutoresLibrosModel } from '../models/autores.model';
 
 export class LibrosService  {
 
+  public mensaje!:string;
+
   private url='https://localhost:44389/api/Libros/SeleccionarLibros?isbn='; //LIBRO
   private urlInsertar = 'https://localhost:44389/api/Libros/InsertarLibros';
   private urlActualizarLibro = 'https://localhost:44389/api/Libros/ActualizarLibros';
@@ -36,7 +38,7 @@ export class LibrosService  {
 
   private urlAutoresLibro = 'https://localhost:44389/api/Autores/SeleccionarAutoresLibro'; 
   private urlInsertarAutorLibro='https://localhost:44389/api/Autores/InsertarAutoresLibro';
-  private urlBorrarAutorLibro ='https://localhost:44389/api/Autores/BorrarAutoresLibros/'
+  private urlBorrarAutorLibro ='https://localhost:44389/api/Autores/BorrarAutoresLibros/';
 
   constructor(private http:HttpClient) { }
 

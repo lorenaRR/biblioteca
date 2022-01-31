@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LibrosModel } from '../../../models/libros.model';
 import { AutoresModel } from '../../../models/autores.model';
 import { LibrosService } from '../../../services/libros.service';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-gestion-libros',
@@ -39,14 +40,13 @@ export class GestionLibrosComponent implements OnInit {
                       this.forma.controls.editorial.value)
               .subscribe(resp=>{
                 this.libros = resp;
-                console.log(this.libros);
               })
   }
 
   borrarLibro(isbn:string){
     this.librosService.deleteLibro(isbn)
-    .subscribe(resp=>{
-      console.log(resp);
+    .subscribe((resp:any)=>{
+      swal(resp.Estado);
     })
   }
 

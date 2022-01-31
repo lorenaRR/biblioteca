@@ -1,9 +1,11 @@
 <app-navbar-admin></app-navbar-admin>
 
 <div class="container m-5">
-    <div class="border border-light bg-light shadow-none p-3 mb-5 bg-light rounded" style="width: 1000px;">
-        <h1 class="text-center m-5">Nuevo libro</h1>
-        <hr>
+    <div class="border border-light bg-light shadow-none p-3 mb-5 bg-light rounded">
+        <div class="m-5">
+            <h1>Nuevo libro</h1>
+            <hr>
+        </div>
         <form class="m-5" (ngSubmit)="guardarFormulario()" [formGroup]="forma">
             <div class="form-group mb-3">
                 <label class="form-label">ISBN</label>
@@ -88,8 +90,8 @@
                 <label class="form-label">Stock</label>
                 <input type="number" class="form-control" formControlName="stock">
             </div>
-
-            <button type="submit" class="btn btn-primary">Enviar</button>
+            <br>
+            <button type="submit" class="btn btn-primary">Crear nuevo libro</button>
         </form>
     </div>
 </div>

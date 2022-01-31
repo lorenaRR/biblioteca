@@ -1,3 +1,4 @@
+import { LibrosService } from '../services/libros.service';
 
 export class UsuarioModel{
     nombre!:string;
@@ -9,4 +10,5 @@ export class UsuarioModel{
     email!:string;
     usuario!:string;
     password!:string;
+    libros!:LibrosService[];
 }

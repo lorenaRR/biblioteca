@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService } from '../../../services/usuario.service';
 import { UsuarioModel } from '../../../models/usuarios.model';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-nuevo',
@@ -68,7 +69,7 @@ export class NuevoComponent implements OnInit {
 
     this.usuarioService.postUsuario(this.forma.controls.dni.value, usuarioNuevo)
       .subscribe((resp:any)=>{
-        console.log(resp.Estado);
+          swal(resp.Estado);
       }) ;
 
     if(this.forma.invalid){

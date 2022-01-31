@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UsuarioService } from '../../../services/usuario.service';
 import { UsuarioModel } from '../../../models/usuarios.model';
+import swal from 'sweetalert';
 
 
 @Component({
@@ -40,14 +41,14 @@ export class GestionUsuariosComponent implements OnInit {
     this.usuarioService.getUsuario(this.forma.controls.dni.value, this.forma.controls.nombre.value,this.forma.controls.apellidos.value,this.forma.controls.admin.value)
       .subscribe(resp=>{
         this.usuarios = resp;
-        console.log(this.usuarios);
       })
   }
 
   borrarUsuario(dni:string){
     this.usuarioService.deleteUsuario(dni)
-      .subscribe(resp=>{
-        console.log(resp);
+      .subscribe((resp:any)=>{
+        swal(resp.Estado);
+        this.verUsuario();
       })
   }
 

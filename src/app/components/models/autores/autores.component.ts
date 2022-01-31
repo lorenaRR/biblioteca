@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AutoresModel } from 'src/app/models/autores.model';
+import swal from 'sweetalert';
 import { LibrosService } from '../../../services/libros.service';
 import { ActualizarLibroComponent } from '../../admin/actualizar-libro/actualizar-libro.component';
 
@@ -14,7 +15,6 @@ export class AutoresComponent implements OnInit {
   formaAutores!:FormGroup;
   autores: AutoresModel[] = [];
   listaAutores: AutoresModel[] = [];
-  cambioAut=false;
   noAutores = false;
 
   constructor(private formBuilder:FormBuilder, private librosService:LibrosService,private actualizarLibroComponent:ActualizarLibroComponent) { 
@@ -38,6 +38,9 @@ export class AutoresComponent implements OnInit {
       if (this.listaAutores.length==0){
         this.noAutores=true;
       }
+      else{
+        this.noAutores=false;
+      }
       });
   }
 
@@ -48,25 +51,19 @@ export class AutoresComponent implements OnInit {
 
     this.librosService.postAutores(autor)
       .subscribe((resp:any)=>{
-        console.log(resp);
+        swal(resp.Estado);
       });
   }
 
   insertarAutorLibro(id_autor:string){ 
-    console.log(id_autor);
     this.actualizarLibroComponent.insertarAutorLibro(id_autor);
   }
 
   borrarAutor(id_autor:string){ 
     this.librosService.deleteAutor(id_autor)
         .subscribe((resp:any)=>{
-          console.log(resp.Estado);
+          swal(resp.Estado);
         });
   }
-
- 
-
-
-
 
 }

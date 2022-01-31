@@ -24,6 +24,7 @@ export class UsuarioService {
 
   private urlPrestamo = 'https://localhost:44389/api/Prestamos/SeleccionarPrestamos';
   private urlInsertarPrestamo = 'https://localhost:44389/api/Prestamos/InsertarPrestamos';
+  private urlActualizarPrestamo = 'https://localhost:44389/api/Prestamos/ActualizarPrestamos'
 
   private paramNombre ='&nombre=';
   private paramApellidos='&apellidos=';
@@ -79,6 +80,10 @@ export class UsuarioService {
 
   postPrestamo(prestamo:PrestamosModel){
     return this.http.post(this.urlInsertarPrestamo, prestamo);
+  }
+
+  putPrestamo(prestamo:PrestamosModel){
+    return this.http.put(this.urlActualizarPrestamo, prestamo);
   }
 
 }

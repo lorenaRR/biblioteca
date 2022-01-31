@@ -11,7 +11,6 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/shared/login/login.component';
 import { GestionUsuariosComponent } from './components/admin/gestion-usuarios/gestion-usuarios.component';
 import { MisLibrosComponent } from './components/user/mis-libros/mis-libros.component';
-import { AdminComponent } from './components/admin/admin/admin.component';
 
 import { UserComponent } from './components/user/user/user.component';
 import { NavbarUserComponent } from './components/user/navbar-user/navbar-user.component';
@@ -28,6 +27,9 @@ import { NuevoLibroComponent } from './components/admin/nuevo-libro/nuevo-libro.
 import { ActualizarLibroComponent } from './components/admin/actualizar-libro/actualizar-libro.component';
 import { CategoriasComponent } from './components/models/categorias/categorias.component';
 import { AutoresComponent } from './components/models/autores/autores.component';
+import { DevolucionesComponent } from './components/admin/devoluciones/devoluciones.component';
+import { ReservasComponent } from './components/admin/reservas/reservas.component';
+import { MensajeComponent } from './components/models/mensaje/mensaje.component';
 
 
 
@@ -37,7 +39,6 @@ import { AutoresComponent } from './components/models/autores/autores.component'
     LoginComponent,
     GestionUsuariosComponent,
     MisLibrosComponent,
-    AdminComponent,
     UserComponent,
     NavbarUserComponent,
     NavbarAdminComponent,
@@ -52,6 +53,9 @@ import { AutoresComponent } from './components/models/autores/autores.component'
     ActualizarLibroComponent,
     CategoriasComponent,
     AutoresComponent,
+    DevolucionesComponent,
+    ReservasComponent,
+    MensajeComponent,
   ],
   imports: [
     BrowserModule,

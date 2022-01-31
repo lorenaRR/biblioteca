@@ -1,6 +1,10 @@
 <app-navbar-admin></app-navbar-admin>
 <div class="container m-5">
-    <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5" style="width: 1500px;">
+    <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5">
+        <div class="m-5">
+            <h1>Gestión de libros y préstamos</h1>
+            <hr>
+        </div>
         <form class="m-5" (ngSubmit)="verLibros()" [formGroup]="forma">
             <input type="text" class="form-control" formControlName="isbn" placeholder="ISBN">
             <input type="text" class="form-control" formControlName="titulo" placeholder="Título">

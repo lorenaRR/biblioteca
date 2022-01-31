@@ -17,5 +17,6 @@ export class LibrosModel{
     autores!:            AutoresModel[];
     fechaPrestamo!:      Date;
     fechaEntrega!:       Date;
+    fechaDevolucion!:       Date;
 }
 

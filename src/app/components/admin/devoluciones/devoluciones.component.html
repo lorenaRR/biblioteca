@@ -1,7 +1,11 @@
 <app-navbar-admin></app-navbar-admin>
 
 <div class="container m-5">
-    <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5" style="width: 1500px;">
+    <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5">
+        <div class="m-5">
+            <h1>Administrar devoluciones</h1>
+            <hr>
+        </div>
         <form class="m-5" (ngSubmit)="buscarPrestamos()" [formGroup]="forma">
             <input type="text" class="form-control" formControlName="dni" placeholder="Dni">
             <br><br>
@@ -20,15 +24,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr [ngStyle]="{'background-color': hoy > prestamo.fechaEntrega  ? '#CD5C5C' : ''}" *ngFor="let prestamo of prestamos">
-                    <td> {{prestamo.dni}} </td>
-                    <td> {{prestamo.isbn}} </td>
+                <tr [ngStyle]="{'background-color': prestamo.fechaInvalida  ? '#CD5C5C' : ''}" *ngFor="let prestamo of prestamos">
+                    <td> <a> {{prestamo.dni}} </a> </td>
+                    <td> <a> {{prestamo.isbn}} </a> </td>
                     <td> {{prestamo.fechaPrestamo | date:'d/M/yy'}} </td>
                     <td> {{prestamo.fechaEntrega | date:'d/M/yy'}} </td>
+                    <td>
+                        <button class="btn btn-primary" (click)="devolverLibro(prestamo)">Devolver</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
-    </div>
-</div>
 
-<!-- <router-outlet></router-outlet> -->
+    </div>
+
+</div>

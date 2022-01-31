@@ -8,8 +8,11 @@
         <input type="text" class="form-control" formControlName="isbn" placeholder="ISBN">
         <input type="text" class="form-control" formControlName="titulo" placeholder="Título">
         <input type="text" class="form-control" formControlName="subtitulo" placeholder="Subtítulo">
-        <input type="text" class="form-control" formControlName="autor" placeholder="Autor">
         <input type="text" class="form-control" formControlName="editorial" placeholder="Editorial">
+        <input type="text" class="form-control" formControlName="autor" placeholder="Autor">
+        <select class="form-select" formControlName="categorias">
+            <option *ngFor="let categoria of categorias">{{categoria}}</option>
+        </select>
         <br><br>
         <button type="submit" class="btn btn-primary">Buscar</button>
     </form>

@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
               {
                 this.cnt2++;
                 if (this.usuarioService.currentUser.admin) {
-                  this.router.navigate(['/admin']);
+                  this.router.navigate(['/gestion-libros']);
                 }
                 else{
                   this.router.navigate(['/user']);

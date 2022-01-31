@@ -1,8 +1,10 @@
 <app-navbar-admin></app-navbar-admin>
 <div class="container m-5">
-    <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5" style="width: 800px;">
-        <h1 class="text-center m-5">Nuevo usuario</h1>
-        <hr>
+    <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5">
+        <div class="m-5">
+            <h1>Nuevo usuario</h1>
+            <hr>
+        </div>
         <form class="m-5" (ngSubmit)="guardarFormulario()" [formGroup]="forma">
             <div class="form-group mb-3">
                 <label class="form-label">Nombre</label>
@@ -30,7 +32,8 @@
                 <input type="email" class="form-control" formControlName="email">
                 <small class="form-text text-muted">Este campo se usará como primera contraseña</small>
             </div>
-            <button type="submit" class="btn btn-primary">Enviar</button>
+            <br>
+            <button type="submit" class="btn btn-primary">Crear nuevo usuario</button>
         </form>
     </div>
 </div>

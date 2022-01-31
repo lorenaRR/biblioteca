@@ -1,6 +1,10 @@
 <app-navbar-admin></app-navbar-admin>
 <div class="container m-5">
-    <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5" style="width: 1500px;">
+    <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5">
+        <div class="m-5">
+            <h1>Gestión de usuarios</h1>
+            <hr>
+        </div>
         <form class="m-5" (ngSubmit)="verUsuario()" [formGroup]="forma">
             <input type="text" class="form-control" formControlName="dni" placeholder="Dni">
             <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre">
@@ -12,6 +16,7 @@
                 <label class="form-check-label">Administradores</label><br>
                 <input type="radio" class="form-check-input" formControlName="admin" value="0">
                 <label class="form-check-label">Usuarios</label>
+                <!-- <input class="form-check-input" type="radio" id="rbIndividual" name="rbIndividual" [(ngModel)]="model.individual" value="S"> -->
             </div>
             <br><br>
 

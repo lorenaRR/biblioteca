@@ -12,8 +12,11 @@ import { LibrosModel } from '../../../models/libros.model';
 })
 export class MisLibrosComponent implements OnInit {
 
+    todosPrestamos: PrestamosModel[] = [];
     prestamos: PrestamosModel[] = [];
+    leidos:PrestamosModel[] =[];
     libros:LibrosModel[]=[];
+    librosLeidos:LibrosModel[]=[];
 
    constructor(private usuarioService:UsuarioService, private librosService:LibrosService) {
 
@@ -41,6 +44,7 @@ export class MisLibrosComponent implements OnInit {
         .subscribe((resp:any)=>{
           libro.fechaPrestamo = resp[0].fechaPrestamo;
           libro.fechaEntrega = resp[0].fechaEntrega;
+          libro.fechaDevolucion = resp[0].fechaDevolucion;
         })
    }
 
@@ -56,12 +60,32 @@ export class MisLibrosComponent implements OnInit {
   ngOnInit(): void {
       this.usuarioService.getPrestamo('',this.usuarioService.currentUser.dni)  //Busca prestamos
         .subscribe((resp:any)=>{
-          this.prestamos = resp;
+          this.todosPrestamos = resp;
+          this.todosPrestamos.forEach(tprestamo => {
+            if(tprestamo.fechaDevolucion==null){
+              this.prestamos.push(tprestamo);
+            }
+            else{
+              this.leidos.push(tprestamo);
+            }
+          });
           this.prestamos.forEach(prestamo => {
             this.librosService.getLibros(prestamo.isbn,'','','') //Busca los datos del libro del prestamo
               .subscribe((resp:any)=>{
                   this.libros.push(resp[0]);
                   this.libros.forEach(libro => {
+                    console.log(libro);
+                    this.getAutores(libro);
+                    this.getCategorias(libro);
+                    this.getFechas(libro);
+                  });
+              });
+          });
+          this.leidos.forEach(leido => {
+            this.librosService.getLibros(leido.isbn,'','','') //Busca los datos del libro del prestamo
+              .subscribe((resp:any)=>{
+                  this.librosLeidos.push(resp[0]);
+                  this.librosLeidos.forEach(libro => {
                     console.log(libro);
                     this.getAutores(libro);
                     this.getCategorias(libro);

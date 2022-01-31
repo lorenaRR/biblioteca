@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioModel } from '../../../models/usuarios.model';
 import { UsuarioService } from '../../../services/usuario.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-user',
@@ -44,7 +45,7 @@ export class UserComponent implements OnInit {
     this.usuario.usuario = this.formaUsu.controls.user.value;
     this.usuarioService.putUsuario(this.usuario)
           .subscribe((resp:any)=>{
-        console.log(resp.Estado);
+            swal(resp.Estado);
       }) ;
   }
 
@@ -53,11 +54,15 @@ export class UserComponent implements OnInit {
         this.usuario.password = this.formaPass.controls.new.value;
         this.usuarioService.putUsuario(this.usuario)
           .subscribe((resp:any)=>{
-        console.log(resp.Estado);
+          swal(resp.Estado);
       }) ;
       }
       else{
         this.passwordNoValido = true;
       }
+  }
+
+  verPass(){
+   
   }
 }

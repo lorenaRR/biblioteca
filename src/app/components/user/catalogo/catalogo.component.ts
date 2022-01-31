@@ -18,6 +18,7 @@ import { AutoresModel } from '../../../models/autores.model';
 export class CatalogoComponent {
 
 libros: LibrosModel [] = [];
+categorias:string[] = [];
 
 categoria_libro: CategoriasModel = new CategoriasModel;
 categoriasLibro:CategoriasModel[]=[];
@@ -30,20 +31,22 @@ forma!: FormGroup;
 
 constructor(private librosService:LibrosService, private formBuilder:FormBuilder, private router:Router) { 
   this.crearFormulario();
+  this.cargarListaCategorias();
 }
 
 ngOnInit(): void {
-
+    
 }
 
 
  crearFormulario(){
     this.forma=this.formBuilder.group({
-        titulo:['', [Validators.required]],
-        subtitulo:['', [Validators.required]],
-        autor:['', [Validators.required]],
-        editorial:['', [Validators.required]],
-        isbn:['', [Validators.required]],
+        titulo:[''],
+        subtitulo:[''],
+        autor:[''],
+        categorias:[''],
+        editorial:[''],
+        isbn:[''],
         });
   }
 
@@ -54,9 +57,8 @@ ngOnInit(): void {
     let subtitulo = this.forma.controls.subtitulo.value;
     let autor = this.forma.controls.autor.value;
     let editorial = this.forma.controls.editorial.value;
+    let categoria = this.forma.controls.categorias.value;
 
-    console.log(this.libros);
- 
     this.libros=[];
   
     this.librosService.getLibros(isbn,titulo,subtitulo,editorial)
@@ -64,12 +66,9 @@ ngOnInit(): void {
       this.libros=resp;
       this.libros.forEach(libro => {  //Recorro todos los libros
           this.getAutoresLibro(libro); //Lleno el array de autores de cada libro
-          this.getCategoriasLibro(libro);
-          console.log(this.libros);
+          this.getCategoriasLibro(libro);          
       });
     });
-
-   
   
   }
 
@@ -85,6 +84,16 @@ ngOnInit(): void {
     this.librosService.getCategoriasLibro(libro.isbn)
       .subscribe((resp:any)=>{
         libro.categorias = resp;
+      });
+  }
+
+  cargarListaCategorias(){
+    this.librosService.getCategorias('', '')
+      .subscribe((resp)=>{
+        this.categorias.push('TODAS');
+        resp.forEach(categoria => {
+          this.categorias.push(categoria.categoria);
+        }); 
       });
   }
 

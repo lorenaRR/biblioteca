@@ -1,0 +1,41 @@
+<app-navbar-admin></app-navbar-admin>
+
+<div class="container m-5">
+    <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5" style="width: 1500px;">
+        <div class="m-5">
+            <h1>Reservas</h1>
+            <hr>
+        </div>
+        <form class="m-5" (ngSubmit)="buscarReservas()" [formGroup]="forma">
+            <input type="text" class="form-control" formControlName="dni" placeholder="Dni">
+            <input type="text" class="form-control" formControlName="isbn" placeholder="ISBN">
+            <input type="text" class="form-control" formControlName="titulo" placeholder="Título">
+            <br><br>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+        <br>
+        <hr>
+        <br>
+        <table class="table" *ngIf="reservas">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">DNI</th>
+                    <th scope="col">ISBN</th>
+                    <th scope="col">Fecha Reserva</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let reserva of reservas">
+                    <td> <a> {{reserva.dni}} </a> </td>
+                    <td> <a> {{reserva.isbn}} </a> </td>
+                    <td> {{reserva.fecha_reserva | date:'d/M/yy'}} </td>
+                    <td>
+                        <button class="btn btn-primary" (click)="cancelarReserva(reserva)">Cancelar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>

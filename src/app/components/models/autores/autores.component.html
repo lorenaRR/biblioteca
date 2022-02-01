@@ -10,14 +10,14 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form class="m-5" (ngSubmit)="buscarAutor()" [formGroup]="formaAutores">
+                <form class="m-5" (ngSubmit)="buscarAutor()" #f="ngForm">
                     <div class="form-group mb-3">
                         <label class="form-label">Nombre: </label>
-                        <input type="text" class="form-control" formControlName="nombre">
+                        <input type="text" class="form-control" [(ngModel)]="autor.nombre" name="nombre">
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label">Apellidos: </label>
-                        <input type="text" class="form-control" formControlName="apellidos">
+                        <input type="text" class="form-control" [(ngModel)]="autor.apellidos" name="apellidos">
                     </div>
                     <button type="submit" class="btn btn-primary m-3">Buscar</button>
                     <button type="button" class="btn btn-primary" (click)="insertarAutor()">Añadir</button>
@@ -27,7 +27,7 @@
                     </div>
                     <div class="list-group" *ngIf="listaAutores">
                         <div *ngFor="let autor of listaAutores">
-                            <a class="list-group-item list-group-item-action" style="float: left; width: 85%;" (click)="insertarAutorLibro(autor.id_autor)">
+                            <a class="list-group-item list-group-item-action" style="float: left; width: 85%;" (click)="insertarAutorLibro(autor)">
                                 {{autor.nombre}} {{autor.apellidos}}
                              </a>
                             <button class="btn btn-danger" style="float: right; width: 15%;" (click)="borrarAutor(autor.id_autor)">

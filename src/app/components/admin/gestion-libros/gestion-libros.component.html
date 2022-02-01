@@ -5,12 +5,12 @@
             <h1>Gestión de libros y préstamos</h1>
             <hr>
         </div>
-        <form class="m-5" (ngSubmit)="verLibros()" [formGroup]="forma">
-            <input type="text" class="form-control" formControlName="isbn" placeholder="ISBN">
-            <input type="text" class="form-control" formControlName="titulo" placeholder="Título">
-            <input type="text" class="form-control" formControlName="subtitulo" placeholder="Subtítulo">
-            <input type="text" class="form-control" formControlName="autor" placeholder="Autor">
-            <input type="text" class="form-control" formControlName="editorial" placeholder="Editorial">
+        <form class="m-5" (ngSubmit)="verLibros()" #f="ngForm">
+            <input type="text" class="form-control" [(ngModel)]="isbn" name="isbn" placeholder="ISBN">
+            <input type="text" class="form-control" [(ngModel)]="titulo" name="titulo" placeholder="Título">
+            <input type="text" class="form-control" [(ngModel)]="subtitulo" name="subtitulo" placeholder="Subtítulo">
+            <input type="text" class="form-control" [(ngModel)]="autor" name="autor" placeholder="Autor">
+            <input type="text" class="form-control" [(ngModel)]="editorial" name="editorial" placeholder="Editorial">
 
 
             <br><br>

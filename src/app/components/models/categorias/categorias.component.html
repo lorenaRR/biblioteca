@@ -10,16 +10,16 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form class="m-5" [formGroup]="formaCategorias">
+                <form class="m-5" #f="ngForm">
                     <div class="form-group mb-3">
                         <label class="form-label">Categoría: </label>
-                        <input type="text" class="form-control" formControlName="categoria">
+                        <input type="text" class="form-control" [(ngModel)]="categoria.categoria" name="categoria">
                     </div>
                     <button type="button" class="btn btn-primary" (click)="insertarCategoria()">Añadir</button>
                     <br><br>
                     <div class="list-group" *ngIf="listaCategorias">
                         <div *ngFor="let categoria of listaCategorias">
-                            <a class="list-group-item list-group-item-action col-4" style="float: left; width: 85%;" (click)="insertarCategoriaLibro(categoria.id_categoria)">
+                            <a class="list-group-item list-group-item-action col-4" style="float: left; width: 85%;" (click)="insertarCategoriaLibro(categoria)">
                                 {{categoria.categoria}}
                             </a>
                             <button class="btn btn-danger" style="float: right; width: 15%;" (click)="borrarCategoria(categoria.id_categoria)">

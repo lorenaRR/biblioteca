@@ -22,9 +22,9 @@ export class ActualizarLibroComponent implements OnInit {
   libro: any;
   id:any;
   categorias: CategoriasModel[] = [];
-  listaCategorias:CategoriasModel[] = [];
   autores: AutoresModel[] = [];
-  listaAutores: AutoresModel[] = [];
+  autores_libros: AutoresLibrosModel[] = [];
+  categorias_libros: CategoriasLibrosModel[] = [];
   swal!: SweetAlert;
 
   constructor(private librosService:LibrosService,  private route:ActivatedRoute) { 
@@ -45,57 +45,76 @@ export class ActualizarLibroComponent implements OnInit {
   
   }
 
+  addAutor(autor: AutoresModel) {
+    this.autores.push(autor);
+    let autor_libro:AutoresLibrosModel = new AutoresLibrosModel;
+      autor_libro.isbn = this.libro.isbn;
+      autor_libro.id_autor = autor.id_autor;
+      this.autores_libros.push(autor_libro);
+      this.autores_libros.forEach(aut_libro => {
+        this.librosService.postAutoresLibro(aut_libro)
+          .subscribe((resp:any)=>{
+            swal(resp.Estado);
+          });
+      });
+  }
+
+  addCategoria(categoria: CategoriasModel){ 
+    this.categorias.push(categoria);
+    let categoria_libro:CategoriasLibrosModel = new CategoriasLibrosModel;
+      categoria_libro.isbn=this.libro.isbn;
+      categoria_libro.id_categoria=categoria.id_categoria;
+      this.categorias_libros.push(categoria_libro);
+      this.categorias_libros.forEach(cat_libro => {
+        this.librosService.postCategoriasLibro(cat_libro)
+          .subscribe((resp:any)=>{
+            swal(resp.Estado);
+          });
+      });
+  }
+
   getAutoresLibro(libro:LibrosModel){
-    this.librosService.getAutoresLibro(libro.isbn) 
+    this.librosService.getAutoresLibro(libro.isbn,'') 
       .subscribe((resp:any)=>{
-          libro.autores=resp;
+          console.log(resp);
+          let autores_libros:AutoresLibrosModel[];
+          autores_libros = resp;
+          autores_libros.forEach(autor_libro => {
+            console.log(autor_libro.id_autor);
+            this.librosService.getAutores(autor_libro.id_autor,'','')
+              .subscribe((resp:any)=>{
+                console.log(resp);
+                this.autores=resp;
+              });
+          });
     });
   }
 
   getCategoriasLibro(libro:LibrosModel){
-    this.librosService.getCategoriasLibro(libro.isbn)
+    this.librosService.getCategoriasLibro(libro.isbn,'')
       .subscribe((resp:any)=>{
-        libro.categorias = resp;
+        console.log(resp);
+        this.categorias = resp;
       });
   }
 
-  borrarAutorLibro(id_autor:string){
-    this.librosService.deleteAutoresLibro(id_autor, this.libro.isbn)
+  borrarAutorLibro(autor:AutoresModel){ //Borrar autor lista
+    this.autores = this.autores.filter(e => e!==autor);
+    this.librosService.deleteAutoresLibro(autor.id_autor, this.libro.isbn)
       .subscribe((resp:any)=>{
         swal(resp.Estado);
       });
   }
 
- borrarCategoriaLibro(id_categoria:string, isbn:string){
-  this.librosService.deleteCategoriasLibro(id_categoria, isbn) 
+  borrarCategoriaLibro(categoria:CategoriasModel){//Borrar categoria lista
+    this.categorias = this.categorias.filter(e => e!==categoria);
+    this.librosService.deleteCategoriasLibro(categoria.id_categoria, this.libro.isbn) 
     .subscribe((resp:any)=>{
       swal(resp.Estado);
       this.getCategoriasLibro(this.libro);
     });
   }
 
-  insertarCategoriaLibro(id_categoria:string){
-    let categoria:CategoriasLibrosModel= new CategoriasLibrosModel;
-    categoria.id_categoria=id_categoria;
-    categoria.isbn=this.libro.isbn;
-    this.librosService.postCategoriasLibro(categoria) 
-      .subscribe((resp:any)=>{
-        swal(resp.Estado);
-        this.getCategoriasLibro(this.libro);
-      });
-  }
-
-  insertarAutorLibro(id_autor:string){
-    let autor:AutoresLibrosModel = new AutoresLibrosModel;
-    autor.id_autor= id_autor;
-    autor.isbn=this.libro.isbn;
-    console.log(autor);
-    this.librosService.postAutoresLibro(autor)
-      .subscribe((resp:any)=>{
-        swal(resp.Estado);
-        this.getAutoresLibro(this.libro);
-      });
-  }
 
   actualizarLibro(){
     this.librosService.putLibro(this.libro)

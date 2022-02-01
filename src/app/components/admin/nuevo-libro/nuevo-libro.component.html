@@ -1,4 +1,6 @@
 <app-navbar-admin></app-navbar-admin>
+<app-autores (addAutor)="addAutor($event)"></app-autores>
+<app-categorias (addCategoria)="addCategoria($event)"></app-categorias>
 
 <div class="container m-5">
     <div class="border border-light bg-light shadow-none p-3 mb-5 bg-light rounded">
@@ -6,20 +8,20 @@
             <h1>Nuevo libro</h1>
             <hr>
         </div>
-        <form class="m-5" (ngSubmit)="guardarFormulario()" [formGroup]="forma">
+        <form class="m-5" (ngSubmit)="guardarFormulario()" #f="ngForm">
             <div class="form-group mb-3">
                 <label class="form-label">ISBN</label>
-                <input type="text" class="form-control" formControlName="isbn">
+                <input type="text" class="form-control" [(ngModel)]="libro.isbn" name="isbn">
             </div>
 
             <div class="form-group mb-3">
                 <label class="form-label">Título</label>
-                <input type="text" class="form-control" formControlName="titulo">
+                <input type="text" class="form-control" [(ngModel)]="libro.titulo" name="titulo">
             </div>
 
             <div class="form-group mb-3">
                 <label class="form-label">Subtítulo</label>
-                <input type="text" class="form-control" formControlName="subtitulo">
+                <input type="text" class="form-control" [(ngModel)]="libro.subtitulo" name="subtitulo">
             </div>
 
             <div class="form-group mb-3">
@@ -28,12 +30,12 @@
                     <i class="fa fa-sm fa-plus"></i>
                 </button>
                 <br>
-                <table *ngIf="nombre_autores_libro" class="table">
+                <table *ngIf="autores" class="table">
                     <tbody>
-                        <tr *ngFor="let nombre of nombre_autores_libro">
-                            <th>{{nombre}}</th>
+                        <tr *ngFor="let autor of autores">
+                            <th>{{autor.nombre}} {{autor.apellidos}}</th>
                             <th>
-                                <button class="btn btn-danger">
+                                <button type="button" class="btn btn-danger" (click)="borrarAutorLibro(autor)">
                                 <i class="fa fa-trash"></i>
                             </button>
                             </th>
@@ -44,22 +46,22 @@
 
             <div class="form-group mb-3">
                 <label class="form-label">Fecha de Publicación</label>
-                <input type="date" class="form-control" formControlName="fechaPublicacion">
+                <input type="date" class="form-control" [(ngModel)]="libro.fechaPublicacion" name="fechaPublicacion">
             </div>
 
             <div class="form-group mb-3">
                 <label class="form-label">Editorial</label>
-                <input type="text" class="form-control" formControlName="editorial">
+                <input type="text" class="form-control" [(ngModel)]="libro.editorial" name="editorial">
             </div>
 
             <div class="form-group mb-3">
                 <label class="form-label">Páginas</label>
-                <input type="number" class="form-control" formControlName="nPaginas">
+                <input type="number" class="form-control" [(ngModel)]="libro.nPaginas" name="nPaginas">
             </div>
 
             <div class="form-group mb-3">
                 <label class="form-label">Descipción</label>
-                <textarea class="form-control" formControlName="descripcion" cols="30" rows="10" maxlength="500"></textarea>
+                <textarea class="form-control" [(ngModel)]="libro.descripcion" name="descripcion" cols="30" rows="10" maxlength="500"></textarea>
             </div>
 
             <div class="form-group xmb-3">
@@ -68,12 +70,12 @@
                     <i class="fa fa-sm fa-plus"></i>
                 </button>
             </div>
-            <table *ngIf="nombre_categorias_libro" class="table">
+            <table *ngIf="categorias" class="table">
                 <tbody>
-                    <tr *ngFor="let categoria of nombre_categorias_libro">
-                        <th>{{categoria}}</th>
+                    <tr *ngFor="let categoria of categorias">
+                        <th>{{categoria.categoria}}</th>
                         <th>
-                            <button class="btn btn-danger">
+                            <button type="button" class="btn btn-danger" (click)="borrarCategoriaLibro(categoria)">
                             <i class="fa fa-trash"></i>
                         </button>
                         </th>
@@ -83,92 +85,15 @@
 
             <div class="form-group mb-3">
                 <label class="form-label">Link de Imágen</label>
-                <input type="text" class="form-control" formControlName="imagen">
+                <input type="text" class="form-control" [(ngModel)]="libro.imagen" name="imagen">
             </div>
 
             <div class="form-group mb-3">
                 <label class="form-label">Stock</label>
-                <input type="number" class="form-control" formControlName="stock">
+                <input type="number" class="form-control" [(ngModel)]="libro.stock" name="stock">
             </div>
             <br>
             <button type="submit" class="btn btn-primary">Crear nuevo libro</button>
         </form>
-    </div>
-</div>
-
-<div class="modal" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Autores</h4>
-                <button type="button" class="btn btn-light" data-dismiss="modal"> <i class="fa fa-times" style="color: gray;"></i> </button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form class="m-5" (ngSubmit)="buscarAutor()" [formGroup]="formaAutores">
-                    <div class="form-group mb-3">
-                        <label class="form-label">Nombre: </label>
-                        <input type="text" class="form-control" formControlName="nombre">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="form-label">Apellidos: </label>
-                        <input type="text" class="form-control" formControlName="apellidos">
-                    </div>
-                    <button type="submit" class="btn btn-primary m-3">Buscar</button>
-                    <button type="button" class="btn btn-primary" (click)="insertarAutor()">Añadir</button>
-                    <br><br>
-                    <div class="list-group" *ngIf="autores">
-                        <a class="list-group-item list-group-item-action" *ngFor="let autor of autores" (click)="addAutorLibro(autor.id_autor)">
-                           {{autor.nombre}} {{autor.apellidos}}
-                        </a>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="myModal2">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Categorías</h4>
-                <button type="button" class="btn btn-light" data-dismiss="modal"> <i class="fa fa-times" style="color: gray;"></i> </button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form class="m-5" [formGroup]="formaCategorias">
-                    <div class="form-group mb-3">
-                        <label class="form-label">Categoría: </label>
-                        <input type="text" class="form-control" formControlName="categoria">
-                    </div>
-                    <button type="button" class="btn btn-primary" (click)="insertarCategoria()">Añadir</button>
-                    <br><br>
-                    <div class="list-group" *ngIf="categorias">
-                        <a class="list-group-item list-group-item-action" *ngFor="let categoria of categorias" (click)="addCategoriaLibro(categoria.id_categoria)">
-                           {{categoria.categoria}}
-                        </a>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-
-        </div>
     </div>
 </div>

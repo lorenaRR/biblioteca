@@ -22,7 +22,6 @@ export class LibrosService  {
   private paramTitulo ='&titulo='; //PARAMETROS
   private paramSubtitulo='&subtitulo=';
   private paramEditorial='&editorial=';
-  private paramAutor='&autor=';
   
   private urlCategorias='https://localhost:44389/api/Categorias/SeleccionarCategorias'; //CATEGORIAS
   private urlInsertarCategoria = 'https://localhost:44389/api/Categorias/InsertarCategorias';
@@ -33,6 +32,7 @@ export class LibrosService  {
   private urlBorrarCategoriasLibro = 'https://localhost:44389/api/Categorias/BorrarCategoriasLibros/';
   
   private urlAutores = 'https://localhost:44389/api/Autores/SeleccionarAutores'; //AUTORES
+  private urlAutoresUnCampo = 'https://localhost:44389/api/Autores/SeleccionarAutoresLibroUnCampo'
   private urlInsertarAutor = 'https://localhost:44389/api/Autores/InsertarAutores';
   private urlBorrarAutor = 'https://localhost:44389/api/Autores/BorrarAutores/'
 
@@ -84,8 +84,8 @@ export class LibrosService  {
 
   /**********************CATEGORIAS-LIBROS***********************/
 
-  getCategoriasLibro(isbn:string){
-    return this.http.get<CategoriasLibrosModel[]>(this.urlCategoriasLibro + '?isbn=' + isbn);
+  getCategoriasLibro(isbn:string, id_categoria:string){
+    return this.http.get<CategoriasLibrosModel[]>(this.urlCategoriasLibro + '?isbn=' + isbn + '&id_categoria=' + id_categoria);
   }
   
   postCategoriasLibro(categoria_libro:CategoriasLibrosModel){
@@ -102,6 +102,10 @@ export class LibrosService  {
     return this.http.get<AutoresModel[]>(this.urlAutores + '?id_autor=' + id_autor + '&nombre=' + nombre + '&apellidos=' + apellidos);
   }
 
+  getAutoresUnCampo(autor:string){
+    return this.http.get<AutoresModel[]>(this.urlAutoresUnCampo + '?autor=' + autor);
+  }
+
   postAutores(autor:AutoresModel){
     return this.http.post(this.urlInsertarAutor, autor);
   }
@@ -114,8 +118,8 @@ export class LibrosService  {
   /**********************AUTORES-LIBROS***********************/
 
 
-  getAutoresLibro(isbn:string){
-    return this.http.get<AutoresLibrosModel[]>(this.urlAutoresLibro + '?isbn=' + isbn);
+  getAutoresLibro(isbn:string, id_autor:string){
+    return this.http.get<AutoresLibrosModel[]>(this.urlAutoresLibro + '?isbn=' + isbn + '&id_autor=' + id_autor);
   }
 
   postAutoresLibro(autor_libro:AutoresLibrosModel){

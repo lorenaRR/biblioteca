@@ -1,6 +1,6 @@
 <app-navbar-admin></app-navbar-admin>
-<app-autores></app-autores>
-<app-categorias></app-categorias>
+<app-autores (addAutor)="addAutor($event)"></app-autores>
+<app-categorias (addCategoria)="addCategoria($event)"></app-categorias>
 
 <div class="container m-5">
     <div class="border border-light bg-light shadow-none p-3 mb-5 bg-light rounded">
@@ -30,10 +30,10 @@
                 <br>
                 <table *ngIf="autores" class="table">
                     <tbody>
-                        <tr *ngFor="let autor of libro.autores">
+                        <tr *ngFor="let autor of autores">
                             <th>{{autor.nombre}} {{autor.apellidos}}</th>
                             <th>
-                                <button class="btn btn-danger" (click)="borrarAutorLibro(autor.id_autor)">
+                                <button class="btn btn-danger" (click)="borrarAutorLibro(autor)">
                                 <i class="fa fa-trash"></i>
                             </button>
                             </th>
@@ -70,10 +70,10 @@
             </div>
             <table *ngIf="categorias" class="table">
                 <tbody>
-                    <tr *ngFor="let categoria of libro.categorias">
+                    <tr *ngFor="let categoria of categorias">
                         <th>{{categoria.categoria}}</th>
                         <th>
-                            <button class="btn btn-danger" (click)="borrarCategoriaLibro(categoria.id_categoria, libro.isbn)">
+                            <button class="btn btn-danger" (click)="borrarCategoriaLibro(categoria)">
                             <i class="fa fa-trash"></i>
                             </button>
                         </th>

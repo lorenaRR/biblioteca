@@ -3,6 +3,7 @@ import { UsuarioService } from '../../../services/usuario.service';
 import { UsuarioModel } from '../../../models/usuarios.model';
 import { ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert';
+import * as moment from 'moment';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class ActualizarComponent implements OnInit {
       .subscribe((resp:any)=>{
         this.usuario = resp[0];
         this.usuario.dni = this.id;
+        this.usuario.fechaNacimiento = moment(this.usuario.fechaNacimiento).format('YYYY-MM-DD');
       });
   }
 

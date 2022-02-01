@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AutoresModel } from 'src/app/models/autores.model';
 import swal from 'sweetalert';
 import { LibrosService } from '../../../services/libros.service';
-import { ActualizarLibroComponent } from '../../admin/actualizar-libro/actualizar-libro.component';
 
 @Component({
   selector: 'app-autores',
@@ -12,27 +10,31 @@ import { ActualizarLibroComponent } from '../../admin/actualizar-libro/actualiza
 })
 export class AutoresComponent implements OnInit {
 
-  formaAutores!:FormGroup;
+
+  @Output() addAutor = new EventEmitter<AutoresModel>();
+
   autores: AutoresModel[] = [];
+  autor: AutoresModel = new AutoresModel;
+  
   listaAutores: AutoresModel[] = [];
   noAutores = false;
 
-  constructor(private formBuilder:FormBuilder, private librosService:LibrosService,private actualizarLibroComponent:ActualizarLibroComponent) { 
-    this.crearFormulario();
+  constructor(private librosService:LibrosService) { 
+
   }
 
-  crearFormulario(){
-    this.formaAutores = this.formBuilder.group({
-      nombre:[''],
-      apellidos:['']
-    });
-  }
 
   ngOnInit(): void {
   }
 
   buscarAutor(){
-    this.librosService.getAutores('',this.formaAutores.controls.nombre.value, this.formaAutores.controls.apellidos.value)
+    if (this.autor.nombre == null){
+      this.autor.nombre="";
+    }
+    if (this.autor.apellidos == null){
+      this.autor.apellidos="";
+    }
+    this.librosService.getAutores('',this.autor.nombre, this.autor.apellidos)
       .subscribe(resp=>{
       this.listaAutores = resp;
       if (this.listaAutores.length==0){
@@ -45,18 +47,14 @@ export class AutoresComponent implements OnInit {
   }
 
   insertarAutor(){ //Insertar Autor nuevo
-    let autor = new AutoresModel;
-    autor.nombre = this.formaAutores.controls.nombre.value;
-    autor.apellidos = this.formaAutores.controls.apellidos.value;
-
-    this.librosService.postAutores(autor)
+    this.librosService.postAutores(this.autor)
       .subscribe((resp:any)=>{
         swal(resp.Estado);
       });
   }
 
-  insertarAutorLibro(id_autor:string){ 
-    this.actualizarLibroComponent.insertarAutorLibro(id_autor);
+  insertarAutorLibro(autor:AutoresModel){ 
+    this.addAutor.emit(autor);
   }
 
   borrarAutor(id_autor:string){ 

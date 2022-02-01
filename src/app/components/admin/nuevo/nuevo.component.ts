@@ -11,10 +11,10 @@ import swal from 'sweetalert';
 })
 export class NuevoComponent implements OnInit {
 
-  forma!: FormGroup;
- 
-  constructor(private formBuilder:FormBuilder, private usuarioService:UsuarioService) {
-      this.crearFormulario();
+  usuario:UsuarioModel = new UsuarioModel;
+
+  constructor(private usuarioService:UsuarioService) {
+  
    }
 
 
@@ -42,47 +42,12 @@ export class NuevoComponent implements OnInit {
     return this.forma.get('email')?.invalid && this.forma.get('email')?.touched;
   }*/
 
-  crearFormulario(){
-    this.forma=this.formBuilder.group({
-        nombre:[''], 
-        apellidos:[''],
-        dni:[''], 
-        direccion:[''], 
-        telefono:[''], 
-        email:[''],
-        });
-  }
-
   guardarFormulario(){
-
-    console.log('prueba');
-
-    console.log(this.forma);
-
-    let usuarioNuevo: UsuarioModel = this.forma.value;
-
-    usuarioNuevo.password=this.forma.controls.email.value;
-    usuarioNuevo.usuario=this.forma.controls.dni.value;
-    usuarioNuevo.admin=false;
-
-    console.log(usuarioNuevo);
-
-    this.usuarioService.postUsuario(this.forma.controls.dni.value, usuarioNuevo)
+ 
+    this.usuarioService.postUsuario(this.usuario.dni, this.usuario)
       .subscribe((resp:any)=>{
           swal(resp.Estado);
       }) ;
-
-    if(this.forma.invalid){
-      Object.values(this.forma.controls).forEach(control=>{
-        if (control instanceof FormGroup) {
-          Object.values(control.controls).forEach(control=> control.markAsTouched());
-        }
-       control.markAsTouched();
-      });
-      return;
-    }
-    this.forma.reset();
-    
     
   }
 }

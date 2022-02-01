@@ -24,7 +24,7 @@ export class MisLibrosComponent implements OnInit {
 
    getCategorias(libro:LibrosModel){
      console.log('libro cat: ' + libro);
-    this.librosService.getCategoriasLibro(libro.isbn)
+    this.librosService.getCategoriasLibro(libro.isbn,'')
     .subscribe((resp:any)=>{
       libro.categorias = resp;
     });
@@ -32,7 +32,7 @@ export class MisLibrosComponent implements OnInit {
 
    getAutores(libro:LibrosModel){
     console.log('libro aut: ' + libro);
-    this.librosService.getAutoresLibro(libro.isbn) 
+    this.librosService.getAutoresLibro(libro.isbn,'') 
     .subscribe((resp:any)=>{
         libro.autores=resp;
       });

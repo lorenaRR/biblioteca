@@ -74,14 +74,14 @@ ngOnInit(): void {
 
 
   getAutoresLibro(libro:LibrosModel){
-    this.librosService.getAutoresLibro(libro.isbn) 
+    this.librosService.getAutoresLibro(libro.isbn,'') 
       .subscribe((resp:any)=>{
           libro.autores=resp;
     });
   }
 
   getCategoriasLibro(libro:LibrosModel){
-    this.librosService.getCategoriasLibro(libro.isbn)
+    this.librosService.getCategoriasLibro(libro.isbn,'')
       .subscribe((resp:any)=>{
         libro.categorias = resp;
       });

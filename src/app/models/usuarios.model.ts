@@ -11,4 +11,5 @@ export class UsuarioModel{
     usuario!:string;
     password!:string;
     libros!:LibrosService[];
+    fechaNacimiento!:Date;
 }

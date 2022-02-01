@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 import { CategoriasModel } from '../../../models/categorias.model';
 import { LibrosService } from '../../../services/libros.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { AutoresModel } from '../../../models/autores.model';
-import { ActualizarLibroComponent } from '../../admin/actualizar-libro/actualizar-libro.component';
 import swal from 'sweetalert';
 
 @Component({
@@ -13,24 +11,18 @@ import swal from 'sweetalert';
 })
 export class CategoriasComponent implements OnInit {
 
+  @Output() addCategoria = new EventEmitter<CategoriasModel>();
+
   listaCategorias: CategoriasModel[] = [];
-  formaCategorias!:FormGroup;
-  public categoria: CategoriasModel = new CategoriasModel;
+  categoria: CategoriasModel = new CategoriasModel;
 
-
-  constructor(private librosService:LibrosService, private formBuilder:FormBuilder, private actualizarLibroComponent:ActualizarLibroComponent) { 
-    this.crearFormulario();
+  constructor(private librosService:LibrosService) { 
     this.cargarCategorias();
   }
 
   ngOnInit(): void {
   }
 
-  crearFormulario(){
-    this.formaCategorias = this.formBuilder.group({
-      categoria:['']
-    });
-  }
 
   cargarCategorias(){
     this.listaCategorias = [];
@@ -44,17 +36,16 @@ export class CategoriasComponent implements OnInit {
 
   insertarCategoria(){
     let categoria = new CategoriasModel;
-    categoria.categoria=this.formaCategorias.controls.categoria.value.toUpperCase();
+    categoria.categoria=this.categoria.categoria.toUpperCase();
     this.librosService.postCategorias(categoria)
         .subscribe((resp:any)=>{
           swal(resp.Estado);
-          this.formaCategorias.reset();
           this.cargarCategorias();
         });
   }
 
-  insertarCategoriaLibro(id_categoria:string){
-    this.actualizarLibroComponent.insertarCategoriaLibro(id_categoria);
+  insertarCategoriaLibro(categoria:CategoriasModel){
+    this.addCategoria.emit(categoria);
   }
 
   borrarCategoria(id_categoria:string){

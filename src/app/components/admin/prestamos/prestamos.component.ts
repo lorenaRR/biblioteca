@@ -5,6 +5,7 @@ import { UsuarioModel } from '../../../models/usuarios.model';
 import { PrestamosModel } from '../../../models/prestamos.models';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
+import swal from 'sweetalert';
 
 
 @Component({
@@ -47,7 +48,7 @@ export class PrestamosComponent implements OnInit {
 
     this.usuarioService.postPrestamo(prestamo)
       .subscribe((resp:any)=>{
-        console.log(resp.Estado);
+        swal(resp.Estado);
     });
   }
 

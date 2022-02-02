@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
-import { UsuarioModel } from '../../../models/usuarios.model';
+import swal from 'sweetalert';
 
 
 @Component({
@@ -12,73 +11,42 @@ import { UsuarioModel } from '../../../models/usuarios.model';
   ]
 })
 export class LoginComponent implements OnInit {
+  user!:string;
+  pass!:string;
+  idUsuario!:string;
+  
+  constructor(private usuarioService:UsuarioService, private router:Router) {
 
-
-
-    forma!: FormGroup; 
-    usuarios: UsuarioModel[] = [];
-    usuarioNoValido:boolean = false;
-    passwordNoValido:boolean = false;
-    cnt=0;
-    cnt2=0;
- 
-
-  constructor(private formBuilder:FormBuilder, private usuarioService:UsuarioService, private router:Router) {
-    this.crearFormulario();
-    this.getUsuarios();
    }
 
   ngOnInit(): void {
   }
 
   
-  crearFormulario(){
-    this.forma=this.formBuilder.group({
-        usuario:['', [Validators.required]], 
-        password:['',[Validators.required]]
-        });
-  }
 
-  getUsuarios(){//Sacar todos los usuarios
-    this.usuarioService.getUsuario('','','','99') 
-    .subscribe((resp:any)=>{
-        this.usuarios = resp;
-    });
-  }
-
-  comprobar(){
+ comprobar(){
 
     //localStorage.setItem("usuario", this.currentUser)    
     //localStorage.getItem("usuario");
 
-    this.usuarios.forEach(usuario => { //Comporbar usuario
-      if (usuario.usuario == this.forma.controls.usuario.value){
-        this.cnt++;
-        this.usuarioService.login(this.forma.controls.usuario.value, this.forma.controls.password.value)
-          .subscribe((resp:any)=>{
-            this.usuarioService.currentUser = resp[0];  
-            if (this.usuarioService.currentUser.password == this.forma.controls.password.value) //Comprobar contraseña
-              {
-                this.cnt2++;
-                if (this.usuarioService.currentUser.admin) {
-                  this.router.navigate(['/gestion-libros']);
-                }
-                else{
-                  this.router.navigate(['/user']);
-                }   
-
-             }  
-          });
-      }
-    });
-
-    if (this.cnt==0){
-      this.usuarioNoValido=true;
-      this.cnt2++;
-    }
-    if (this.cnt2==0){
-      this.passwordNoValido=true;
-    }
+    this.usuarioService.login(this.user,this.pass)
+      .subscribe((resp:any)=>{
+        console.log(resp);
+        if(resp){
+          this.usuarioService.currentUser=resp[0];
+          this.idUsuario=resp[0].dni;
+          localStorage.setItem("idUsuario", this.idUsuario);
+          if (this.usuarioService.currentUser.admin){
+            this.router.navigate(['/gestion-libros']);
+          }
+          else{
+            this.router.navigate(['/user']);
+          }
+        }
+        else{
+          swal("El usuario o la contraseña son incorrectos");
+        }
+      });
     
   }  
 

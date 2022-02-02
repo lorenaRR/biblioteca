@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LibrosService } from '../../../services/libros.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LibrosModel } from '../../../models/libros.model';
-import { CategoriasModel } from '../../../models/categorias.model';
-import { AutoresModel } from '../../../models/autores.model';
+import { CategoriasModel, CategoriasLibrosModel } from '../../../models/categorias.model';
+import { AutoresModel, AutoresLibrosModel } from '../../../models/autores.model';
 
 @Component({
   selector: 'app-catalogo',
@@ -17,20 +16,18 @@ import { AutoresModel } from '../../../models/autores.model';
 
 export class CatalogoComponent {
 
-libros: LibrosModel [] = [];
-categorias:string[] = [];
+  libros: LibrosModel[] = [];
+  categorias:string[]=[];
 
-categoria_libro: CategoriasModel = new CategoriasModel;
-categoriasLibro:CategoriasModel[]=[];
+  isbn!: string;
+  titulo!: string;
+  subtitulo!: string;
+  editorial!: string;
+  autor!: string;
+  categoria="TODAS";
+  categoria2!: string;
 
-autor_libro: LibrosModel = new LibrosModel;
-autoresLibro:LibrosModel[]=[];
-
-isbnTemp: string = '';
-forma!: FormGroup;
-
-constructor(private librosService:LibrosService, private formBuilder:FormBuilder, private router:Router) { 
-  this.crearFormulario();
+constructor(private librosService:LibrosService, private router:Router) { 
   this.cargarListaCategorias();
 }
 
@@ -39,55 +36,107 @@ ngOnInit(): void {
 }
 
 
- crearFormulario(){
-    this.forma=this.formBuilder.group({
-        titulo:[''],
-        subtitulo:[''],
-        autor:[''],
-        categorias:[''],
-        editorial:[''],
-        isbn:[''],
-        });
+buscar(){
+
+  this.libros=[];
+  if (this.isbn==null){
+    this.isbn="";
+  }
+  if (this.titulo==null){
+    this.titulo="";
+  }
+  if (this.subtitulo==null){
+    this.subtitulo="";
+  }
+  if (this.editorial==null){
+    this.editorial="";
+  }
+  if (this.autor==null){
+    this.autor="";
+  }
+  if(this.categoria=="TODAS"){
+    this.categoria2="";
+  }
+  else{
+    this.categoria2=this.categoria;
   }
 
-  buscar(){
-
-    let isbn = this.forma.controls.isbn.value;
-    let titulo = this.forma.controls.titulo.value;
-    let subtitulo = this.forma.controls.subtitulo.value;
-    let autor = this.forma.controls.autor.value;
-    let editorial = this.forma.controls.editorial.value;
-    let categoria = this.forma.controls.categorias.value;
-
-    this.libros=[];
-  
-    this.librosService.getLibros(isbn,titulo,subtitulo,editorial)
-    .subscribe(resp=>{
-      this.libros=resp;
-      this.libros.forEach(libro => {  //Recorro todos los libros
-          this.getAutoresLibro(libro); //Lleno el array de autores de cada libro
-          this.getCategoriasLibro(libro);          
+  let librosBusqueda:LibrosModel[];
+  this.librosService.getLibros(this.isbn,this.titulo,this.subtitulo,this.editorial) //Busca en tabla libros
+    .subscribe((resp:any)=>{
+      librosBusqueda=resp;
+      librosBusqueda.forEach(libroBusqueda => { 
+        this.librosService.getAutoresLibro(libroBusqueda.isbn,'') //Busca en tabla aut-libros 
+          .subscribe((resp:any)=>{
+            let autores_libro:AutoresLibrosModel[];
+            autores_libro=resp;
+            autores_libro.forEach(aut_libro => {
+              this.librosService.getAutoresUnCampo(this.autor) //Busca en tabla autores
+                .subscribe((resp:any)=>{
+                  let autores:AutoresModel[];
+                  autores=resp;
+                  autores.forEach(autor => { 
+                    if(aut_libro.id_autor==autor.id_autor){ 
+                      console.log(autor);
+                      this.librosService.getCategoriasLibro(libroBusqueda.isbn, '') //Busca en tabla cat-libros
+                        .subscribe((resp:any)=>{
+                          let categorias_libros:CategoriasLibrosModel[];
+                          categorias_libros=resp;
+                          categorias_libros.forEach(cat_libro => {
+                            this.librosService.getCategorias(cat_libro.id_categoria, this.categoria2)//Busca en tabla categorias
+                              .subscribe((resp:any)=>{
+                                let categorias:CategoriasModel[];
+                                categorias=resp;
+                                categorias.forEach(categoria => {
+                                  if(cat_libro.id_categoria==categoria.id_categoria && !this.libros.includes(libroBusqueda)){
+                                    this.addAutores(libroBusqueda); //Cargar autores en libroBusqueda
+                                    this.addCategorias(libroBusqueda); //Cargar categorias en libroBusqueda
+                                    this.libros.push(libroBusqueda);  //Añade el libro
+                                  }
+                                });
+                              });
+                          });
+                        });
+                     }
+                  });
+                });
+            });
+          });
       });
+
     });
   
-  }
+}
 
-
-  getAutoresLibro(libro:LibrosModel){
-    this.librosService.getAutoresLibro(libro.isbn,'') 
-      .subscribe((resp:any)=>{
-          libro.autores=resp;
-    });
-  }
-
-  getCategoriasLibro(libro:LibrosModel){
-    this.librosService.getCategoriasLibro(libro.isbn,'')
-      .subscribe((resp:any)=>{
-        libro.categorias = resp;
+addAutores(libro:LibrosModel){ 
+  this.librosService.getAutoresLibro(libro.isbn,'')
+    .subscribe((resp:any)=>{
+      let autores_libros:AutoresLibrosModel[];
+      autores_libros=resp;
+      autores_libros.forEach(aut_libro => {
+        this.librosService.getAutores(aut_libro.id_autor,'','')
+          .subscribe((resp:any)=>{
+            libro.autores=resp;
+          });
       });
-  }
+    })
+}
 
-  cargarListaCategorias(){
+addCategorias(libro:LibrosModel){
+  this.librosService.getCategoriasLibro(libro.isbn,'')
+    .subscribe((resp:any)=>{
+      let categorias_libro:CategoriasLibrosModel[];
+      categorias_libro=resp;
+      categorias_libro.forEach(cat_libro => {
+        this.librosService.getCategorias(cat_libro.id_categoria,'')
+          .subscribe((resp:any)=>{
+            libro.categorias=resp;
+          });
+      });
+    });
+}
+
+cargarListaCategorias(){
     this.librosService.getCategorias('', '')
       .subscribe((resp)=>{
         this.categorias.push('TODAS');

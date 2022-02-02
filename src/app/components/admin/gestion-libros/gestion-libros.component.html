@@ -11,6 +11,9 @@
             <input type="text" class="form-control" [(ngModel)]="subtitulo" name="subtitulo" placeholder="Subtítulo">
             <input type="text" class="form-control" [(ngModel)]="autor" name="autor" placeholder="Autor">
             <input type="text" class="form-control" [(ngModel)]="editorial" name="editorial" placeholder="Editorial">
+            <select class="form-select" [(ngModel)]="categoria" name="categoria">
+                <option *ngFor="let categoria of categorias" [value]="categoria">{{categoria}}</option>
+            </select>
 
 
             <br><br>

@@ -48,6 +48,9 @@ export class LoginComponent implements OnInit {
 
   comprobar(){
 
+    //localStorage.setItem("usuario", this.currentUser)    
+    //localStorage.getItem("usuario");
+
     this.usuarios.forEach(usuario => { //Comporbar usuario
       if (usuario.usuario == this.forma.controls.usuario.value){
         this.cnt++;

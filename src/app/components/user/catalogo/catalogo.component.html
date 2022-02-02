@@ -4,22 +4,19 @@
     <hr>
 </div>
 <div class="row m-5">
-    <form class="m-5" (ngSubmit)="buscar()" [formGroup]="forma">
-        <input type="text" class="form-control" formControlName="isbn" placeholder="ISBN">
-        <input type="text" class="form-control" formControlName="titulo" placeholder="Título">
-        <input type="text" class="form-control" formControlName="subtitulo" placeholder="Subtítulo">
-        <input type="text" class="form-control" formControlName="editorial" placeholder="Editorial">
-        <input type="text" class="form-control" formControlName="autor" placeholder="Autor">
-        <select class="form-select" formControlName="categorias">
-            <option *ngFor="let categoria of categorias">{{categoria}}</option>
+    <form (ngSubmit)="buscar()" #f="ngForm">
+        <input type="text" class="form-control" [(ngModel)]="isbn" name="isbn" placeholder="ISBN">
+        <input type="text" class="form-control" [(ngModel)]="titulo" name="titulo" placeholder="Título">
+        <input type="text" class="form-control" [(ngModel)]="subtitulo" name="subtitulo" placeholder="Subtítulo">
+        <input type="text" class="form-control" [(ngModel)]="autor" name="autor" placeholder="Autor">
+        <input type="text" class="form-control" [(ngModel)]="editorial" name="editorial" placeholder="Editorial">
+        <select class="form-select" [(ngModel)]="categoria" name="categoria">
+            <option *ngFor="let categoria of categorias" [value]="categoria">{{categoria}}</option>
         </select>
-        <br><br>
+        <br>
         <button type="submit" class="btn btn-primary">Buscar</button>
+        <br><br>
     </form>
-    <br>
-    <hr>
-    <br>
-    <br>
     <hr>
     <br>
     <div class="row m-5">

@@ -1,7 +1,7 @@
 <app-navbar-user></app-navbar-user>
 <div class="row m-5">
     <div class="col-5 text-center">
-        <img src="./assets/user.png" alt="">
+        <img src="./assets/user.png" style="width: 50%;" alt="logo usuario">
         <div class="stats rounded p-3 m-3">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><i class="user-icon fa fa-user"></i> {{usuario.nombre}} {{usuario.apellidos}}</li>
@@ -11,7 +11,7 @@
             </ul>
         </div>
         <div class="stats rounded p-3 m-3">
-            <div class="progress m-3">
+            <!-- <div class="progress m-3">
                 <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <div class="progress m-3">
@@ -25,6 +25,18 @@
             </div>
             <div class="progress m-3">
                 <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div> -->
+            <div>
+                <p>Tienes {{nLibrosPrestados}} libros prestados actualmente.</p>
+            </div>
+            <div>
+                <p>Tienes {{nLibrosReservados}} libros reservados.</p>
+            </div>
+            <div>
+                <p>Has leído {{nLibrosLeidos}} libros.</p>
+            </div>
+            <div *ngIf="pendiente" class="alert alert-danger" role="alert">
+                ¡Tienes libros pendientes!
             </div>
         </div>
     </div>
@@ -39,7 +51,7 @@
             <form (ngSubmit)="actualizarUser()" #f="ngForm">
                 <h3>Nombre de usuario:</h3>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Usuario" aria-label="Usuario" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" placeholder="Usuario" aria-label="Usuario" aria-describedby="basic-addon2" [(ngModel)]="user" name="user">
                     <div class="input-group-append">
                         <button class="btn btn-success" type="button">Actualizar usuario</button>
                     </div>
@@ -53,19 +65,19 @@
             <form (ngSubmit)="actualizarPass()" #f2="ngForm">
                 <h3>Editar contraseña:</h3>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="basic-addon2">
+                    <input type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="basic-addon2" [(ngModel)]="pass" name="pass" id="pass">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="button" (click)="verPass('pass')"><i class="fa fa-eye"></i></button>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" placeholder="Repetir contraseña" aria-label="Repetir contraseña" aria-describedby="basic-addon2" [(ngModel)]="pass2" name="pass2" id="pass2">
                     <div class="input-group-append">
                         <button class="btn btn-secondary" type="button"><i class="fa fa-eye"></i></button>
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Repetir contraseña" aria-label="Repetir contraseña" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button"><i class="fa fa-eye"></i></button>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Nueva contraseña" aria-label="Nueva contraseña" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" placeholder="Nueva contraseña" aria-label="Nueva contraseña" aria-describedby="basic-addon2" [(ngModel)]="passNueva" name="passNueva">
                 </div>
                 <button type="submit" class="btn btn-primary">Enviar</button>
             </form>

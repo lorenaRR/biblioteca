@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { PrestamosModel } from '../../../models/prestamos.models';
 import { UsuarioService } from '../../../services/usuario.service';
 import { UsuarioModel } from '../../../models/usuarios.model';
@@ -14,7 +13,7 @@ import swal from 'sweetalert';
 })
 export class DevolucionesComponent implements OnInit {
 
-  forma!:FormGroup;
+  dni!:string;
   prestamos: PrestamosModel[] = [];
   usuarios: UsuarioModel[] = [];
   libros:LibrosService[]=[];
@@ -22,22 +21,19 @@ export class DevolucionesComponent implements OnInit {
   hoy = new Date();
 
 
-  constructor(private formBuilder:FormBuilder, private usuarioService:UsuarioService, private librosService:LibrosService) { 
-    this.crearFormulario();
+  constructor( private usuarioService:UsuarioService, private librosService:LibrosService) { 
   }
 
-  crearFormulario(){
-    this.forma=this.formBuilder.group({
-      dni:['']
-    });
-  }
 
    ngOnInit(): void {
   }
 
   buscarPrestamos(){
     this.prestamos = [];
-      this.usuarioService.getPrestamo('',this.forma.controls.dni.value)
+    if(this.dni==null){
+      this.dni="";
+    }
+      this.usuarioService.getPrestamo('',this.dni)
         .subscribe((resp:any)=>{
           let todosPrestamos:PrestamosModel[] = resp;
           todosPrestamos.forEach(tPrestamo => {

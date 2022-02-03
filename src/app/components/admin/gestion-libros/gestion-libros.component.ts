@@ -21,7 +21,7 @@ export class GestionLibrosComponent implements OnInit {
   subtitulo!: string;
   editorial!: string;
   autor!: string;
-  categoria="TODAS";
+  categoria="TODAS LAS CATEGORIAS";
   categoria2!:string;
 
  
@@ -37,7 +37,7 @@ export class GestionLibrosComponent implements OnInit {
   cargarCategorias(){
     this.librosService.getCategorias('', '')
       .subscribe((resp)=>{
-        this.categorias.push('TODAS');
+        this.categorias.push('TODAS LAS CATEGORIAS');
         resp.forEach(categoria => {
           this.categorias.push(categoria.categoria);
         }); 
@@ -65,7 +65,7 @@ export class GestionLibrosComponent implements OnInit {
     if (this.autor==null){
       this.autor="";
     }
-    if(this.categoria=="TODAS"){
+    if(this.categoria=="TODAS LAS CATEGORIAS"){
       this.categoria2="";
     }
     else{

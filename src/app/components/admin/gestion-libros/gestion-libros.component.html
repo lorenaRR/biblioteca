@@ -6,49 +6,48 @@
             <hr>
         </div>
         <form class="m-5" (ngSubmit)="verLibros()" #f="ngForm">
-            <input type="text" class="form-control" [(ngModel)]="isbn" name="isbn" placeholder="ISBN">
-            <input type="text" class="form-control" [(ngModel)]="titulo" name="titulo" placeholder="Título">
-            <input type="text" class="form-control" [(ngModel)]="subtitulo" name="subtitulo" placeholder="Subtítulo">
-            <input type="text" class="form-control" [(ngModel)]="autor" name="autor" placeholder="Autor">
-            <input type="text" class="form-control" [(ngModel)]="editorial" name="editorial" placeholder="Editorial">
-            <select class="form-select" [(ngModel)]="categoria" name="categoria">
+            <input type="text" class="form-control m-3" [(ngModel)]="isbn" name="isbn" placeholder="ISBN">
+            <input type="text" class="form-control m-3" [(ngModel)]="titulo" name="titulo" placeholder="Título">
+            <input type="text" class="form-control m-3" [(ngModel)]="subtitulo" name="subtitulo" placeholder="Subtítulo">
+            <input type="text" class="form-control m-3" [(ngModel)]="autor" name="autor" placeholder="Autor">
+            <input type="text" class="form-control m-3" [(ngModel)]="editorial" name="editorial" placeholder="Editorial">
+            <select class="form-select m-3" [(ngModel)]="categoria" name="categoria">
                 <option *ngFor="let categoria of categorias" [value]="categoria">{{categoria}}</option>
             </select>
 
-
-            <br><br>
-
-            <button type="submit" class="btn btn-primary">Buscar</button>
+            <button type="submit" class="btn btn-primary m-3">Buscar</button>
         </form>
-        <br>
-        <hr>
-        <br>
-        <table class="table" *ngIf="libros">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">ISBN</th>
-                    <th scope="col">Título</th>
-                    <th scope="col">Subtítulo</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let libro of libros">
-                    <td> {{libro.isbn}} </td>
-                    <td> {{libro.titulo}} </td>
-                    <td> {{libro.subtitulo}} </td>
-                    <td>
-                        <button class="btn btn-success" [routerLink]="['/prestamos', libro.isbn]" title="Prestamos">
+        <div class="m-5">
+            <hr>
+            <br>
+            <table class="table" *ngIf="libros">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ISBN</th>
+                        <th scope="col">Título</th>
+                        <th scope="col">Subtítulo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let libro of libros">
+                        <td> {{libro.isbn}} </td>
+                        <td> {{libro.titulo}} </td>
+                        <td> {{libro.subtitulo}} </td>
+                        <td>
+                            <button class="btn btn-success" [routerLink]="['/prestamos', libro.isbn]" title="Prestamos">
                             <i class="fa fa-book-reader"></i>
-                        </button>
-                        <button class="btn btn-info" [routerLink]="['/actualizar-libro', libro.isbn]" title="Actualizar">
+                            </button>
+                            <button class="btn btn-info" [routerLink]="['/actualizar-libro', libro.isbn]" title="Actualizar">
                             <i class="fa fa-pen"></i>
-                        </button>
-                        <button (click)="borrarLibro(libro.isbn)" class="btn btn-danger" title="Borrar"> 
+                            </button>
+                            <button (click)="borrarLibro(libro.isbn)" class="btn btn-danger" title="Borrar"> 
                             <i class="fa fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </div>

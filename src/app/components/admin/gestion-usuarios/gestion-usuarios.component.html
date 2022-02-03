@@ -6,10 +6,10 @@
             <hr>
         </div>
         <form class="m-5" (ngSubmit)="verUsuario()" #f="ngForm">
-            <input type="text" class="form-control" [(ngModel)]="dni" name="dni" placeholder="DNI">
-            <input type="text" class="form-control" [(ngModel)]="nombre" name="nombre" placeholder="Nombre">
-            <input type="text" class="form-control" [(ngModel)]="apellidos" name="apellidos" placeholder="Apellidos">
-            <div class="form-check">
+            <input type="text" class="form-control m-3" [(ngModel)]="dni" name="dni" placeholder="DNI">
+            <input type="text" class="form-control m-3" [(ngModel)]="nombre" name="nombre" placeholder="Nombre">
+            <input type="text" class="form-control m-3" [(ngModel)]="apellidos" name="apellidos" placeholder="Apellidos">
+            <div class="form-check m-3">
                 <input type="radio" class="form-check-input" [(ngModel)]="admin" name="admin" value="99">
                 <label class="form-check-label">Todos</label><br>
                 <input type="radio" class="form-check-input" [(ngModel)]="admin" name="admin" value="1">
@@ -17,42 +17,41 @@
                 <input type="radio" class="form-check-input" [(ngModel)]="admin" name="admin" value="0">
                 <label class="form-check-label">Usuarios</label>
             </div>
-            <br><br>
-
-            <button type="submit" class="btn btn-primary">Buscar</button>
+            <button type="submit" class="btn btn-primary m-3">Buscar</button>
         </form>
-        <br>
-        <hr>
-        <br>
-        <table class="table" *ngIf="usuarios">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Apellidos</th>
-                    <th scope="col">DNI</th>
-                    <th scope="col">Dirección</th>
-                    <th scope="col">Teléfono</th>
-                    <th scope="col">E-mail</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let usuario of usuarios">
-                    <td> {{usuario.nombre}} </td>
-                    <td> {{usuario.apellidos}} </td>
-                    <td> {{usuario.dni}} </td>
-                    <td> {{usuario.direccion}} </td>
-                    <td> {{usuario.telefono}} </td>
-                    <td> {{usuario.email}} </td>
-                    <td>
-                        <button class="btn btn-info" [routerLink]="['/actualizar', usuario.dni]">
+        <div class="m-5">
+            <hr>
+            <br>
+            <table class="table" *ngIf="usuarios">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellidos</th>
+                        <th scope="col">DNI</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">E-mail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let usuario of usuarios">
+                        <td> {{usuario.nombre}} </td>
+                        <td> {{usuario.apellidos}} </td>
+                        <td> {{usuario.dni}} </td>
+                        <td> {{usuario.direccion}} </td>
+                        <td> {{usuario.telefono}} </td>
+                        <td> {{usuario.email}} </td>
+                        <td>
+                            <button class="btn btn-info" [routerLink]="['/actualizar', usuario.dni]">
                             <i class="fa fa-pen"></i>
                         </button>
-                        <button (click)="borrarUsuario(usuario.dni)" class="btn btn-danger">
+                            <button (click)="borrarUsuario(usuario.dni)" class="btn btn-danger">
                             <i class="fa fa-trash"></i>
                         </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

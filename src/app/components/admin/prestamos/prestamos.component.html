@@ -1,41 +1,42 @@
 <app-navbar-admin></app-navbar-admin>
 
 <div class="container m-5">
-    <div class="m-5">
-        <h1>Prestamos - Buscar usuario</h1>
-        <hr>
-    </div>
     <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5" style="width: 1500px;">
+        <div class="m-5">
+            <h1>Prestamos - Buscar usuario</h1>
+            <hr>
+        </div>
         <form class="m-5" (ngSubmit)="buscarUsuario()" [formGroup]="forma">
-            <input type="text" class="form-control" formControlName="dni" placeholder="Dni">
-            <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre">
-            <input type="text" class="form-control" formControlName="apellidos" placeholder="Apellidos">
-            <br><br>
-            <button type="submit" class="btn btn-primary">Buscar</button>
+            <input type="text" class="form-control m-3" formControlName="dni" placeholder="Dni">
+            <input type="text" class="form-control m-3" formControlName="nombre" placeholder="Nombre">
+            <input type="text" class="form-control m-3" formControlName="apellidos" placeholder="Apellidos">
+            <br>
+            <button type="submit" class="btn btn-primary m-3">Buscar</button>
         </form>
-        <br>
-        <hr>
-        <br>
-        <table class="table" *ngIf="usuarios">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Apellidos</th>
-                    <th scope="col">DNI</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let usuario of usuarios">
-                    <td> {{usuario.nombre}} </td>
-                    <td> {{usuario.apellidos}} </td>
-                    <td> {{usuario.dni}} </td>
-                    <td>
-                        <button class="btn btn-success">
-                            <i class="fa fa-check" (click)="prestar(usuario.dni)" title="Prestar libro"></i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="m-5">
+            <hr>
+            <br>
+            <table class="table" *ngIf="usuarios">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellidos</th>
+                        <th scope="col">DNI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let usuario of usuarios">
+                        <td> {{usuario.nombre}} </td>
+                        <td> {{usuario.apellidos}} </td>
+                        <td> {{usuario.dni}} </td>
+                        <td>
+                            <button class="btn btn-success">
+                                <i class="fa fa-check" (click)="prestar(usuario.dni)" title="Prestar libro"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

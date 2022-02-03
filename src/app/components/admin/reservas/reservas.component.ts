@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { ReservasModel } from '../../../models/reservas.model';
 import { UsuarioService } from '../../../services/usuario.service';
 import { LibrosService } from '../../../services/libros.service';
@@ -12,37 +11,42 @@ import { LibrosModel } from '../../../models/libros.model';
 })
 export class ReservasComponent implements OnInit {
 
-  forma!:FormGroup;
+  dni!:string;
+  isbn!:string;
+  titulo!:string;
   todasReservas: ReservasModel[] = [];
   reservas: ReservasModel[] = [];
   libros: LibrosModel[] = [];
 
-  constructor(private usuarioService:UsuarioService, private librosService:LibrosService, private formBuilder:FormBuilder) { 
-    this.crearFormulario();
+  constructor(private usuarioService:UsuarioService, private librosService:LibrosService) { 
   }
 
   ngOnInit(): void {
   }
 
-  crearFormulario(){
-    this.forma=this.formBuilder.group({
-      dni:[''],
-      isbn:[''],
-      titulo:['']
-    });
-  }
 
 
   buscarReservas(){
     this.reservas=[];
     this.todasReservas=[];
-    this.usuarioService.getReserva(this.forma.controls.isbn.value, this.forma.controls.dni.value)
+    
+    if(this.dni==null){
+      this.dni="";
+    }
+    if(this.isbn==null){
+      this.isbn="";
+    }
+    if(this.titulo==null){
+      this.titulo="";
+    }
+
+    this.usuarioService.getReserva(this.isbn, this.dni)
       .subscribe((resp:any)=>{
         this.todasReservas = resp;
         this.todasReservas.forEach(reserva => {
           console.log(reserva.isbn);
-          console.log(this.forma.controls.titulo.value);
-          this.librosService.getLibros(reserva.isbn, this.forma.controls.titulo.value,'','')
+          console.log(this.titulo);
+          this.librosService.getLibros(reserva.isbn, this.titulo,'','')
             .subscribe((resp:any)=>{
               if (resp!=null){
                 this.reservas.push(reserva);

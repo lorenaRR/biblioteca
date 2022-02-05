@@ -3,6 +3,7 @@ import { ReservasModel } from '../../../models/reservas.model';
 import { UsuarioService } from '../../../services/usuario.service';
 import { LibrosService } from '../../../services/libros.service';
 import { LibrosModel } from '../../../models/libros.model';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-reservas',
@@ -40,7 +41,7 @@ export class ReservasComponent implements OnInit {
       this.titulo="";
     }
 
-    this.usuarioService.getReserva(this.isbn, this.dni)
+    this.usuarioService.getReservaUsuario(this.isbn, this.dni, this.titulo)
       .subscribe((resp:any)=>{
         this.todasReservas = resp;
         this.todasReservas.forEach(reserva => {
@@ -57,7 +58,11 @@ export class ReservasComponent implements OnInit {
   }
 
   cancelarReserva(reserva:ReservasModel){
-
+    this.usuarioService.deleteReserva(reserva.dni,reserva.isbn)
+      .subscribe((resp:any)=>{
+        swal(resp.Estado);
+        this.buscarReservas();
+      });
   }
 
 }

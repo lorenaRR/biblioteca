@@ -67,13 +67,13 @@
                 <div class="input-group mb-3">
                     <input type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="basic-addon2" [(ngModel)]="pass" name="pass" id="pass">
                     <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button" (click)="verPass('pass')"><i class="fa fa-eye"></i></button>
+                        <button class="btn btn-secondary" type="button" (click)="verPass('pass', 'eye1')"><i class="fa fa-eye-slash" id="eye1"></i></button>
                     </div>
                 </div>
                 <div class="input-group mb-3">
                     <input type="password" class="form-control" placeholder="Repetir contraseña" aria-label="Repetir contraseña" aria-describedby="basic-addon2" [(ngModel)]="pass2" name="pass2" id="pass2">
                     <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button"><i class="fa fa-eye"></i></button>
+                        <button class="btn btn-secondary" type="button" (click)="verPass('pass2', 'eye2')"><i class="fa fa-eye-slash" id="eye2"></i></button>
                     </div>
                 </div>
                 <div class="input-group mb-3">

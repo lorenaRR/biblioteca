@@ -18,7 +18,10 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">DNI</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellidos</th>
                         <th scope="col">ISBN</th>
+                        <th scope="col">Titulo</th>
                         <th scope="col">Fecha Prestamo</th>
                         <th scope="col">Fecha Entrega</th>
                     </tr>
@@ -26,7 +29,10 @@
                 <tbody>
                     <tr [ngStyle]="{'background-color': prestamo.fechaInvalida  ? '#CD5C5C' : ''}" *ngFor="let prestamo of prestamos">
                         <td> <a> {{prestamo.dni}} </a> </td>
+                        <td> <a> {{prestamo.nombre}} </a> </td>
+                        <td> <a> {{prestamo.apellidos}} </a> </td>
                         <td> <a> {{prestamo.isbn}} </a> </td>
+                        <td> <a> {{prestamo.titulo}} </a> </td>
                         <td> {{prestamo.fechaPrestamo | date:'d/M/yy'}} </td>
                         <td> {{prestamo.fechaEntrega | date:'d/M/yy'}} </td>
                         <td>

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioModel } from '../../../models/usuarios.model';
 import { UsuarioService } from '../../../services/usuario.service';
 import swal from 'sweetalert';
-import { LibrosService } from '../../../services/libros.service';
 import { PrestamosModel } from '../../../models/prestamos.models';
 import { ReservasModel } from '../../../models/reservas.model';
 
@@ -13,7 +12,7 @@ import { ReservasModel } from '../../../models/reservas.model';
 })
 export class UserComponent implements OnInit {
 
-  public usuario!:UsuarioModel;
+  usuario!:UsuarioModel;
   user!:string;
   pass!:string;
   pass2!:string;
@@ -28,14 +27,32 @@ export class UserComponent implements OnInit {
 
 
   constructor(private usuarioService:UsuarioService) { 
-    this.usuario=this.usuarioService.currentUser;
+    //this.getUsuario();
+    this.usuario = this.usuarioService.currentUser;
     this.user=this.usuario.usuario;
     this.calcularLibrosLeidos();
     this.calcularLibrosPrestados();
+    this.calcularLibrosReservados();
+    
   }
 
   ngOnInit(): void {
 
+  }
+
+  getUsuario(){
+    let id=localStorage.getItem("usuario");
+    if (id!=null){
+      this.usuarioService.getUsuario(id,'','','')
+        .subscribe((resp:any)=>{
+          this.usuario = resp;
+          console.log(this.usuario);
+          this.user=this.usuario.usuario;
+          this.calcularLibrosLeidos();
+          this.calcularLibrosPrestados();
+          this.calcularLibrosReservados();
+        });
+    }
   }
 
   calcularLibrosPrestados(){
@@ -65,7 +82,10 @@ export class UserComponent implements OnInit {
   calcularLibrosReservados(){
     this.usuarioService.getReserva('',this.usuario.dni)
       .subscribe((resp:any)=>{
-        this.nLibrosReservados = resp.lenght;
+        this.reservados = resp;
+        this.reservados.forEach(r => {
+          this.nLibrosReservados++;
+        });
       });
   }
 
@@ -99,13 +119,27 @@ export class UserComponent implements OnInit {
       });
     }
     else{
-      swal("Contraseña incorrecta.");
+      swal('Contraseña incorrecta.');
     }
   }
 
-  verPass(id:string){
+  verPass(id:string, idIcon:string){
+
     let type = document.getElementById(id);
-    console.log(type);
-    
+    let icon = document.getElementById(idIcon);
+
+    if(type?.getAttribute('type') == 'password'){
+      type?.setAttribute('type','text');
+      icon?.removeAttribute('class');
+      icon?.setAttribute('class','fa fa-eye');
+    }
+    else{
+      type?.setAttribute('type','password');
+      icon?.removeAttribute('class');
+      icon?.setAttribute('class','fa fa-eye-slash');
+    }
+
   }
 }
+
+

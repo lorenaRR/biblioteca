@@ -20,11 +20,14 @@ export class UsuarioService {
   private urlLogin = 'https://localhost:44389/api/Usuarios/Logins';
 
   private urlReserva = 'https://localhost:44389/api/Reservas/SeleccionarReservas';
+  private urlReservaUsuario = 'https://localhost:44389/api/Reservas/SeleccionarReservasUsuarios';
   private urlInsertarReserva = 'https://localhost:44389/api/Reservas/InsertarReserva';
+  private urlBorrarReserva = 'https://localhost:44389/api/Reservas/BorrarReserva';
 
   private urlPrestamo = 'https://localhost:44389/api/Prestamos/SeleccionarPrestamos';
+  private urlPrestamoUsuario = 'https://localhost:44389/api/Prestamos/SeleccionarPrestamosUsuarios';
   private urlInsertarPrestamo = 'https://localhost:44389/api/Prestamos/InsertarPrestamos';
-  private urlActualizarPrestamo = 'https://localhost:44389/api/Prestamos/ActualizarPrestamos'
+  private urlActualizarPrestamo = 'https://localhost:44389/api/Prestamos/ActualizarPrestamos';
 
   private paramNombre ='&nombre=';
   private paramApellidos='&apellidos=';
@@ -68,8 +71,16 @@ export class UsuarioService {
     return this.http.get<ReservasModel[]>(this.urlReserva + '?dni=' + dni + '&isbn=' + isbn)
   }
 
+  getReservaUsuario(isbn:string,dni:string, titulo:string){
+    return this.http.get<ReservasModel[]>(this.urlReservaUsuario + '?dni=' + dni + '&isbn=' + isbn + '&titulo=' + titulo)
+  }
+
   postReserva(reserva:ReservasModel){
     return this.http.post(this.urlInsertarReserva,reserva);
+  }
+
+  deleteReserva(dni:any, isbn:any){
+    return this.http.delete(this.urlBorrarReserva + '?isbn=' + isbn + '&dni=' + dni);
   }
 
   /**********************PRESTAMOS***********************/
@@ -84,6 +95,10 @@ export class UsuarioService {
 
   putPrestamo(prestamo:PrestamosModel){
     return this.http.put(this.urlActualizarPrestamo, prestamo);
+  }
+
+  getPrestamoUsuario(dni:string){
+    return this.http.get<PrestamosModel[]>(this.urlPrestamoUsuario + '?dni=' + dni)
   }
 
 }

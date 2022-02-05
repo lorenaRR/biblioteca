@@ -7,4 +7,7 @@ export class PrestamosModel {
     fechaEntrega!: Date;
     fechaDevolucion!:Date;
     fechaInvalida!:boolean;
+    nombre!:string;
+    apellidos!:string;
+    titulo!:string;
 }

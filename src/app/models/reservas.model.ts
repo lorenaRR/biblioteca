@@ -3,4 +3,7 @@ export class ReservasModel {
     isbn!:string;
     dni!:string;
     fecha_reserva!: Date;
+    nombre!:string;
+    apellidos!:string;
+    titulo!:string;
 }

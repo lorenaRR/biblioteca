@@ -20,14 +20,20 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">DNI</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apeliidos</th>
                         <th scope="col">ISBN</th>
+                        <th scope="col">Titulo</th>
                         <th scope="col">Fecha Reserva</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let reserva of reservas">
                         <td> <a> {{reserva.dni}} </a> </td>
+                        <td> <a> {{reserva.nombre}} </a> </td>
+                        <td> <a> {{reserva.apellidos}} </a> </td>
                         <td> <a> {{reserva.isbn}} </a> </td>
+                        <td> <a> {{reserva.titulo}} </a> </td>
                         <td> {{reserva.fecha_reserva | date:'d/M/yy'}} </td>
                         <td>
                             <button class="btn btn-primary" (click)="cancelarReserva(reserva)">Cancelar</button>

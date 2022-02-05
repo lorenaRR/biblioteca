@@ -10,12 +10,15 @@ import { Router } from '@angular/router';
 })
 export class NavbarUserComponent implements OnInit {
 
-  public user!:UsuarioModel;
+  usuario: UsuarioModel = new UsuarioModel;
 
-  constructor(private usuarioService:UsuarioService, private router:Router) { }
+  constructor(private usuarioService:UsuarioService, private router:Router) {
+    //this.getUsuario();
+   }
 
   ngOnInit(): void {
-    this.user=this.usuarioService.currentUser;
+    
+    this.usuario = this.usuarioService.currentUser;
   }
 
   salir(){
@@ -23,6 +26,17 @@ export class NavbarUserComponent implements OnInit {
     this.usuarioService.currentUser=new UsuarioModel;
     this.router.navigate(['/login']);
     console.log(this.usuarioService.currentUser);
+  }
+
+  getUsuario(){
+    let id=localStorage.getItem("idUsuario");
+    if (id!=null){
+      this.usuarioService.getUsuario(id,'','','')
+        .subscribe((resp:any)=>{
+          this.usuario = resp;
+          console.log(this.usuario);
+        });
+    }
   }
 
 }

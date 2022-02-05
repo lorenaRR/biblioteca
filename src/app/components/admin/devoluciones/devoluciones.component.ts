@@ -33,7 +33,7 @@ export class DevolucionesComponent implements OnInit {
     if(this.dni==null){
       this.dni="";
     }
-      this.usuarioService.getPrestamo('',this.dni)
+      this.usuarioService.getPrestamoUsuario(this.dni)
         .subscribe((resp:any)=>{
           let todosPrestamos:PrestamosModel[] = resp;
           todosPrestamos.forEach(tPrestamo => {
@@ -50,6 +50,7 @@ export class DevolucionesComponent implements OnInit {
     this.usuarioService.putPrestamo(prestamo)
       .subscribe((resp:any)=>{
         swal(resp.Estado);
+        this.buscarPrestamos();
       });
   }
 

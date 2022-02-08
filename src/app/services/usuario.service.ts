@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ReservasModel } from '../models/reservas.model';
 import { PrestamosModel } from '../models/prestamos.models';
+import { LibrosModel } from '../models/libros.model';
 
 
 @Injectable({
@@ -18,6 +19,9 @@ export class UsuarioService {
   private urlBorrar = 'https://localhost:44389/api/Usuarios/BorrarUsuarios/';
 
   private urlLogin = 'https://localhost:44389/api/Usuarios/Logins';
+  private urlFechaNacimiento = 'https://localhost:44389/api/Usuarios/SeleccionarFechaNacimiento';
+
+
 
   private urlReserva = 'https://localhost:44389/api/Reservas/SeleccionarReservas';
   private urlReservaUsuario = 'https://localhost:44389/api/Reservas/SeleccionarReservasUsuarios';
@@ -65,6 +69,10 @@ export class UsuarioService {
     return this.http.get<UsuarioModel>(this.urlLogin + '?user=' + user + '&pass=' + pass)
   }
 
+  getFechaNacimiento(fecha1:Date, fecha2:Date):Observable<UsuarioModel[]>{  
+    return this.http.get<UsuarioModel[]>(this.urlFechaNacimiento + '?fecha1=' + fecha1 + '&fecha2=' + fecha2)
+  }
+
   /**********************RESERVAS***********************/
 
   getReserva(isbn:string,dni:string){
@@ -100,5 +108,7 @@ export class UsuarioService {
   getPrestamoUsuario(dni:string){
     return this.http.get<PrestamosModel[]>(this.urlPrestamoUsuario + '?dni=' + dni)
   }
+
+
 
 }

@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
 
     this.usuarioService.login(this.user,this.pass)
       .subscribe((resp:any)=>{
-        console.log(resp);
         if(resp){
           this.usuarioService.currentUser=resp[0];
           this.idUsuario=resp[0].dni;

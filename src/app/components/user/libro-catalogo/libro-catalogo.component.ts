@@ -4,6 +4,7 @@ import { LibrosService } from '../../../services/libros.service';
 import { LibrosModel } from '../../../models/libros.model';
 import { ReservasModel } from '../../../models/reservas.model';
 import { UsuarioService } from '../../../services/usuario.service';
+import swal from 'sweetalert';
 
 
 @Component({
@@ -35,16 +36,31 @@ export class LibroCatalogoComponent implements OnInit  {
     this.reserva.isbn = this.libro.isbn;
     this.reserva.dni = this.usuarioService.currentUser.dni;
     this.reserva.fecha_reserva = new Date();
-    console.log(this.reserva);
-    this.usuarioService.postReserva(this.reserva)
-        .subscribe((resp:any)=>{
-          console.log(resp.Estado);
-          this.usuarioService.getReserva(this.libro.isbn,'')
-          .subscribe((resp:any)=>{
-              this.reservasLibro = resp;
-                this.num_cola = this.reservasLibro.length-1;
-          });
-        })
+    let yaReservado=false;
+    this.usuarioService.getReserva('',this.usuarioService.currentUser.dni)
+      .subscribe((resp:any)=>{
+        let res_usu:ReservasModel[];
+        res_usu=resp;
+        res_usu.forEach(r => {
+          if(r.isbn==this.reserva.isbn){
+            yaReservado=true;
+            swal("Ya ha reservado este libro")
+          }
+          else{
+            this.usuarioService.postReserva(this.reserva)
+            .subscribe((resp:any)=>{
+              console.log(resp.Estado);
+              this.usuarioService.getReserva(this.libro.isbn,'')
+              .subscribe((resp:any)=>{
+                  this.reservasLibro = resp;
+                  this.num_cola = this.reservasLibro.length-1;
+                  swal(resp.Estado);
+              });
+            });
+          }
+        });
+      });
+    
       
   }
 

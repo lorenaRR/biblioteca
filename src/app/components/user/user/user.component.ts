@@ -27,25 +27,26 @@ export class UserComponent implements OnInit {
 
 
   constructor(private usuarioService:UsuarioService) { 
-    //this.getUsuario();
-    this.usuario = this.usuarioService.currentUser;
+    this.getUsuario();
+    /*this.usuario = this.usuarioService.currentUser;
     this.user=this.usuario.usuario;
     this.calcularLibrosLeidos();
     this.calcularLibrosPrestados();
-    this.calcularLibrosReservados();
+    this.calcularLibrosReservados();*/
     
   }
 
   ngOnInit(): void {
-
+    
   }
 
   getUsuario(){
     let id=localStorage.getItem("usuario");
+    console.log(id);
     if (id!=null){
       this.usuarioService.getUsuario(id,'','','')
         .subscribe((resp:any)=>{
-          this.usuario = resp;
+          this.usuario = resp[0];
           console.log(this.usuario);
           this.user=this.usuario.usuario;
           this.calcularLibrosLeidos();

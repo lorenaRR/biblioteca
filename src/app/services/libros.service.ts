@@ -40,6 +40,8 @@ export class LibrosService  {
   private urlInsertarAutorLibro='https://localhost:44389/api/Autores/InsertarAutoresLibro';
   private urlBorrarAutorLibro ='https://localhost:44389/api/Autores/BorrarAutoresLibros/';
 
+  private urlNoDevueltos = 'https://localhost:44389/api/Prestamos/SeleccionarNoDevueltos'; //INFORMES
+
   constructor(private http:HttpClient) { }
 
   getHeaders() {
@@ -130,5 +132,10 @@ export class LibrosService  {
     return this.http.delete(this.urlBorrarAutorLibro + '?id_autor=' + id_autor + '&isbn=' + isbn);
   }
 
+    /**********************INFORMES***********************/
+
+  getNoDevueltos(){
+    return this.http.get<LibrosModel[]>(this.urlNoDevueltos);
+  }
 
 }

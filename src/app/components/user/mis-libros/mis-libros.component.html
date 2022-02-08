@@ -10,7 +10,6 @@
                 <th>Fecha Préstamo</th>
                 <th>Fecha Entrega</th>
                 <th>Título</th>
-                <th>Autor</th>
             </tr>
         </thead>
         <tbody>
@@ -19,9 +18,6 @@
                 <td class="align-middle">{{libro.fechaPrestamo | date:'d/M/yy'}}</td>
                 <td class="align-middle">{{libro.fechaEntrega | date:'d/M/yy'}}</td>
                 <td class="align-middle">{{libro.titulo}}</td>
-                <td class="align-middle">
-                    <p *ngFor="let autor of libro.autores"> {{autor.nombre}} {{autor.apellidos}}</p>
-                </td>
             </tr>
         </tbody>
     </table>
@@ -38,7 +34,6 @@
                 <th>Portada</th>
                 <th>Fecha Devolucion</th>
                 <th>Título</th>
-                <th>Autor</th>
             </tr>
         </thead>
         <tbody>
@@ -46,9 +41,6 @@
                 <td class="align-middle"><img [src]="getImagen(libroLeido)" alt="" style="width: 25%;"></td>
                 <td class="align-middle">{{libroLeido.fechaDevolucion | date:'d/M/yy'}}</td>
                 <td class="align-middle">{{libroLeido.titulo}}</td>
-                <td class="align-middle">
-                    <p *ngFor="let autor of libroLeido.autores"> {{autor.nombre}} {{autor.apellidos}}</p>
-                </td>
             </tr>
         </tbody>
     </table>

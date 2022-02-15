@@ -8,3 +8,8 @@ export class CategoriasLibrosModel {
     id_categoria!:string;
     isbn!:string;
 }
+
+export class ListaLibrosCategorias{
+    categoria!: string;
+    Total!: number;
+}

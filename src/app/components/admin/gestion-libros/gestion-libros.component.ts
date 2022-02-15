@@ -4,7 +4,6 @@ import { AutoresLibrosModel, AutoresModel } from '../../../models/autores.model'
 import { LibrosService } from '../../../services/libros.service';
 import swal from 'sweetalert';
 import { CategoriasLibrosModel, CategoriasModel } from 'src/app/models/categorias.model';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-gestion-libros',
@@ -42,10 +41,6 @@ export class GestionLibrosComponent implements OnInit {
           this.categorias.push(categoria.categoria);
         }); 
       });
-  }
-
-  buscarCategorias(libro:LibrosModel){
-    
   }
 
   verLibros(){

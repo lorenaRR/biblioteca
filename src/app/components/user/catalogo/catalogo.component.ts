@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { LibrosModel } from '../../../models/libros.model';
 import { CategoriasModel, CategoriasLibrosModel } from '../../../models/categorias.model';
 import { AutoresModel, AutoresLibrosModel } from '../../../models/autores.model';
+import { UsuarioModel } from '../../../models/usuarios.model';
+import { UsuarioService } from '../../../services/usuario.service';
 
 @Component({
   selector: 'app-catalogo',
@@ -16,23 +18,39 @@ import { AutoresModel, AutoresLibrosModel } from '../../../models/autores.model'
 
 export class CatalogoComponent {
 
+  usuario!:UsuarioModel;
+
   libros: LibrosModel[] = [];
   categorias:string[]=[];
+
+  noLibros=false;
 
   isbn!: string;
   titulo!: string;
   subtitulo!: string;
   editorial!: string;
   autor!: string;
-  categoria="TODAS";
+  categoria="TODAS LAS CATEGORIAS";
   categoria2!: string;
 
-constructor(private librosService:LibrosService, private router:Router) { 
+constructor(private librosService:LibrosService, private router:Router, private usuarioService:UsuarioService) { 
+  this.getUsuario();
   this.cargarListaCategorias();
 }
 
 ngOnInit(): void {
     
+}
+
+
+getUsuario(){
+  let id=localStorage.getItem("idUsuario");
+  if (id!=null){
+    this.usuarioService.getUsuario(id,'','','99')
+      .subscribe((resp:any)=>{
+        this.usuario = resp[0];
+      });
+  }
 }
 
 
@@ -54,7 +72,7 @@ buscar(){
   if (this.autor==null){
     this.autor="";
   }
-  if(this.categoria=="TODAS"){
+  if(this.categoria=="TODAS LAS CATEGORIAS"){
     this.categoria2="";
   }
   else{
@@ -77,7 +95,6 @@ buscar(){
                   autores=resp;
                   autores.forEach(autor => { 
                     if(aut_libro.id_autor==autor.id_autor){ 
-                      console.log(autor);
                       this.librosService.getCategoriasLibro(libroBusqueda.isbn, '') //Busca en tabla cat-libros
                         .subscribe((resp:any)=>{
                           let categorias_libros:CategoriasLibrosModel[];
@@ -89,9 +106,10 @@ buscar(){
                                 categorias=resp;
                                 categorias.forEach(categoria => {
                                   if(cat_libro.id_categoria==categoria.id_categoria && !this.libros.includes(libroBusqueda)){
-                                    this.addAutores(libroBusqueda); //Cargar autores en libroBusqueda
-                                    this.addCategorias(libroBusqueda); //Cargar categorias en libroBusqueda
-                                    this.libros.push(libroBusqueda);  //Añade el libro
+                                      this.noLibros=false;
+                                      this.addAutores(libroBusqueda); //Cargar autores en libroBusqueda
+                                      this.addCategorias(libroBusqueda); //Cargar categorias en libroBusqueda
+                                      this.libros.push(libroBusqueda);  //Añade el libro
                                   }
                                 });
                               });
@@ -105,6 +123,13 @@ buscar(){
       });
 
     });
+
+    if(this.libros.length==0){
+      this.noLibros=true;
+     }
+     else{
+       this.noLibros=false;
+     }
   
 }
 
@@ -139,7 +164,7 @@ addCategorias(libro:LibrosModel){
 cargarListaCategorias(){
     this.librosService.getCategorias('', '')
       .subscribe((resp)=>{
-        this.categorias.push('TODAS');
+        this.categorias.push('TODAS LAS CATEGORIAS');
         resp.forEach(categoria => {
           this.categorias.push(categoria.categoria);
         }); 

@@ -1,4 +1,10 @@
 <app-navbar-admin></app-navbar-admin>
+<nav class="row m-3" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/gestion-usuarios">Gestión de usuarios</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Actualizar usuario</li>
+    </ol>
+</nav>
 <div class="container m-5">
     <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5">
         <h1 class="m-5">Actualizar usuario</h1>
@@ -32,7 +38,8 @@
                 <label class="form-label">E-mail</label>
                 <input type="email" class="form-control" name="email" [(ngModel)]="usuario.email">
             </div>
-            <button type="submit" class="btn btn-primary">Enviar</button>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+            <button type="button" class="btn btn-danger m-5" (click)="resetear()">Resetear usuario y contraseña</button>
         </form>
     </div>
 </div>

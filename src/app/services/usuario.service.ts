@@ -16,6 +16,8 @@ export class UsuarioService {
   private url = 'https://localhost:44389/api/Usuarios/SeleccionarUsuarios?id=';
   private urlInsertar = 'https://localhost:44389/api/Usuarios/InsertarUsuarios';
   private urlActualizar = 'https://localhost:44389/api/Usuarios/ActualizarUsuarios';
+  private urlActualizarUser = 'https://localhost:44389/api/Usuarios/ActualizarUser';
+  private urlActualizarPass = 'https://localhost:44389/api/Usuarios/ActualizarPass';
   private urlBorrar = 'https://localhost:44389/api/Usuarios/BorrarUsuarios/';
 
   private urlLogin = 'https://localhost:44389/api/Usuarios/Logins';
@@ -60,6 +62,15 @@ export class UsuarioService {
     return this.http.put(this.urlActualizar, usuario);
   }
 
+  putUser(usuario:UsuarioModel){
+    return this.http.put(this.urlActualizarUser, usuario);
+  }
+
+  putPass(usuario:UsuarioModel){
+    return this.http.put(this.urlActualizarPass, usuario);
+  }
+
+
   deleteUsuario(dni: any) : Observable<any> {
     let options = {headers: this.getHeaders(),}
     return this.http.delete(this.urlBorrar + `${dni}`, options)
@@ -102,6 +113,7 @@ export class UsuarioService {
   }
 
   putPrestamo(prestamo:PrestamosModel){
+    console.log(prestamo);
     return this.http.put(this.urlActualizarPrestamo, prestamo);
   }
 

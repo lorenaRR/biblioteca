@@ -27,13 +27,7 @@ export class UserComponent implements OnInit {
 
 
   constructor(private usuarioService:UsuarioService) { 
-    this.getUsuario();
-    /*this.usuario = this.usuarioService.currentUser;
-    this.user=this.usuario.usuario;
-    this.calcularLibrosLeidos();
-    this.calcularLibrosPrestados();
-    this.calcularLibrosReservados();*/
-    
+    this.getUsuario();    
   }
 
   ngOnInit(): void {
@@ -41,17 +35,16 @@ export class UserComponent implements OnInit {
   }
 
   getUsuario(){
-    let id=localStorage.getItem("usuario");
-    console.log(id);
+    let id=localStorage.getItem("idUsuario");
     if (id!=null){
-      this.usuarioService.getUsuario(id,'','','')
+      this.usuarioService.getUsuario(id,'','','99')
         .subscribe((resp:any)=>{
           this.usuario = resp[0];
-          console.log(this.usuario);
           this.user=this.usuario.usuario;
           this.calcularLibrosLeidos();
           this.calcularLibrosPrestados();
           this.calcularLibrosReservados();
+          this.getPendientes();
         });
     }
   }
@@ -104,24 +97,38 @@ export class UserComponent implements OnInit {
 
   actualizarUser(){
     this.usuario.usuario = this.user;
-    this.usuarioService.putUsuario(this.usuario)
+    console.log(this.usuario);
+    this.usuarioService.putUser(this.usuario)
       .subscribe((resp:any)=>{
           swal(resp.Estado);
       });
   }
 
   actualizarPass(){
-    if(this.usuario.password==this.pass && this.pass == this.pass2 && this.passNueva!=null)
-    {
-      this.usuario.password = this.passNueva;
-      this.usuarioService.putUsuario(this.usuario)
-      .subscribe((resp:any)=>{
-          swal(resp.Estado);
-      });
+    let id=localStorage.getItem("idUsuario"); 
+    if (id!=null){
+      this.usuarioService.getUsuario(id,'','','99')  //Vuelvo a coger los datos del usuario
+        .subscribe((resp:any)=>{
+          this.usuario = resp[0];
+          if(this.pass == this.pass2 && this.passNueva!=null) //Copruebo los campos de la contraseña
+          {
+            this.usuarioService.login(this.usuario.usuario, this.pass) //Intento el login
+              .subscribe((resp:any)=>{
+                if(resp){
+                  this.usuario.password = this.passNueva;
+                  this.usuarioService.putPass(this.usuario) //Modifico contraseña
+                  .subscribe((resp:any)=>{
+                      swal(resp.Estado);
+                  });
+                }  
+              });
+          }
+          else{
+            swal('Contraseña incorrecta.');
+          }
+        });
     }
-    else{
-      swal('Contraseña incorrecta.');
-    }
+    
   }
 
   verPass(id:string, idIcon:string){

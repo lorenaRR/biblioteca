@@ -22,11 +22,15 @@ export class NuevoComponent implements OnInit {
   }
 
   guardarFormulario(){
-    console.log(this.usuario);
-    this.usuarioService.postUsuario(this.usuario.dni, this.usuario)
+    if (this.usuario.dni !=null && this.usuario.email !=null && this.usuario.admin != null){
+      this.usuarioService.postUsuario(this.usuario.dni, this.usuario)
       .subscribe((resp:any)=>{
           swal(resp.Estado);
       }) ;
+    }
+    else{
+      swal("El campo tipo de usuario, DNI y E-mail son obligatorios");
+    }
     
   }
 }

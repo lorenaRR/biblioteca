@@ -4,6 +4,7 @@ import { UsuarioModel } from '../../../models/usuarios.model';
 import { DatePipe } from '@angular/common';
 import { UsuarioService } from '../../../services/usuario.service';
 import { LibrosService } from '../../../services/libros.service';
+import { ListaLibrosCategorias } from '../../../models/categorias.model';
 
 @Component({
   selector: 'app-informes',
@@ -14,13 +15,15 @@ export class InformesComponent implements OnInit {
 
   libros: LibrosModel[] = [];
   usuarios: UsuarioModel[] = [];
-  informes: string[] = ["Fechas Nacimiento Usuarios", "Categorias","Libros No Devueltos"];
+  lista_cat: ListaLibrosCategorias[]=[];
+  informes: string[] = ["Fechas Nacimiento Usuarios", "Número de Lectores por cada Categoria", "Número de Libros por cada Categoria","Libros No Devueltos"];
   informe!:string;
   fecha1!: Date;
   fecha2!: Date;
   iNacimientos=false;
   iCategorias=false;
   iNoDevueltos=false;
+  iCategoriasUsu=false;
 
   constructor(private usuarioService:UsuarioService, private librosService:LibrosService) { }
 
@@ -33,18 +36,30 @@ export class InformesComponent implements OnInit {
         this.iNacimientos=true;
         this.iCategorias=false;
         this.iNoDevueltos=false;
+        this.iCategoriasUsu=false;
         
         break;
-      case "Categorias":
+      case "Número de Libros por cada Categoria":
         this.iNacimientos=false;
         this.iCategorias=true;
         this.iNoDevueltos=false;
+        this.iCategoriasUsu=false;
+        this.verNumCategorias();
         
+        break;
+      case "Número de Lectores por cada Categoria":
+        this.iNacimientos=false;
+        this.iCategorias=false;
+        this.iNoDevueltos=false;
+        this.iCategoriasUsu=true;
+        this.verNumLectores();
+      
         break;
       case "Libros No Devueltos":
         this.iNacimientos=false;
         this.iCategorias=false;
         this.iNoDevueltos=true;
+        this.iCategoriasUsu=false;
         this.verNoDevueltos();
         
         break;
@@ -55,17 +70,51 @@ export class InformesComponent implements OnInit {
   }
 
   verFechaNacimiento(){
+    this.usuarios=[];
     this.usuarioService.getFechaNacimiento(this.fecha1,this.fecha2)
       .subscribe((resp:any)=>{
           this.usuarios=resp;
       });
   }
 
+  verNumLectores(){
+    this.lista_cat=[];
+    this.librosService.getNumUsuariosPorCategorias()
+      .subscribe((resp:any)=>{
+        this.lista_cat = resp;
+      });
+  }
+
   verNoDevueltos(){
+    this.libros=[];
     this.librosService.getNoDevueltos()
       .subscribe((resp:any)=>{
         this.libros=resp;
       });
+  }
+
+  verNumCategorias(){
+    this.lista_cat=[];
+    this.librosService.getNumLibrosPorCategorias()
+      .subscribe((resp:any)=>{
+        this.lista_cat = resp;
+      });
+  }
+
+  printDiv(id:string) { //Imprimir los informes
+    let div = document.getElementById(id);
+    let win = window.open('', '', 'height=700,width=700');
+  
+    if(win!=null && div!=null){
+      win.document.write(div.outerHTML);
+      var style = '<style>';
+      style = style + 'tr, td {padding: 10px;text-align: left; height: 50px; vertical-align: center; }';
+      style = style + '</style>';
+      win.document.write(style);
+      win.document.close();
+      win.print();
+    }
+
   }
 
 }

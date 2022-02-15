@@ -25,11 +25,10 @@ import { PrestamosComponent } from './components/admin/prestamos/prestamos.compo
 import { ActualizarComponent } from './components/admin/actualizar/actualizar.component';
 import { NuevoLibroComponent } from './components/admin/nuevo-libro/nuevo-libro.component';
 import { ActualizarLibroComponent } from './components/admin/actualizar-libro/actualizar-libro.component';
-import { CategoriasComponent } from './components/models/categorias/categorias.component';
-import { AutoresComponent } from './components/models/autores/autores.component';
+import { CategoriasComponent } from './components/modals/categorias/categorias.component';
+import { AutoresComponent } from './components/modals/autores/autores.component';
 import { DevolucionesComponent } from './components/admin/devoluciones/devoluciones.component';
 import { ReservasComponent } from './components/admin/reservas/reservas.component';
-import { MensajeComponent } from './components/models/mensaje/mensaje.component';
 
 
 
@@ -55,7 +54,6 @@ import { MensajeComponent } from './components/models/mensaje/mensaje.component'
     AutoresComponent,
     DevolucionesComponent,
     ReservasComponent,
-    MensajeComponent,
   ],
   imports: [
     BrowserModule,

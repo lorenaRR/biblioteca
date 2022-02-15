@@ -3,7 +3,6 @@ import { PrestamosModel } from '../../../models/prestamos.models';
 import { UsuarioService } from '../../../services/usuario.service';
 import { UsuarioModel } from '../../../models/usuarios.model';
 import { LibrosService } from '../../../services/libros.service';
-import { DatePipe } from '@angular/common';
 import swal from 'sweetalert';
 
 @Component({
@@ -17,7 +16,6 @@ export class DevolucionesComponent implements OnInit {
   prestamos: PrestamosModel[] = [];
   usuarios: UsuarioModel[] = [];
   libros:LibrosService[]=[];
-  datePipe!: DatePipe;
   hoy = new Date();
 
 
@@ -49,6 +47,7 @@ export class DevolucionesComponent implements OnInit {
     console.log(prestamo);
     this.usuarioService.putPrestamo(prestamo)
       .subscribe((resp:any)=>{
+        console.log(resp);
         swal(resp.Estado);
         this.buscarPrestamos();
       });

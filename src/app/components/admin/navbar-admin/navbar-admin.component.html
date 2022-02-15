@@ -1,13 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">BiblioAstur</a>
+        <img class="navbar-brand img-fluid" src="./assets/logo_mini.png" alt="Logo BiblioAstur">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/gestion-libros" [routerLinkActive]="['active']">Adminsitrar libros</a>
+                    <a class="nav-link" routerLink="/gestion-libros" [routerLinkActive]="['active']">Administrar libros</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/nuevo-libro" [routerLinkActive]="['active']">Nuevo libro</a>
@@ -30,7 +30,7 @@
             </ul>
         </div>
         <form class="form-inline my-2 my-lg-0 float-right">
-            <a class="mx-3" style="color:white; text-decoration: none;">{{user.nombre}} </a>
+            <a class="mx-3" style="color:white; text-decoration: none;">{{usuario.nombre}} </a>
             <a class="btn btn-danger my-2 my-sm-0 " (click)="salir()">Cerrar sesión</a>
         </form>
     </div>

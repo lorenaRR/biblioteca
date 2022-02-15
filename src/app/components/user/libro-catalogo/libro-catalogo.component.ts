@@ -5,6 +5,7 @@ import { LibrosModel } from '../../../models/libros.model';
 import { ReservasModel } from '../../../models/reservas.model';
 import { UsuarioService } from '../../../services/usuario.service';
 import swal from 'sweetalert';
+import { UsuarioModel } from '../../../models/usuarios.model';
 
 
 @Component({
@@ -14,7 +15,11 @@ import swal from 'sweetalert';
 })
 export class LibroCatalogoComponent implements OnInit  {
 
-  constructor(private activatedRoute: ActivatedRoute, private librosService:LibrosService, private usuarioService:UsuarioService) { }
+  constructor(private activatedRoute: ActivatedRoute, private librosService:LibrosService, private usuarioService:UsuarioService) { 
+    
+  }
+
+  usuario!:UsuarioModel;
   libro: LibrosModel = new LibrosModel;
   reserva: ReservasModel = new ReservasModel;
   reservasLibro: ReservasModel[] = [];
@@ -25,47 +30,67 @@ export class LibroCatalogoComponent implements OnInit  {
     console.log(id);
     this.librosService.getLibros(id,'','','')
     .subscribe(resp=>{
-      console.log(resp);
       this.libro=resp[0];
-      console.log(this.libro);
+      this.getNumReservas();
     })
 
   }
 
+
   insertarReserva(){
-    this.reserva.isbn = this.libro.isbn;
-    this.reserva.dni = this.usuarioService.currentUser.dni;
-    this.reserva.fecha_reserva = new Date();
-    let yaReservado=false;
-    this.usuarioService.getReserva('',this.usuarioService.currentUser.dni)
+    
+
+    let id=localStorage.getItem("idUsuario");
+    if (id!=null){
+      this.usuarioService.getUsuario(id,'','','99') //Buscar usuario
+        .subscribe((resp:any)=>{
+          this.usuario = resp[0];
+
+          this.reserva.isbn = this.libro.isbn;
+          this.reserva.dni = this.usuario.dni;
+          this.reserva.fecha_reserva = new Date();
+
+          this.usuarioService.getReserva(this.libro.isbn,this.usuario.dni) //Buscar reserva
+            .subscribe((resp:any)=>{
+              if(resp.length>0){
+                swal("Ya ha reservado este libro.");
+              }
+              else{
+                this.usuarioService.postReserva(this.reserva) //Añadir reserva si no estaba previamente reservado
+                  .subscribe((resp:any)=>{
+                    swal(resp.Estado);
+                    this.getNumReservas();
+                  });
+              }
+            });
+
+      });
+    }
+  }
+
+  getNumReservas(){
+    this.num_cola=0;
+    let id=localStorage.getItem("idUsuario");
+    console.log(this.num_cola);
+    this.usuarioService.getReserva(this.libro.isbn,'')
       .subscribe((resp:any)=>{
-        let res_usu:ReservasModel[];
-        res_usu=resp;
-        res_usu.forEach(r => {
-          if(r.isbn==this.reserva.isbn){
-            yaReservado=true;
-            swal("Ya ha reservado este libro")
+        let reservas:ReservasModel[];
+        reservas= resp;
+        reservas.forEach(r => {
+          if (r.dni != id){
+              this.num_cola++;
+              console.log(this.num_cola);
           }
           else{
-            this.usuarioService.postReserva(this.reserva)
-            .subscribe((resp:any)=>{
-              console.log(resp.Estado);
-              this.usuarioService.getReserva(this.libro.isbn,'')
-              .subscribe((resp:any)=>{
-                  this.reservasLibro = resp;
-                  this.num_cola = this.reservasLibro.length-1;
-                  swal(resp.Estado);
-              });
-            });
+            return;
           }
         });
+        
       });
-    
-      
   }
 
   getImagen(libro:LibrosModel){
-    if (libro.imagen!='') {  //Aquí salta un error!!!
+    if (libro.imagen!='') {  
       return `${libro.imagen}`
     }
     else{

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioModel } from '../../../models/usuarios.model';
 import { UsuarioService } from '../../../services/usuario.service';
-import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,20 +10,27 @@ import { Router } from '@angular/router';
 })
 export class NavbarAdminComponent implements OnInit {
 
-  public user!:UsuarioModel;
-  forma!:FormGroup;
+  usuario: UsuarioModel = new UsuarioModel;
 
   constructor(private usuarioService:UsuarioService, private router:Router) { }
 
   ngOnInit(): void {
-    this.user=this.usuarioService.currentUser;
+    this.getUsuario();
   }
 
   salir(){
-    console.log(this.usuarioService.currentUser);
-    this.usuarioService.currentUser=new UsuarioModel;
+    localStorage.removeItem("isUsuario");
     this.router.navigate(['/login']);
-    console.log(this.usuarioService.currentUser);
+  }
+
+  getUsuario(){
+    let id=localStorage.getItem("idUsuario");
+    if (id!=null){
+      this.usuarioService.getUsuario(id,'','','99')
+        .subscribe((resp:any)=>{
+          this.usuario = resp[0];
+        });
+    }
   }
 
 }

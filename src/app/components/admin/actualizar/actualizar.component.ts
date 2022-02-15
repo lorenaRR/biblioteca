@@ -4,6 +4,7 @@ import { UsuarioModel } from '../../../models/usuarios.model';
 import { ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert';
 import * as moment from 'moment';
+import { ThisReceiver } from '@angular/compiler';
 
 
 @Component({
@@ -18,14 +19,6 @@ export class ActualizarComponent implements OnInit {
   usuario: any;
   id:any;
 
-  actualizarFormulario(){
-    this.usuarioService.putUsuario(this.usuario)
-      .subscribe((resp:any)=>{
-        swal(resp.Estado);
-      }) ;
-  }
-
-
   ngOnInit(): void {
     this.usuario = new UsuarioModel();
     this.id=this.route.snapshot.paramMap.get('id');
@@ -36,5 +29,28 @@ export class ActualizarComponent implements OnInit {
         this.usuario.fechaNacimiento = moment(this.usuario.fechaNacimiento).format('YYYY-MM-DD');
       });
   }
+
+  actualizarFormulario(){
+    this.usuarioService.putUsuario(this.usuario)
+      .subscribe((resp:any)=>{
+        swal(resp.Estado);
+      }) ;
+  }
+
+  resetear(){
+    this.usuario.usuario = this.usuario.dni;
+    this.usuario.password = this. usuario.email;
+    this.usuarioService.putUser(this.usuario)
+      .subscribe((resp:any)=>{
+        swal(resp.Estado);
+        this.usuarioService.putPass(this.usuario)
+          .subscribe((resp:any)=>{
+            swal(resp.Estado);
+          });       
+      });
+  }
+
+
+
 
 }

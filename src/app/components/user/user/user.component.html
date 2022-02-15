@@ -1,4 +1,9 @@
 <app-navbar-user></app-navbar-user>
+<nav class="row m-3" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Mi cuenta</li>
+    </ol>
+</nav>
 <div class="row m-5">
     <div class="col-5 text-center">
         <img src="./assets/user.png" style="width: 50%;" alt="logo usuario">
@@ -38,7 +43,7 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Usuario" aria-label="Usuario" aria-describedby="basic-addon2" [(ngModel)]="user" name="user">
                     <div class="input-group-append">
-                        <button class="btn btn-success" type="button">Actualizar usuario</button>
+                        <button class="btn btn-success" type="button" (click)="actualizarUser()">Actualizar usuario</button>
                     </div>
                 </div>
             </form>
@@ -50,13 +55,13 @@
             <form (ngSubmit)="actualizarPass()" #f2="ngForm">
                 <h3>Editar contraseña:</h3>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="basic-addon2" [(ngModel)]="pass" name="pass" id="pass">
+                    <input type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña actual" aria-describedby="basic-addon2" [(ngModel)]="pass" name="pass" id="pass">
                     <div class="input-group-append">
                         <button class="btn btn-secondary" type="button" (click)="verPass('pass', 'eye1')"><i class="fa fa-eye-slash" id="eye1"></i></button>
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Repetir contraseña" aria-label="Repetir contraseña" aria-describedby="basic-addon2" [(ngModel)]="pass2" name="pass2" id="pass2">
+                    <input type="password" class="form-control" placeholder="Repetir contraseña" aria-label="Repetir contraseña actual" aria-describedby="basic-addon2" [(ngModel)]="pass2" name="pass2" id="pass2">
                     <div class="input-group-append">
                         <button class="btn btn-secondary" type="button" (click)="verPass('pass2', 'eye2')"><i class="fa fa-eye-slash" id="eye2"></i></button>
                     </div>
@@ -64,7 +69,7 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Nueva contraseña" aria-label="Nueva contraseña" aria-describedby="basic-addon2" [(ngModel)]="passNueva" name="passNueva">
                 </div>
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <button type="submit" class="btn btn-primary" (click)="actualizarPass()">Enviar</button>
             </form>
         </div>
     </div>

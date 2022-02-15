@@ -1,15 +1,22 @@
 <app-navbar-admin></app-navbar-admin>
-
+<nav class="row m-3" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/gestion-libros">Gestión de Libros</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Prestamo - {{libro.titulo}}</li>
+    </ol>
+</nav>
 <div class="container m-5">
     <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5" style="width: 1500px;">
         <div class="m-5">
-            <h1>Prestamos - Buscar usuario</h1>
+            <h1>Prestamo - <i>{{libro.titulo}}</i></h1>
+            <br>
+            <h2>Buscar usuario: </h2>
             <hr>
         </div>
-        <form class="m-5" (ngSubmit)="buscarUsuario()" [formGroup]="forma">
-            <input type="text" class="form-control m-3" formControlName="dni" placeholder="Dni">
-            <input type="text" class="form-control m-3" formControlName="nombre" placeholder="Nombre">
-            <input type="text" class="form-control m-3" formControlName="apellidos" placeholder="Apellidos">
+        <form class="m-5" (ngSubmit)="buscarUsuario()" #f="ngForm">
+            <input type="text" class="form-control m-3" [(ngModel)]="dni" name="dni" placeholder="Dni">
+            <input type="text" class="form-control m-3" [(ngModel)]="nombre" name="nombre" placeholder="Nombre">
+            <input type="text" class="form-control m-3" [(ngModel)]="apellidos" name="apellidos" placeholder="Apellidos">
             <br>
             <button type="submit" class="btn btn-primary m-3">Buscar</button>
         </form>

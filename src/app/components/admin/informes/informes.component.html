@@ -1,5 +1,9 @@
 <app-navbar-admin></app-navbar-admin>
-
+<nav class="row m-3" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Informes</li>
+    </ol>
+</nav>
 <div class="container m-5">
     <div class="border border-light bg-light shadow-none bg-light rounded p-3 mb-5">
         <div class="m-5">
@@ -11,27 +15,63 @@
                 <option *ngFor="let informe of informes" [value]="informe">{{informe}}</option>
             </select>
         </form>
-        <div class="m-5" *ngIf="iCategorias">
+        <div class="m-5" *ngIf="iCategoriasUsu" id="categorias_usu">
             <hr>
             <br>
-            <table class="table" *ngIf="libros">
+            <div>
+                <h3>Listado de categorías por número de libros: </h3>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <table class="table" *ngIf="lista_cat">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">ISBN</th>
-                        <th scope="col">Título</th>
-                        <th scope="col">Subtítulo</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Número de lectores</th>
+                        <th scope="col"><button class="btn btn-secondary" (click)="printDiv('categorias_usu')"><i class="fa fa-print"></i></button></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let libro of libros">
-                        <td> {{libro.isbn}} </td>
-                        <td> {{libro.titulo}} </td>
-                        <td> {{libro.subtitulo}} </td>
+                    <tr *ngFor="let categoria of lista_cat">
+                        <td> {{categoria.categoria}} </td>
+                        <td> {{categoria.Total}} </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="m-5" *ngIf="iNoDevueltos">
+        <div class="m-5" *ngIf="iCategorias" id="categorias">
+            <hr>
+            <br>
+            <div>
+                <h3>Listado de categorías por número de libros: </h3>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <table class="table" *ngIf="lista_cat">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Número de libros</th>
+                        <th scope="col"><button class="btn btn-secondary" (click)="printDiv('categorias')"><i class="fa fa-print"></i></button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let categoria of lista_cat">
+                        <td> {{categoria.categoria}} </td>
+                        <td> {{categoria.Total}} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="m-5" *ngIf="iNoDevueltos" id="no_devueltos">
+            <hr>
+            <br>
+            <div>
+                <h3>Listado de libros no devueltos: </h3>
+            </div>
+            <br>
             <hr>
             <br>
             <table class="table" *ngIf="libros">
@@ -41,6 +81,7 @@
                         <th scope="col">Título</th>
                         <th scope="col">Subtítulo</th>
                         <th scope="col">Fecha de entrega</th>
+                        <th scope="col"><button class="btn btn-secondary" (click)="printDiv('no_devueltos')"><i class="fa fa-print"></i></button></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,29 +97,35 @@
         <div class="m-5" *ngIf="iNacimientos">
             <hr>
             <br>
-            <form class="m-5" (ngSubmit)="verFechaNacimiento()" #f="ngForm">
-                <div class="m-5">
+            <form (ngSubmit)="verFechaNacimiento()" #f="ngForm">
+                <div>
                     <h3>Listado de usuarios por fecha de nacimiento: </h3>
                 </div>
-                <div class="form-group mb-3">
+                <br>
+                <hr>
+                <br>
+                <div class="form-group">
                     <label class="form-label">Entre</label>
                     <input type="date" class="form-control" [(ngModel)]="fecha1" name="fecha1">
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group">
                     <label class="form-label">y</label>
                     <input type="date" class="form-control" [(ngModel)]="fecha2" name="fecha2">
                 </div>
-                <button type="submit" class="btn btn-primary m-3">Ver</button>
+                <br>
+                <button type="submit" class="btn btn-primary">Ver</button>
             </form>
+            <br>
             <hr>
             <br>
-            <table class="table" *ngIf="usuarios">
+            <table class="table" *ngIf="usuarios" id="nacimientos">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">DNI</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellidos</th>
                         <th scope="col">Fecha Nacimiento</th>
+                        <th scope="col"><button class="btn btn-secondary" (click)="printDiv('nacimientos')"><i class="fa fa-print"></i></button></th>
                     </tr>
                 </thead>
                 <tbody>

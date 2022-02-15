@@ -1,4 +1,9 @@
 <app-navbar-user></app-navbar-user>
+<nav class="row m-3" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Mis libros</li>
+    </ol>
+</nav>
 
 <div class="m-5">
     <h1>Lista de libros en prestamo</h1>
@@ -7,17 +12,18 @@
         <thead>
             <tr>
                 <th>Portada</th>
+                <th>Título</th>
                 <th>Fecha Préstamo</th>
                 <th>Fecha Entrega</th>
-                <th>Título</th>
+
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let libro of libros">
+            <tr [ngStyle]="{'background-color': libro.fechaInvalida  ? '#CD5C5C' : ''}" *ngFor="let libro of libros" title="">
                 <td class="align-middle"><img [src]="getImagen(libro)" alt="" style="width: 25%;"></td>
+                <td class="align-middle">{{libro.titulo}}</td>
                 <td class="align-middle">{{libro.fechaPrestamo | date:'d/M/yy'}}</td>
                 <td class="align-middle">{{libro.fechaEntrega | date:'d/M/yy'}}</td>
-                <td class="align-middle">{{libro.titulo}}</td>
             </tr>
         </tbody>
     </table>
@@ -32,15 +38,15 @@
         <thead>
             <tr>
                 <th>Portada</th>
-                <th>Fecha Devolucion</th>
                 <th>Título</th>
+                <th>Fecha Devolucion</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let libroLeido of librosLeidos">
                 <td class="align-middle"><img [src]="getImagen(libroLeido)" alt="" style="width: 25%;"></td>
-                <td class="align-middle">{{libroLeido.fechaDevolucion | date:'d/M/yy'}}</td>
                 <td class="align-middle">{{libroLeido.titulo}}</td>
+                <td class="align-middle">{{libroLeido.fechaDevolucion | date:'d/M/yy'}}</td>
             </tr>
         </tbody>
     </table>

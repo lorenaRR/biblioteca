@@ -1,16 +1,21 @@
 <app-navbar-user></app-navbar-user>
+<nav class="row m-3" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/catalogo">Catalogo</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{libro.titulo}}</li>
+    </ol>
+</nav>
 
 <div class="row m-5">
     <div class="col-6 mb-5">
-        <img [src]="getImagen(libro)" class="img-fluid" alt="">
+        <img [src]="getImagen(libro)" class="img-fluid" alt="Portada libro" style="width: 75%;">
     </div>
     <div class="col-6 mb-5">
         <h1>{{libro.titulo | uppercase}} </h1><br>
-        <!-- <h3 *ngFor="let author  of libro.volumeInfo.authors">{{author}}</h3><br> -->
         <h5>{{libro.editorial}} - <small> {{libro.fechaPublicacion | date:'M/d/yyyy'}} </small> </h5><br>
         <h6>{{libro.nPaginas}} páginas.</h6><br><br>
         <p>{{libro.descripcion}}</p><br>
-        <button (click)="insertarReserva()" class="btn btn-primary">Reservar</button><br>
-        <span>Personas delante de tí: {{num_cola}}</span>
+        <button (click)="insertarReserva()" class="btn btn-primary">Reservar</button><br><br>
+        <span>Personas en la cola: {{num_cola}}</span>
     </div>
 </div>

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LibrosModel } from '../models/libros.model';
+import { LibrosModel, ListaLectores } from '../models/libros.model';
 import { CategoriasModel, CategoriasLibrosModel, ListaLibrosCategorias } from '../models/categorias.model';
 import { AutoresModel, AutoresLibrosModel } from '../models/autores.model';
 
@@ -43,6 +43,7 @@ export class LibrosService  {
   private urlNoDevueltos = 'https://localhost:44389/api/Prestamos/SeleccionarNoDevueltos'; //INFORMES
   private urlNumLibrosCategorias = 'https://localhost:44389/api/Categorias/SeleccionarNumLibrosPorCategorias';
   private urlNumUsuariosCategorias = 'https://localhost:44389/api/Categorias/SeleccionarNumUsuariosPorCategorias';
+  private urlNumLectores = 'https://localhost:44389/api/Libros/SeleccionarNumLectores';
 
   constructor(private http:HttpClient) { }
 
@@ -146,6 +147,10 @@ export class LibrosService  {
 
   getNumUsuariosPorCategorias(){
     return this.http.get<ListaLibrosCategorias[]>(this.urlNumUsuariosCategorias);
+  }
+
+  getNumLectores(){
+    return this.http.get<ListaLectores[]>(this.urlNumLectores);
   }
 
 }

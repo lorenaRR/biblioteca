@@ -64,12 +64,19 @@ export class PrestamosComponent implements OnInit {
     prestamo.isbn=this.id;
     prestamo.fechaPrestamo = new Date();
     prestamo.fechaEntrega = moment(prestamo.fechaPrestamo).add(15, 'days').toDate(); 
-    console.log(prestamo);
-    this.usuarioService.postPrestamo(prestamo)
+    this.usuarioService.getPrestamo(prestamo.isbn,prestamo.dni)
       .subscribe((resp:any)=>{
-        swal(resp.Estado);
+        console.log(resp);
+        if(resp.length>0){
+          swal('Este usuario ya tiene prestado este libro');
+        }    
+        else{
+          this.usuarioService.postPrestamo(prestamo)
+            .subscribe((resp:any)=>{
+              swal(resp.Estado);
+            });
+        }
       });
-    
   }
 
 }

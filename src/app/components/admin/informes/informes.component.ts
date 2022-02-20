@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LibrosModel } from '../../../models/libros.model';
+import { LibrosModel, ListaLectores } from '../../../models/libros.model';
 import { UsuarioModel } from '../../../models/usuarios.model';
 import { DatePipe } from '@angular/common';
 import { UsuarioService } from '../../../services/usuario.service';
@@ -16,7 +16,8 @@ export class InformesComponent implements OnInit {
   libros: LibrosModel[] = [];
   usuarios: UsuarioModel[] = [];
   lista_cat: ListaLibrosCategorias[]=[];
-  informes: string[] = ["Fechas Nacimiento Usuarios", "Número de Lectores por cada Categoria", "Número de Libros por cada Categoria","Libros No Devueltos"];
+  lista_lect: ListaLectores[]=[];
+  informes: string[] = ["Fechas Nacimiento Usuarios", "Número de Lectores por cada Categoria", "Número de Libros por cada Categoria","Libros No Devueltos", "Libros más leídos"];
   informe!:string;
   fecha1!: Date;
   fecha2!: Date;
@@ -24,6 +25,7 @@ export class InformesComponent implements OnInit {
   iCategorias=false;
   iNoDevueltos=false;
   iCategoriasUsu=false;
+  iLectores=false;
 
   constructor(private usuarioService:UsuarioService, private librosService:LibrosService) { }
 
@@ -37,6 +39,7 @@ export class InformesComponent implements OnInit {
         this.iCategorias=false;
         this.iNoDevueltos=false;
         this.iCategoriasUsu=false;
+        this.iLectores=false;
         
         break;
       case "Número de Libros por cada Categoria":
@@ -44,6 +47,7 @@ export class InformesComponent implements OnInit {
         this.iCategorias=true;
         this.iNoDevueltos=false;
         this.iCategoriasUsu=false;
+        this.iLectores=false;
         this.verNumCategorias();
         
         break;
@@ -52,6 +56,7 @@ export class InformesComponent implements OnInit {
         this.iCategorias=false;
         this.iNoDevueltos=false;
         this.iCategoriasUsu=true;
+        this.iLectores=false;
         this.verNumLectores();
       
         break;
@@ -60,10 +65,19 @@ export class InformesComponent implements OnInit {
         this.iCategorias=false;
         this.iNoDevueltos=true;
         this.iCategoriasUsu=false;
+        this.iLectores=false;
         this.verNoDevueltos();
         
         break;
-    
+      case "Libros más leídos":
+          this.iNacimientos=false;
+          this.iCategorias=false;
+          this.iNoDevueltos=false;
+          this.iCategoriasUsu=false;
+          this.iLectores=true;
+          this.verLectores();
+          
+          break;
       default:
         break;
     }
@@ -98,6 +112,14 @@ export class InformesComponent implements OnInit {
     this.librosService.getNumLibrosPorCategorias()
       .subscribe((resp:any)=>{
         this.lista_cat = resp;
+      });
+  }
+
+  verLectores(){
+    this.lista_lect=[];
+    this.librosService.getNumLectores()
+      .subscribe((resp:any)=>{
+        this.lista_lect = resp;
       });
   }
 

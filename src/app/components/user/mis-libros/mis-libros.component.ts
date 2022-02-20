@@ -57,9 +57,8 @@ export class MisLibrosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     let id=localStorage.getItem("idUsuario");
-    console.log(id);
+
     if (id!=null){
       this.usuarioService.getUsuario(id,'','','99') //Busca el usuario
         .subscribe((resp:any)=>{
@@ -87,7 +86,7 @@ export class MisLibrosComponent implements OnInit {
                 });
             });
             this.leidos.forEach(leido => {
-              this.librosService.getLibros(leido.isbn,'','','') //Busca los datos del libro del prestamo
+              this.librosService.getLibros(leido.isbn,'','','') //Busca los datos del libro leído
                 .subscribe((resp:any)=>{
                     this.librosLeidos.push(resp[0]);
                     this.librosLeidos.forEach(libro => {
@@ -97,6 +96,7 @@ export class MisLibrosComponent implements OnInit {
                     });
                 });
             });
+            
           });
         });
     }

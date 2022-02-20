@@ -26,6 +26,7 @@ export class NuevoComponent implements OnInit {
       this.usuarioService.postUsuario(this.usuario.dni, this.usuario)
       .subscribe((resp:any)=>{
           swal(resp.Estado);
+          this.usuario = new UsuarioModel;
       }) ;
     }
     else{

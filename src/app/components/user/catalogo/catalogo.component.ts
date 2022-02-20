@@ -23,7 +23,7 @@ export class CatalogoComponent {
   libros: LibrosModel[] = [];
   categorias:string[]=[];
 
-  noLibros=false;
+  click=false;//para controlar si ha iniciado una busqueda;
 
   isbn!: string;
   titulo!: string;
@@ -57,6 +57,7 @@ getUsuario(){
 buscar(){
 
   this.libros=[];
+  this.click=true;
   if (this.isbn==null){
     this.isbn="";
   }
@@ -106,7 +107,6 @@ buscar(){
                                 categorias=resp;
                                 categorias.forEach(categoria => {
                                   if(cat_libro.id_categoria==categoria.id_categoria && !this.libros.includes(libroBusqueda)){
-                                      this.noLibros=false;
                                       this.addAutores(libroBusqueda); //Cargar autores en libroBusqueda
                                       this.addCategorias(libroBusqueda); //Cargar categorias en libroBusqueda
                                       this.libros.push(libroBusqueda);  //Añade el libro
@@ -123,13 +123,6 @@ buscar(){
       });
 
     });
-
-    if(this.libros.length==0){
-      this.noLibros=true;
-     }
-     else{
-       this.noLibros=false;
-     }
   
 }
 
@@ -156,6 +149,7 @@ addCategorias(libro:LibrosModel){
         this.librosService.getCategorias(cat_libro.id_categoria,'')
           .subscribe((resp:any)=>{
             libro.categorias=resp;
+            console.log(libro.categorias);
           });
       });
     });

@@ -50,7 +50,7 @@ export class NuevoLibroComponent implements OnInit {
       this.autores_libros.forEach(aut_libro => {
         this.librosService.postAutoresLibro(aut_libro)
           .subscribe((resp:any)=>{
-            swal(resp.Estado);
+            console.log(resp);
           });
       });
     });
@@ -65,7 +65,7 @@ export class NuevoLibroComponent implements OnInit {
       this.categorias_libros.forEach(cat_libro => {
         this.librosService.postCategoriasLibro(cat_libro)
           .subscribe((resp:any)=>{
-            swal(resp.Estado);
+            console.log(resp);
           });
       });
     });
@@ -78,6 +78,9 @@ export class NuevoLibroComponent implements OnInit {
           swal(resp.Estado);
           this.addAutoresLibro();
           this.addCategoriasLibro();
+          this.libro = new LibrosModel;
+          this.categorias = [];
+          this.autores = [];
         });
     }
     else{

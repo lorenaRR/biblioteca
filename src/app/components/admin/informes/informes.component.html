@@ -140,5 +140,31 @@
 
         </div>
 
+        <div class="m-5" *ngIf="iLectores" id="lectores">
+            <hr>
+            <br>
+            <div>
+                <h3>Listado de libros más leídos: </h3>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <table class="table" *ngIf="lista_lect">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Título</th>
+                        <th scope="col">Número de lectores</th>
+                        <th scope="col"><button class="btn btn-secondary" (click)="printDiv('lectores')"><i class="fa fa-print"></i></button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let lector of lista_lect">
+                        <td> {{lector.titulo}} </td>
+                        <td> {{lector.Total}} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </div>

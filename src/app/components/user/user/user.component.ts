@@ -4,6 +4,8 @@ import { UsuarioService } from '../../../services/usuario.service';
 import swal from 'sweetalert';
 import { PrestamosModel } from '../../../models/prestamos.models';
 import { ReservasModel } from '../../../models/reservas.model';
+import { LibrosModel } from '../../../models/libros.model';
+import { LibrosService } from '../../../services/libros.service';
 
 @Component({
   selector: 'app-user',
@@ -21,12 +23,13 @@ export class UserComponent implements OnInit {
   prestados: PrestamosModel[] = [];
   nLibrosReservados=0;
   reservados: ReservasModel[] = [];
+  librosReservados:LibrosModel[] = [];
   nLibrosLeidos=0;
   pendiente!:boolean;
   pendientes: PrestamosModel[] = [];
 
 
-  constructor(private usuarioService:UsuarioService) { 
+  constructor(private usuarioService:UsuarioService, private librosService:LibrosService) { 
     this.getUsuario();    
   }
 
@@ -78,6 +81,10 @@ export class UserComponent implements OnInit {
       .subscribe((resp:any)=>{
         this.reservados = resp;
         this.reservados.forEach(r => {
+          this.librosService.getLibros(r.isbn,'','','')
+            .subscribe((resp:any)=>{
+                this.librosReservados.push(resp[0]);
+            });
           this.nLibrosReservados++;
         });
       });
@@ -97,7 +104,6 @@ export class UserComponent implements OnInit {
 
   actualizarUser(){
     this.usuario.usuario = this.user;
-    console.log(this.usuario);
     this.usuarioService.putUser(this.usuario)
       .subscribe((resp:any)=>{
           swal(resp.Estado);

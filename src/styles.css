@@ -7,6 +7,11 @@ body {
     border-radius: 20px;
 }
 
+.badge-secondary {
+    background-color: darkgray;
+    border-radius: 20px;
+}
+
 .fa {
     color: white;
 }

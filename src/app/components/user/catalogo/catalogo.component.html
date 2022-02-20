@@ -25,13 +25,13 @@
     </form>
     <hr>
     <br>
+    <div class="alert alert-danger" *ngIf="libros.length==0 && click" role="alert">
+        Libro no encontrado.
+    </div>
     <div class="row m-5">
-        <div class="alert alert-danger" *ngIf="noLibros" role="alert">
-            Libro no encontrado.
-        </div>
         <div class="col-md-3 mb-5" *ngFor="let libro of libros; let i = index">
-            <img (click)="onLibroClick(libro)" [src]="getImagen(libro)" alt="" class="img-fluid" [ngStyle]="{'cursor': 'pointer'}">
             <div class="m-5">
+                <img (click)="onLibroClick(libro)" [src]="getImagen(libro)" alt="" class="img-fluid mb-2" [ngStyle]="{'cursor': 'pointer'}">
                 <h5>{{libro.titulo}}</h5>
                 <p *ngFor="let autor of libro.autores">{{autor.nombre}} {{autor.apellidos}}</p>
                 <span>{{libro.fechaPublicacion | date:'d/M/yyyy'}}</span><br>

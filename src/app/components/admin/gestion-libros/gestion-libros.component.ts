@@ -15,6 +15,8 @@ export class GestionLibrosComponent implements OnInit {
   libros: LibrosModel[] = [];
   categorias:string[]=[];
 
+  click=false;//para controlar si ha iniciado una busqueda;
+
   isbn!: string;
   titulo!: string;
   subtitulo!: string;
@@ -44,6 +46,8 @@ export class GestionLibrosComponent implements OnInit {
   }
 
   verLibros(){
+    this.click = true;
+
     this.libros=[];
     if (this.isbn==null){
       this.isbn="";

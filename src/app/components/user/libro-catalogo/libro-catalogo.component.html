@@ -12,7 +12,7 @@
     </div>
     <div class="col-6 mb-5">
         <h1>{{libro.titulo | uppercase}} </h1><br>
-        <h5>{{libro.editorial}} - <small> {{libro.fechaPublicacion | date:'M/d/yyyy'}} </small> </h5><br>
+        <h5>{{libro.editorial}} - <small> {{libro.fechaPublicacion | date:'d/M/yyyy'}} </small> </h5><br>
         <h6>{{libro.nPaginas}} páginas.</h6><br><br>
         <p>{{libro.descripcion}}</p><br>
         <button (click)="insertarReserva()" class="btn btn-primary">Reservar</button><br><br>

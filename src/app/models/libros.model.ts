@@ -21,3 +21,7 @@ export class LibrosModel{
     fechaInvalida!:      boolean;
 }
 
+export class ListaLectores{
+    titulo!: string;
+    Total!: number;
+}

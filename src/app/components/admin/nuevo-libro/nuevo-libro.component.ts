@@ -15,7 +15,6 @@ export class NuevoLibroComponent implements OnInit {
     categorias: CategoriasModel[] = [];
     autores: AutoresModel[] = [];
     autores_libros: AutoresLibrosModel[] = [];
-    categorias_libros: CategoriasLibrosModel[] = [];
     libro: LibrosModel = new LibrosModel;
  
   constructor(private librosService:LibrosService) {
@@ -42,32 +41,40 @@ export class NuevoLibroComponent implements OnInit {
   }
 
   addAutoresLibro(){ //Añadir relacion aut-libro
-    this.autores.forEach(autor => {
-      let autor_libro:AutoresLibrosModel = new AutoresLibrosModel;
-      autor_libro.isbn = this.libro.isbn;
-      autor_libro.id_autor = autor.id_autor;
-      this.autores_libros.push(autor_libro);
-      this.autores_libros.forEach(aut_libro => {
-        this.librosService.postAutoresLibro(aut_libro)
-          .subscribe((resp:any)=>{
-            console.log(resp);
-          });
-      });
+    let aut_libro:AutoresLibrosModel = new AutoresLibrosModel;
+    let array_aut_libro:AutoresLibrosModel[] = [];
+    console.log('lista autores', this.autores);
+    this.autores.forEach(autor => {     
+      aut_libro.isbn = this.libro.isbn;
+      aut_libro.id_autor = autor.id_autor;
+      array_aut_libro.push(aut_libro);
+      aut_libro = new AutoresLibrosModel;
+    });
+    console.log('array autor', array_aut_libro);
+    array_aut_libro.forEach(aut => {
+      this.librosService.postAutoresLibro(aut)
+        .subscribe((resp:any)=>{
+          console.log(resp);
+        });
     });
   }
 
   addCategoriasLibro(){  //Añadir relacion cat-libro
+    let cat_libro:CategoriasLibrosModel = new CategoriasLibrosModel;
+    let array_cat_libro:CategoriasLibrosModel[]=[];
+    console.log('lista categorias', this.categorias);
     this.categorias.forEach(categoria => {
-      let categoria_libro:CategoriasLibrosModel = new CategoriasLibrosModel;
-      categoria_libro.isbn=this.libro.isbn;
-      categoria_libro.id_categoria=categoria.id_categoria;
-      this.categorias_libros.push(categoria_libro);
-      this.categorias_libros.forEach(cat_libro => {
-        this.librosService.postCategoriasLibro(cat_libro)
-          .subscribe((resp:any)=>{
-            console.log(resp);
-          });
-      });
+      cat_libro.isbn=this.libro.isbn;
+      cat_libro.id_categoria=categoria.id_categoria;
+      array_cat_libro.push(cat_libro);
+      cat_libro=new CategoriasLibrosModel; 
+    });
+    console.log('array categorias', array_cat_libro);
+    array_cat_libro.forEach(cat => {
+      this.librosService.postCategoriasLibro(cat)
+        .subscribe((resp:any)=>{
+          console.log(resp);
+        });
     });
   }
 

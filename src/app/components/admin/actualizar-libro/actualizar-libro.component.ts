@@ -41,6 +41,7 @@ export class ActualizarLibroComponent implements OnInit {
         this.libro.fechaPublicacion = moment(this.libro.fechaPublicacion).format('YYYY-MM-DD');
         this.getAutoresLibro(this.libro);
         this.getCategoriasLibro(this.libro);
+        console.log(this.libro);
       });
   
   }
@@ -76,16 +77,13 @@ export class ActualizarLibroComponent implements OnInit {
   getAutoresLibro(libro:LibrosModel){
     this.librosService.getAutoresLibro(libro.isbn,'') 
       .subscribe((resp:any)=>{
-          console.log(resp);
-          let autores_libros:AutoresLibrosModel[];
-          autores_libros = resp;
-          autores_libros.forEach(autor_libro => {
-            console.log(autor_libro.id_autor);
-            this.librosService.getAutores(autor_libro.id_autor,'','')
+        console.log(resp);
+          let auts:AutoresModel[]=resp;
+          auts.forEach(a => {
+            this.librosService.getAutores(a.id_autor,'','')
               .subscribe((resp:any)=>{
-                console.log(resp);
-                this.autores=resp;
-              });
+                  this.autores.push(resp[0]);
+              })
           });
     });
   }
@@ -93,7 +91,6 @@ export class ActualizarLibroComponent implements OnInit {
   getCategoriasLibro(libro:LibrosModel){
     this.librosService.getCategoriasLibro(libro.isbn,'')
       .subscribe((resp:any)=>{
-        console.log(resp);
         this.categorias = resp;
       });
   }

@@ -18,6 +18,8 @@ export class ActualizarComponent implements OnInit {
 
   usuario: any;
   id:any;
+  emailNoValido=false;
+  adminNoValido=false;
 
   ngOnInit(): void {
     this.usuario = new UsuarioModel();
@@ -31,10 +33,22 @@ export class ActualizarComponent implements OnInit {
   }
 
   actualizarFormulario(){
-    this.usuarioService.putUsuario(this.usuario)
+
+    if(this.usuario.email!=null && /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(this.usuario.email)){
+      this.emailNoValido=false;
+    }
+    else{
+      this.emailNoValido=true;
+      swal("El e-mail no es correcto");
+    }
+
+    if(!this.emailNoValido){
+      this.usuarioService.putUsuario(this.usuario)
       .subscribe((resp:any)=>{
         swal(resp.Estado);
       }) ;
+    }
+   
   }
 
   resetear(){

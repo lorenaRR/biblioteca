@@ -87,7 +87,6 @@ export class GestionLibrosComponent implements OnInit {
                     autores=resp;
                     autores.forEach(autor => { 
                       if(aut_libro.id_autor==autor.id_autor){ 
-                        console.log(autor);
                         this.librosService.getCategoriasLibro(libroBusqueda.isbn, '') //Busca en tabla cat-libros
                           .subscribe((resp:any)=>{
                             let categorias_libros:CategoriasLibrosModel[];

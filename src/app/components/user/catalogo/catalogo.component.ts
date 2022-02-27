@@ -21,9 +21,10 @@ export class CatalogoComponent {
   usuario!:UsuarioModel;
 
   libros: LibrosModel[] = [];
+  librosBusqueda:LibrosModel[] =[];
   categorias:string[]=[];
 
-  click=false;//para controlar si ha iniciado una busqueda;
+  click = false;
 
   isbn!: string;
   titulo!: string;
@@ -55,9 +56,9 @@ getUsuario(){
 
 
 buscar(){
-
   this.libros=[];
   this.click=true;
+  
   if (this.isbn==null){
     this.isbn="";
   }
@@ -80,11 +81,10 @@ buscar(){
     this.categoria2=this.categoria;
   }
 
-  let librosBusqueda:LibrosModel[];
   this.librosService.getLibros(this.isbn,this.titulo,this.subtitulo,this.editorial) //Busca en tabla libros
-    .subscribe((resp:any)=>{
-      librosBusqueda=resp;
-      librosBusqueda.forEach(libroBusqueda => { 
+  .subscribe((resp:any)=>{
+      this.librosBusqueda=resp;
+      this.librosBusqueda.forEach(libroBusqueda => { 
         this.librosService.getAutoresLibro(libroBusqueda.isbn,'') //Busca en tabla aut-libros 
           .subscribe((resp:any)=>{
             let autores_libro:AutoresLibrosModel[];
@@ -106,10 +106,10 @@ buscar(){
                                 let categorias:CategoriasModel[];
                                 categorias=resp;
                                 categorias.forEach(categoria => {
-                                  if(cat_libro.id_categoria==categoria.id_categoria && !this.libros.includes(libroBusqueda)){
+                                  if(cat_libro.id_categoria == categoria.id_categoria && !this.libros.includes(libroBusqueda)){
                                       this.addAutores(libroBusqueda); //Cargar autores en libroBusqueda
                                       this.addCategorias(libroBusqueda); //Cargar categorias en libroBusqueda
-                                      this.libros.push(libroBusqueda);  //Añade el libro
+                                      this.libros.push(libroBusqueda);  //Añade el libros
                                   }
                                 });
                               });
@@ -121,9 +121,9 @@ buscar(){
             });
           });
       });
+  });
 
-    });
-  
+
 }
 
 addAutores(libro:LibrosModel){ 
@@ -138,9 +138,12 @@ addAutores(libro:LibrosModel){
           });
       });
     })
+
+
 }
 
 addCategorias(libro:LibrosModel){
+  let categorias:CategoriasModel[] = [];
   this.librosService.getCategoriasLibro(libro.isbn,'')
     .subscribe((resp:any)=>{
       let categorias_libro:CategoriasLibrosModel[];
@@ -148,10 +151,10 @@ addCategorias(libro:LibrosModel){
       categorias_libro.forEach(cat_libro => {
         this.librosService.getCategorias(cat_libro.id_categoria,'')
           .subscribe((resp:any)=>{
-            libro.categorias=resp;
-            console.log(libro.categorias);
+            categorias.push(resp[0]);
           });
       });
+      libro.categorias=categorias;
     });
 }
 
@@ -175,10 +178,21 @@ cargarListaCategorias(){
   }
 
   onLibroClick(libro:LibrosModel){
-    console.log(libro.isbn);
     this.router.navigate(['/libro-catalogo', libro.isbn]);
   }
 
 }
 
+
+function busquedaFinal(): unknown {
+  throw new Error('Function not implemented.');
+}
+
+function b() {
+  throw new Error('Function not implemented.');
+}
+
+function comprobarLibroEncontrado() {
+  throw new Error('Function not implemented.');
+}
 

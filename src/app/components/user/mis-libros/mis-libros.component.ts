@@ -83,6 +83,7 @@ export class MisLibrosComponent implements OnInit {
                       this.getCategorias(libro);
                       this.getFechas(libro);
                     });
+                    this.libros.sort();
                 });
             });
             this.leidos.forEach(leido => {
@@ -94,6 +95,7 @@ export class MisLibrosComponent implements OnInit {
                       this.getCategorias(libro);
                       this.getFechas(libro);
                     });
+                    this.librosLeidos.sort();
                 });
             });
             

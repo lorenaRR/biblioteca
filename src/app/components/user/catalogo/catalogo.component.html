@@ -25,7 +25,7 @@
     </form>
     <hr>
     <br>
-    <div class="alert alert-danger" *ngIf="libros.length==0 && click" role="alert">
+    <div class="alert alert-danger" *ngIf="click && libros.length==0" role="alert">
         Libro no encontrado.
     </div>
     <div class="row m-5">

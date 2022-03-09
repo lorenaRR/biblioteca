@@ -16,6 +16,7 @@ export class NuevoLibroComponent implements OnInit {
     autores: AutoresModel[] = [];
     autores_libros: AutoresLibrosModel[] = [];
     libro: LibrosModel = new LibrosModel;
+    isbnNoValido=false;
  
   constructor(private librosService:LibrosService) {
    }
@@ -25,11 +26,15 @@ export class NuevoLibroComponent implements OnInit {
   }
 
   addAutor(autor: AutoresModel) {
-    this.autores.push(autor);
+    if(!this.autores.includes(autor)){
+      this.autores.push(autor);
+    }
   }
 
   addCategoria(categoria: CategoriasModel){ 
-    this.categorias.push(categoria);
+    if(!this.categorias.includes(categoria)){
+      this.categorias.push(categoria);
+    }
   }
 
   borrarAutorLibro(autor:AutoresModel){ //Borrar autor lista
@@ -79,19 +84,26 @@ export class NuevoLibroComponent implements OnInit {
   }
 
   guardarFormulario(){
+
+        
     if (this.libro.isbn!=null){
-      this.librosService.postLibro(this.libro)
-        .subscribe((resp:any)=>{
-          swal(resp.Estado);
-          this.addAutoresLibro();
-          this.addCategoriasLibro();
-          this.libro = new LibrosModel;
-          this.categorias = [];
-          this.autores = [];
-        });
+      this.isbnNoValido=false;
     }
     else{
+      this.isbnNoValido=true;
       swal("El campo ISBN no puede estar vacío.")
+    }
+
+    if(!this.isbnNoValido){
+      this.librosService.postLibro(this.libro)
+      .subscribe((resp:any)=>{
+        swal(resp.Estado);
+        this.addAutoresLibro();
+        this.addCategoriasLibro();
+        this.libro = new LibrosModel;
+        this.categorias = [];
+        this.autores = [];
+      });
     }
     
   }

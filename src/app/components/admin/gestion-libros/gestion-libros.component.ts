@@ -15,7 +15,7 @@ export class GestionLibrosComponent implements OnInit {
   libros: LibrosModel[] = [];
   categorias:string[]=[];
 
-  click=false;//para controlar si ha iniciado una busqueda;
+  noLibros=false;
 
   isbn!: string;
   titulo!: string;
@@ -27,6 +27,7 @@ export class GestionLibrosComponent implements OnInit {
 
  
   constructor(private librosService:LibrosService)  {
+    this.libros = [];
     this.cargarCategorias();
    }
 
@@ -45,10 +46,106 @@ export class GestionLibrosComponent implements OnInit {
       });
   }
 
-  verLibros(){
-    this.click = true;
+  informarListaLibros(resp:any){
+    let libro:LibrosModel = new LibrosModel();
+    libro.autores = [];
+    libro.categorias = [];
+    let autor:AutoresModel = new AutoresModel();
+    let categoria:CategoriasModel = new CategoriasModel();
+    let isbnAntiguo:string;
+    let autorNuevo = false;
+    let categoriaNueva = true;
 
+    isbnAntiguo = resp[0].isbn;
+    libro.isbn = resp[0].isbn;
+    libro.titulo = resp[0].titulo;
+    libro.subtitulo = resp[0].subtitulo;
+    libro.descripcion = resp[0].descripcion;
+    libro.fechaPublicacion = resp[0].fechaPublicacion;
+    libro.nPaginas = resp[0].nPaginas;
+    libro.imagen = resp[0].imagen;
+    libro.stock = resp[0].stock;
+    autor.nombre = resp[0].nombre;
+    autor.apellidos =  resp[0].apellidos;
+    libro.autores.push(autor);
+    categoria.categoria = resp[0].categoria;
+    libro.categorias.push(categoria);
+
+    
+
+    for (let i = 1; i < resp.length; i++) {  
+          autor = new AutoresModel();  
+          categoria = new CategoriasModel();
+          categoriaNueva = true;
+          if(resp[i].isbn == isbnAntiguo){
+
+            autor.nombre=resp[i].nombre;
+            autor.apellidos=resp[i].apellidos;
+
+            for (let j = 0; j < libro.autores.length; j++) {
+              if(libro.autores[j].nombre != autor.nombre || libro.autores[j].apellidos != autor.apellidos){
+                autorNuevo=true;
+              } 
+              else{
+                autorNuevo=false;
+              }
+            }
+
+            if(autorNuevo){
+              libro.autores.push(autor);
+            }
+            
+
+            categoria.categoria=resp[i].categoria;  
+
+            for (let k = 0; k < libro.categorias.length; k++) {
+              if(libro.categorias[k].categoria == categoria.categoria){
+                categoriaNueva=false;
+              }
+            }
+            
+            if(categoriaNueva){
+              libro.categorias.push(categoria);
+            }  
+          }
+          else{
+            autor = new AutoresModel();
+            categoria = new CategoriasModel();
+            this.libros.push(libro);
+            libro = new LibrosModel();
+            libro.autores = []; 
+            libro.categorias = [];
+            libro.isbn = resp[i].isbn;
+            isbnAntiguo = resp[i].isbn;
+            libro.titulo = resp[i].titulo;
+            libro.subtitulo = resp[i].subtitulo;
+            libro.descripcion = resp[i].descripcion;
+            libro.fechaPublicacion = resp[i].fechaPublicacion;
+            libro.nPaginas = resp[i].nPaginas;
+            libro.imagen = resp[i].imagen;
+            libro.stock = resp[i].stock;  
+            autor.nombre=resp[i].nombre;
+            autor.apellidos=resp[i].apellidos;
+            categoria.categoria=resp[i].categoria;
+            libro.autores.push(autor);
+            libro.categorias.push(categoria);          
+          }
+    }
+
+    this.libros.push(libro);
+
+    if (this.libros.length==0){
+      this.noLibros=true;
+    }
+    else{
+      this.noLibros=false;
+    }
+  }
+
+
+  verLibros(){
     this.libros=[];
+    
     if (this.isbn==null){
       this.isbn="";
     }
@@ -71,48 +168,18 @@ export class GestionLibrosComponent implements OnInit {
       this.categoria2=this.categoria;
     }
 
-    let librosBusqueda:LibrosModel[];
-    this.librosService.getLibros(this.isbn,this.titulo,this.subtitulo,this.editorial) //Busca en tabla libros
+    this.librosService.getLibrosCatalogo(this.isbn,this.titulo, this.subtitulo, this.editorial, this.autor, this.categoria2)
       .subscribe((resp:any)=>{
-        librosBusqueda=resp;
-        librosBusqueda.forEach(libroBusqueda => { 
-          this.librosService.getAutoresLibro(libroBusqueda.isbn,'') //Busca en tabla aut-libros 
-            .subscribe((resp:any)=>{
-              let autores_libro:AutoresLibrosModel[];
-              autores_libro=resp;
-              autores_libro.forEach(aut_libro => {
-                this.librosService.getAutoresUnCampo(this.autor) //Busca en tabla autores
-                  .subscribe((resp:any)=>{
-                    let autores:AutoresModel[];
-                    autores=resp;
-                    autores.forEach(autor => { 
-                      if(aut_libro.id_autor==autor.id_autor){ 
-                        this.librosService.getCategoriasLibro(libroBusqueda.isbn, '') //Busca en tabla cat-libros
-                          .subscribe((resp:any)=>{
-                            let categorias_libros:CategoriasLibrosModel[];
-                            categorias_libros=resp;
-                            categorias_libros.forEach(cat_libro => {
-                              this.librosService.getCategorias(cat_libro.id_categoria, this.categoria2)//Busca en tabla categorias
-                                .subscribe((resp:any)=>{
-                                  let categorias:CategoriasModel[];
-                                  categorias=resp;
-                                  categorias.forEach(categoria => {
-                                    if(cat_libro.id_categoria==categoria.id_categoria && !this.libros.includes(libroBusqueda)){
-                                      this.libros.push(libroBusqueda);  //Añade el libro
-                                    }
-                                  });
-                                });
-                            });
-                          });
-                       }
-                    });
-                  });
-              });
-            });
-        });
-
+        if(resp.length>0){
+          this.informarListaLibros(resp);
+          this.noLibros=false;
+        }
+        else{
+          this.noLibros=true;
+        }
+        
       });
-  }
+}
 
   borrarLibro(isbn:string){
     this.librosService.deleteLibro(isbn)

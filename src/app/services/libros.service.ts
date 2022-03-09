@@ -18,6 +18,7 @@ export class LibrosService  {
   private urlInsertar = 'https://localhost:44389/api/Libros/InsertarLibros';
   private urlActualizarLibro = 'https://localhost:44389/api/Libros/ActualizarLibros';
   private urlBorrarLibro = 'https://localhost:44389/api/Libros/BorrarLibro/';
+  private urlCatalogo = 'https://localhost:44389/api/Libros/SeleccionarCatalogo';
 
   private paramTitulo ='&titulo='; //PARAMETROS
   private paramSubtitulo='&subtitulo=';
@@ -57,6 +58,10 @@ export class LibrosService  {
 
   getLibros(isbn:string, titulo:string, subtitulo:string, editorial:string):Observable<LibrosModel[]>{  
     return this.http.get<LibrosModel[]>(this.url + isbn + this.paramTitulo + titulo + this.paramSubtitulo + subtitulo + this.paramEditorial + editorial)
+  }
+
+  getLibrosCatalogo(isbn:string, titulo:string, subtitulo:string, editorial:string, autor:string, categoria:string):Observable<LibrosModel[]>{  
+    return this.http.get<LibrosModel[]>(this.urlCatalogo + '?isbn=' + isbn + '&titulo=' + titulo + '&subtitulo=' + subtitulo + '&editorial=' + editorial + '&autor=' + autor + '&categoria=' + categoria)
   }
 
   postLibro(libro:LibrosModel){

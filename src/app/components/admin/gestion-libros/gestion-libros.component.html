@@ -31,6 +31,8 @@
                         <th scope="col">ISBN</th>
                         <th scope="col">Título</th>
                         <th scope="col">Subtítulo</th>
+                        <th scope="col">Autores</th>
+                        <th scope="col">Categorias</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,8 +41,14 @@
                         <td> {{libro.titulo}} </td>
                         <td> {{libro.subtitulo}} </td>
                         <td>
+                            <p *ngFor="let autor of libro.autores">{{autor.nombre}} {{autor.apellidos}}</p>
+                        </td>
+                        <td>
+                            <p *ngFor="let categoria of libro.categorias">{{categoria.categoria}}</p>
+                        </td>
+                        <td>
                             <button class="btn btn-success" [routerLink]="['/prestamos', libro.isbn]" title="Prestamos">
-                            <i class="fa fa-book-reader"></i>
+                            <i class="fa fa-book-open-reader"></i>
                             </button>
                             <button class="btn btn-info" [routerLink]="['/actualizar-libro', libro.isbn]" title="Actualizar">
                             <i class="fa fa-pen"></i>
@@ -52,7 +60,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="alert alert-danger" *ngIf="libros.length==0 && click" role="alert">
+            <div class="alert alert-danger" *ngIf="noLibros" role="alert">
                 Libro no encontrado.
             </div>
         </div>

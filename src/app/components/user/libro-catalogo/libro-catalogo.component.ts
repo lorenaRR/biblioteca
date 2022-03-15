@@ -27,7 +27,6 @@ export class LibroCatalogoComponent implements OnInit  {
 
   ngOnInit(): void {
     const {id} = this.activatedRoute.snapshot.params;
-    console.log(id);
     this.librosService.getLibros(id,'','','')
     .subscribe(resp=>{
       this.libro=resp[0];
@@ -71,7 +70,6 @@ export class LibroCatalogoComponent implements OnInit  {
   getNumReservas(){
     this.num_cola=0;
     let id=localStorage.getItem("idUsuario");
-    console.log(this.num_cola);
     this.usuarioService.getReserva(this.libro.isbn,'')
       .subscribe((resp:any)=>{
         let reservas:ReservasModel[];
@@ -79,7 +77,6 @@ export class LibroCatalogoComponent implements OnInit  {
         reservas.forEach(r => {
           if (r.dni != id){
               this.num_cola++;
-              console.log(this.num_cola);
           }
           else{
             return;

@@ -4,6 +4,7 @@ import { UsuarioService } from '../../../services/usuario.service';
 import { UsuarioModel } from '../../../models/usuarios.model';
 import { LibrosService } from '../../../services/libros.service';
 import swal from 'sweetalert';
+import { LibrosModel } from '../../../models/libros.model';
 
 @Component({
   selector: 'app-devoluciones',
@@ -44,12 +45,24 @@ export class DevolucionesComponent implements OnInit {
 
   devolverLibro(prestamo:PrestamosModel){
     prestamo.fechaDevolucion = new Date();
-    console.log(prestamo);
     this.usuarioService.putPrestamo(prestamo)
       .subscribe((resp:any)=>{
-        console.log(resp);
         swal(resp.Estado);
+        this.sumarStock(prestamo);
         this.buscarPrestamos();
+      });
+  }
+
+  sumarStock(prestamo:PrestamosModel){
+    let libro:LibrosModel = new LibrosModel();
+    this.librosService.getLibros(prestamo.isbn,'','','')
+      .subscribe((resp:any)=>{
+        libro=resp[0];
+        libro.stock++;
+        this.librosService.putLibro(libro)
+          .subscribe((resp:any)=>{
+            console.log(resp.Estado);
+          });
       });
   }
 

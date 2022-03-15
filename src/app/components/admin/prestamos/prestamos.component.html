@@ -37,8 +37,8 @@
                         <td> {{usuario.apellidos}} </td>
                         <td> {{usuario.dni}} </td>
                         <td>
-                            <button class="btn btn-success">
-                                <i class="fa fa-check" (click)="prestar(usuario.dni)" title="Prestar libro"></i>
+                            <button class="btn btn-success" (click)="prestar(usuario.dni)">
+                                <i class="fa fa-check" title="Prestar libro"></i>
                             </button>
                         </td>
                     </tr>

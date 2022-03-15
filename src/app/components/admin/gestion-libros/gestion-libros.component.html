@@ -33,6 +33,7 @@
                         <th scope="col">Subtítulo</th>
                         <th scope="col">Autores</th>
                         <th scope="col">Categorias</th>
+                        <th scope="col">Stock</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,8 +47,9 @@
                         <td>
                             <p *ngFor="let categoria of libro.categorias">{{categoria.categoria}}</p>
                         </td>
+                        <td> {{libro.stock}} </td>
                         <td>
-                            <button class="btn btn-success" [routerLink]="['/prestamos', libro.isbn]" title="Prestamos">
+                            <button class="btn btn-success" (click)="comprobarStock(libro.isbn)" title="Prestamos">  
                             <i class="fa fa-book-open-reader"></i>
                             </button>
                             <button class="btn btn-info" [routerLink]="['/actualizar-libro', libro.isbn]" title="Actualizar">

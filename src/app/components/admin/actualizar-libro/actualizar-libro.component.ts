@@ -25,7 +25,12 @@ export class ActualizarLibroComponent implements OnInit {
   autores: AutoresModel[] = [];
   autores_libros: AutoresLibrosModel[] = [];
   categorias_libros: CategoriasLibrosModel[] = [];
+  isbnNoValido = false;
+  categoriasNoValido = false;
+  autoresNoValido = false;
+  stockNoValido = false;
   swal!: SweetAlert;
+
 
   constructor(private librosService:LibrosService,  private route:ActivatedRoute) { 
 
@@ -41,7 +46,6 @@ export class ActualizarLibroComponent implements OnInit {
         this.libro.fechaPublicacion = moment(this.libro.fechaPublicacion).format('YYYY-MM-DD');
         this.getAutoresLibro(this.libro);
         this.getCategoriasLibro(this.libro);
-        console.log(this.libro);
       });
   
   }
@@ -56,6 +60,12 @@ export class ActualizarLibroComponent implements OnInit {
         this.librosService.postAutoresLibro(aut_libro)
           .subscribe((resp:any)=>{
             swal(resp.Estado);
+            if (this.autores.length ==0){
+              this.autoresNoValido = true;
+            }
+            else{
+              this.autoresNoValido = false;
+            }
           });
       });
   }
@@ -70,6 +80,12 @@ export class ActualizarLibroComponent implements OnInit {
         this.librosService.postCategoriasLibro(cat_libro)
           .subscribe((resp:any)=>{
             swal(resp.Estado);
+            if (this.categorias.length ==0){
+              this.categoriasNoValido = true;
+            }
+            else{
+              this.categoriasNoValido = false;
+            }
           });
       });
   }
@@ -100,6 +116,12 @@ export class ActualizarLibroComponent implements OnInit {
     this.librosService.deleteAutoresLibro(autor.id_autor, this.libro.isbn)
       .subscribe((resp:any)=>{
         swal(resp.Estado);
+        if (this.autores.length ==0){
+          this.autoresNoValido = true;
+        }
+        else{
+          this.autoresNoValido = false;
+        }
       });
   }
 
@@ -109,15 +131,37 @@ export class ActualizarLibroComponent implements OnInit {
     .subscribe((resp:any)=>{
       swal(resp.Estado);
       this.getCategoriasLibro(this.libro);
+      if (this.categorias.length ==0){
+        this.categoriasNoValido = true;
+      }
+      else{
+        this.categoriasNoValido = false;
+      }
     });
   }
 
 
   actualizarLibro(){
-    this.librosService.putLibro(this.libro)
+
+    
+
+    if(this.libro.stock<0 || Number.isNaN(this.libro.stock) || !Number.isInteger(this.libro.stock)){
+        this.stockNoValido = true;
+        swal("El stock tiene que ser un número entero y positivo.")
+    }
+    else{
+      this.stockNoValido = false;
+    }
+
+    if(!this.categoriasNoValido && !this.autoresNoValido && !this.stockNoValido){
+      this.librosService.putLibro(this.libro)
       .subscribe((resp:any)=>{
           swal(resp.Estado);
       });
+    }
+   
+
+    
   }
 
 }

@@ -45,8 +45,6 @@ export class ReservasComponent implements OnInit {
       .subscribe((resp:any)=>{
         this.todasReservas = resp;
         this.todasReservas.forEach(reserva => {
-          console.log(reserva.isbn);
-          console.log(this.titulo);
           this.librosService.getLibros(reserva.isbn, this.titulo,'','')
             .subscribe((resp:any)=>{
               if (resp!=null){

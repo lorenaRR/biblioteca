@@ -4,6 +4,7 @@ import { AutoresLibrosModel, AutoresModel } from '../../../models/autores.model'
 import { LibrosService } from '../../../services/libros.service';
 import swal from 'sweetalert';
 import { CategoriasLibrosModel, CategoriasModel } from 'src/app/models/categorias.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-libros',
@@ -26,7 +27,7 @@ export class GestionLibrosComponent implements OnInit {
   categoria2!:string;
 
  
-  constructor(private librosService:LibrosService)  {
+  constructor(private librosService:LibrosService, private router:Router)  {
     this.libros = [];
     this.cargarCategorias();
    }
@@ -44,6 +45,67 @@ export class GestionLibrosComponent implements OnInit {
           this.categorias.push(categoria.categoria);
         }); 
       });
+  }
+
+  comprobarStock(isbn:string){
+
+    this.librosService.getLibros(isbn, '','','')
+      .subscribe((resp:any)=>{
+        let libro:LibrosModel = resp[0];
+        if (libro.stock==0 || libro.stock==null){
+            swal("No quedan libros disponibles para el préstamo.")
+        }
+        else{
+          this.router.navigate(['/prestamos', isbn]);
+        }
+      });
+
+  }
+
+  verLibros(){
+    this.libros=[];
+    
+    if (this.isbn==null){
+      this.isbn="";
+    }
+    if (this.titulo==null){
+      this.titulo="";
+    }
+    if (this.subtitulo==null){
+      this.subtitulo="";
+    }
+    if (this.editorial==null){
+      this.editorial="";
+    }
+    if (this.autor==null){
+      this.autor="";
+    }
+    if(this.categoria=="TODAS LAS CATEGORIAS"){
+      this.categoria2="";
+    }
+    else{
+      this.categoria2=this.categoria;
+    }
+
+    this.librosService.getLibrosCatalogo(this.isbn,this.titulo, this.subtitulo, this.editorial, this.autor, this.categoria2)
+      .subscribe((resp:any)=>{
+        if(resp.length>0){
+          this.informarListaLibros(resp);
+          this.noLibros=false;
+        }
+        else{
+          this.noLibros=true;
+        }
+        
+      });
+}
+
+  borrarLibro(isbn:string){
+    this.librosService.deleteLibro(isbn)
+    .subscribe((resp:any)=>{
+      swal(resp.Estado);
+      this.verLibros();
+    });
   }
 
   informarListaLibros(resp:any){
@@ -140,52 +202,6 @@ export class GestionLibrosComponent implements OnInit {
     else{
       this.noLibros=false;
     }
-  }
-
-
-  verLibros(){
-    this.libros=[];
-    
-    if (this.isbn==null){
-      this.isbn="";
-    }
-    if (this.titulo==null){
-      this.titulo="";
-    }
-    if (this.subtitulo==null){
-      this.subtitulo="";
-    }
-    if (this.editorial==null){
-      this.editorial="";
-    }
-    if (this.autor==null){
-      this.autor="";
-    }
-    if(this.categoria=="TODAS LAS CATEGORIAS"){
-      this.categoria2="";
-    }
-    else{
-      this.categoria2=this.categoria;
-    }
-
-    this.librosService.getLibrosCatalogo(this.isbn,this.titulo, this.subtitulo, this.editorial, this.autor, this.categoria2)
-      .subscribe((resp:any)=>{
-        if(resp.length>0){
-          this.informarListaLibros(resp);
-          this.noLibros=false;
-        }
-        else{
-          this.noLibros=true;
-        }
-        
-      });
-}
-
-  borrarLibro(isbn:string){
-    this.librosService.deleteLibro(isbn)
-    .subscribe((resp:any)=>{
-      swal(resp.Estado);
-    });
   }
 
 

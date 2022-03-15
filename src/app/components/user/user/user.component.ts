@@ -38,7 +38,7 @@ export class UserComponent implements OnInit {
   }
 
   getUsuario(){
-    let id=localStorage.getItem("idUsuario");
+    let id=localStorage.getItem('idUsuario');
     if (id!=null){
       this.usuarioService.getUsuario(id,'','','99')
         .subscribe((resp:any)=>{
@@ -111,7 +111,7 @@ export class UserComponent implements OnInit {
   }
 
   actualizarPass(){
-    let id=localStorage.getItem("idUsuario"); 
+    let id=localStorage.getItem('idUsuario'); 
     if (id!=null){
       this.usuarioService.getUsuario(id,'','','99')  //Vuelvo a coger los datos del usuario
         .subscribe((resp:any)=>{
@@ -125,6 +125,9 @@ export class UserComponent implements OnInit {
                   this.usuarioService.putPass(this.usuario) //Modifico contraseña
                   .subscribe((resp:any)=>{
                       swal(resp.Estado);
+                      this.pass = '';
+                      this.pass2 = '';
+                      this.passNueva = '';
                   });
                 }  
               });

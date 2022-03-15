@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
 
     this.usuarioService.login(this.user,this.pass)
       .subscribe((resp:any)=>{
-        if(resp){
+        if(resp.length>0 && this.user != null && this.pass !=null){
           this.usuarioService.currentUser=resp[0];
           this.idUsuario=resp[0].dni;
           localStorage.setItem("idUsuario", this.idUsuario);

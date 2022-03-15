@@ -61,6 +61,7 @@ export class AutoresComponent implements OnInit {
     this.librosService.deleteAutor(id_autor)
         .subscribe((resp:any)=>{
           swal(resp.Estado);
+          this.buscarAutor();
         });
   }
 

@@ -12,8 +12,8 @@ import { AutoresModel, AutoresLibrosModel } from '../models/autores.model';
 
 export class LibrosService  {
 
-  private url = 'https://localhost:44389/';
-  //private url = 'https://app-biblioteca.azurewebsites.net/';
+  //private url = 'https://localhost:44389/';
+  private url = 'https://app-biblioteca.azurewebsites.net/';
 
   private urlLibro='api/Libros/SeleccionarLibros'; //LIBRO
   private urlInsertar = 'api/Libros/InsertarLibros';

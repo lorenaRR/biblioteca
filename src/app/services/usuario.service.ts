@@ -12,8 +12,8 @@ import { PrestamosModel } from '../models/prestamos.models';
 
 export class UsuarioService {
 
-  private url = 'https://localhost:44389/';
-  //private url = 'https://app-biblioteca.azurewebsites.net/';
+  //private url = 'https://localhost:44389/';
+  private url = 'https://app-biblioteca.azurewebsites.net/';
 
   private urlUsuarios = 'api/Usuarios/SeleccionarUsuarios'
   private urlInsertar = 'api/Usuarios/InsertarUsuarios';

@@ -32,11 +32,12 @@ const routes: Routes = [
   {path:'mis-libros', component: MisLibrosComponent },
   {path:'catalogo', component: CatalogoComponent },
   {path:'libro-catalogo/:id', component: LibroCatalogoComponent},
+  {path: '', pathMatch: 'full', redirectTo: 'login'},
   {path:'**', pathMatch:'full', redirectTo:'login'},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
